@@ -1,0 +1,21 @@
+/* 1. Typography */
+@import 'scss/base/typography';
+
+/* 2. Variables (Overrides de Bootstrap) */
+@import 'scss/abstracts/variables';
+
+/* 3. Bootstrap y Librerías de Terceros */
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+/* 4. Base (Reset y elementos globales) */
+@import 'scss/base/global';
+
+/* 5. Componentes */
+@import 'scss/components/cards';
+@import 'scss/components/forms';
+@import 'scss/components/badges';
+
+/* 6. Layout */
+@import 'scss/layout/header';
+@import 'scss/layout/footer';

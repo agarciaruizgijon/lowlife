@@ -1,0 +1,15 @@
+.badge-category {
+  background-color: $primary;
+  color: white;
+  padding: 0.35em 0.65em;
+  border-radius: 0.25rem;
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  .btn-close-white {
+    width: 0.5em;
+    height: 0.5em;
+  }
+}

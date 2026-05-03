@@ -1,0 +1,23 @@
+.navbar-lowlife {
+  background-color: $primary;
+  
+  .nav-link {
+    color: white;
+    font-weight: 600;
+    
+    &:hover, &:focus {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+  
+  .navbar-brand {
+    color: white;
+    font-weight: 700;
+  }
+  
+  .search-pill {
+    border-radius: 50rem;
+    padding: 0.25rem 1rem;
+    border: none;
+  }
+}

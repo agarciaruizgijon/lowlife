@@ -1,0 +1,14 @@
+.form-control-underline {
+  border: none;
+  border-bottom: 2px solid #ccc;
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+  background-color: transparent;
+  box-shadow: none !important;
+  
+  &:focus {
+    border-bottom-color: $primary;
+    background-color: transparent;
+  }
+}
