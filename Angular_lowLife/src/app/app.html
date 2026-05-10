@@ -1,1 +1,90 @@
+<!-- Global Header / Navbar -->
+<nav class="navbar navbar-expand-lg navbar-lowlife">
+  <div class="container-fluid px-4 px-lg-5">
+    <a class="navbar-brand-logo me-5 d-flex align-items-center" href="#">
+      <img src="assets/imagenes/logo.png" alt="LF Logo" style="height: 60px;">
+    </a>
+    
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Center Links -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3 gap-lg-3 me-lg-3">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Catálogo</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Destacado</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Nosotros</a>
+        </li>
+      </ul>
+      
+      <!-- Right Side: Search and Icons -->
+      <div class="d-flex align-items-center gap-4">
+        <div class="search-container d-none d-lg-block">
+          <input class="form-control search-pill bg-white" type="search" placeholder="Buscar" aria-label="Search">
+          <i class="bi bi-search search-icon"></i>
+        </div>
+        <div class="d-flex nav-icons gap-4">
+          <i class="bi bi-cart2"></i>
+          <i class="bi bi-person"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
 <router-outlet></router-outlet>
+
+<!-- Global Footer -->
+<footer class="footer-lowlife">
+  <div class="container">
+    <div class="row gy-4">
+      
+      <!-- Social Column -->
+      <div class="col-12 col-md-3 d-flex align-items-center">
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-youtube"></i></a>
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+
+      <!-- Ayuda y contacto -->
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="footer-title">Ayuda y contacto</div>
+        <ul>
+          <li><a href="#">Centro de Ayuda / FAQ</a></li>
+          <li><a href="#">Cambios y devoluciones</a></li>
+          <li><a href="#">Envíos y Entregas</a></li>
+        </ul>
+      </div>
+
+      <!-- LowLife -->
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="footer-title">LowLife</div>
+        <ul>
+          <li><a href="#">Trabaja con nosotros</a></li>
+          <li><a href="#">Programa de Afiliados</a></li>
+          <li><a href="#">Blog / Novedades</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="footer-title">Legal</div>
+        <ul>
+          <li><a href="#">Términos y Condiciones</a></li>
+          <li><a href="#">Política de Privacidad y Cookies</a></li>
+          <li><a href="#">Garantía de Autenticidad</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</footer>
