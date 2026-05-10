@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +9,26 @@ import { Router } from '@angular/router';
 })
 export class App {
   protected readonly title = signal('Angular_lowLife');
+  isNavbarOpen: boolean = false;
 
-  constructor(public router: Router) {}
+  constructor(public router: Router) {
+    // Close navbar on route change
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isNavbarOpen = false;
+      }
+    });
+  }
 
   isLoginPage(): boolean {
     return this.router.url === '/login' || this.router.url === '/registro';
+  }
+
+  toggleNavbar() {
+    this.isNavbarOpen = !this.isNavbarOpen;
+  }
+
+  closeNavbar() {
+    this.isNavbarOpen = false;
   }
 }

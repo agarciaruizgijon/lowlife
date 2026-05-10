@@ -9,6 +9,17 @@ import { Component } from '@angular/core';
 export class Index {
   activeSort: string = 'destacado';
   maxPrice: number = 300;
+  isFilterModalOpen: boolean = false;
+
+  openFilterModal() {
+    this.isFilterModalOpen = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeFilterModal() {
+    this.isFilterModalOpen = false;
+    document.body.style.overflow = '';
+  }
 
   allArticulos = [
     { id: 1, name: 'Sudadera Adidas', price: 45, image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=500&q=80', colors: ['#ffffff', '#e53935', '#ff9800', '#3f51b5'] },

@@ -49,6 +49,59 @@
   cursor: pointer;
 }
 
+/* Mobile nav icons (always visible) */
+.nav-icon-mobile {
+  font-size: 1.4rem;
+  color: white;
+  cursor: pointer;
+}
+
+/* Mobile navbar collapse styles */
+@media (max-width: 991px) {
+  /* Hide navbar content by default on mobile (Angular-controlled) */
+  .navbar-collapse {
+    display: none;
+    width: 100%;
+    padding: 0.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 0.5rem;
+  }
+
+  /* Show when Angular adds .show class */
+  .navbar-collapse.show {
+    display: block;
+  }
+
+  .navbar-collapse .nav-link {
+    padding: 0.6rem 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .navbar-collapse .d-flex.align-items-center {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+    padding: 0.5rem 0;
+  }
+
+  .search-container.w-100 {
+    width: 100% !important;
+  }
+
+  .search-pill {
+    width: 100%;
+  }
+}
+
+/* Desktop: always show navbar content */
+@media (min-width: 992px) {
+  .navbar-collapse {
+    display: flex !important;
+    flex-basis: auto;
+    align-items: center;
+  }
+}
+
 /* Footer Customization */
 .footer-lowlife {
   background-color: var(--bs-primary, #e63b2e);
