@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { StyleGuide } from './style-guide/style-guide';
+import { Index } from './index/index';
 
 const routes: Routes = [
   { path: 'guia-estilos', component: StyleGuide },
-  { path: '', redirectTo: '/guia-estilos', pathMatch: 'full' }
+  { path: 'index', component: Index },
+  { path: '', redirectTo: '/index', pathMatch: 'full' }
 ];
 
 @NgModule({
