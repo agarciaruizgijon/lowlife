@@ -10,12 +10,8 @@ const routes: Routes = [
   { path: 'guia-estilos', component: StyleGuide },
   { path: 'index', component: Index },
   { path: 'login', component: Login },
-<<<<<<< HEAD
   { path: 'producto', component: ProductDetail },
-  { path: '', redirectTo: '/producto', pathMatch: 'full' }
-=======
   { path: '', redirectTo: '/index', pathMatch: 'full' }
->>>>>>> 709ca5f5dff60765cbf622adc00795498ed5b007
 ];
 
 @NgModule({

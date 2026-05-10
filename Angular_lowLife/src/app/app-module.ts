@@ -9,11 +9,7 @@ import { Login } from './auth/login/login';
 import { ProductDetail } from './product-detail/product-detail';
 
 @NgModule({
-<<<<<<< HEAD
-  declarations: [App, StyleGuide, Login, ProductDetail],
-=======
-  declarations: [App, StyleGuide, Index, Login],
->>>>>>> 709ca5f5dff60765cbf622adc00795498ed5b007
+  declarations: [App, StyleGuide, Index, Login, ProductDetail],
   imports: [BrowserModule, AppRoutingModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
