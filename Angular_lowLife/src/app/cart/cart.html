@@ -1,0 +1,26 @@
+<div class="cart-wrapper">
+  <div class="container py-5 d-flex flex-column align-items-center">
+    
+    <!-- Empty Cart Card -->
+    <div class="cart-box mb-5">
+      <h1 class="fw-bold text-center mb-4">Carrito</h1>
+      <h3 class="fw-normal text-center mb-0">Su carrito está vacío</h3>
+    </div>
+
+    <!-- Recommendations Card -->
+    <div class="suggestions-box">
+      <h2 class="fw-bold text-center mb-5">Pensamos que te podría gustar</h2>
+      
+      <div class="row g-4 justify-content-center">
+        <!-- Item 1 -->
+        <div class="col-md-4" *ngFor="let item of recomendados">
+          <div class="suggestion-card">
+            <img [src]="item.image" [alt]="item.name" class="img-fluid w-100 h-100" style="object-fit: cover;">
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+  </div>
+</div>
