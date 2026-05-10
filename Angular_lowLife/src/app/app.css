@@ -1,0 +1,91 @@
+.app-wrapper {
+  background-color: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Navbar */
+.navbar-lowlife {
+  background-color: #e63b2e; /* Color rojo corporativo */
+  padding: 1.25rem 0;
+}
+
+.logo-text {
+  font-size: 2.25rem;
+  letter-spacing: -1.5px;
+  line-height: 1;
+}
+
+.border-dashed {
+  border-style: dashed !important;
+  border-width: 2px !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.nav-link {
+  font-size: 1.15rem;
+}
+
+.nav-link:hover {
+  opacity: 0.8;
+}
+
+/* Search bar */
+.search-pill-container {
+  width: 250px;
+}
+
+.search-pill-container input {
+  padding-right: 2.5rem !important;
+  font-size: 0.95rem;
+  height: 40px;
+}
+
+.search-pill-container input:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.search-pill-container .search-icon {
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  font-size: 1rem;
+}
+
+.right-section a {
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.right-section a:hover {
+  opacity: 0.8;
+}
+
+/* Main Content Typography */
+main h1 {
+  letter-spacing: -1.5px;
+}
+
+/* Profile Cards */
+.profile-cards img {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  aspect-ratio: 1 / 1;
+}
+
+/* Footer */
+.footer-lowlife {
+  background-color: #e63b2e; /* Color rojo corporativo */
+}
+
+.social-icons a {
+  transition: opacity 0.2s;
+}
+
+.social-icons a:hover {
+  opacity: 0.7;
+}
+
+.hover-underline:hover {
+  text-decoration: underline !important;
+}

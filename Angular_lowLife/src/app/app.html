@@ -1,1 +1,110 @@
-<router-outlet></router-outlet>
+<div class="app-wrapper d-flex flex-column min-vh-100">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-lowlife">
+    <div class="container-fluid px-5">
+      <!-- Logo -->
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <span class="logo-text text-white fw-bold fst-italic border border-light border-dashed p-1">LF</span>
+      </a>
+      
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <!-- Center Links -->
+        <ul class="navbar-nav mx-auto gap-4 mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold" href="#">Catálogo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold" href="#">Destacado</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold" href="#">Nosotros</a>
+          </li>
+        </ul>
+
+        <!-- Right section (Search, Cart, User) -->
+        <div class="d-flex align-items-center gap-4 right-section mt-3 mt-lg-0">
+          <form class="d-flex" role="search">
+            <div class="search-pill-container position-relative">
+              <input class="form-control rounded-pill px-4 border-0 shadow-sm" type="search" placeholder="Buscar" aria-label="Search">
+              <i class="bi bi-search search-icon position-absolute"></i>
+            </div>
+          </form>
+          <a href="#" class="text-white fs-4"><i class="bi bi-cart3"></i></a>
+          <a href="#" class="text-white fs-4"><i class="bi bi-person"></i></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container my-5 text-center flex-grow-1 d-flex flex-column justify-content-center">
+    <h1 class="display-3 fw-bold mt-2 mb-3 text-dark">LowLife</h1>
+    <p class="fs-3 mb-5 text-dark">No cuesta tanto vestir bien</p>
+
+    <div class="row justify-content-center g-5 mb-4 profile-cards">
+      <!-- Card 1 -->
+      <div class="col-md-5 col-lg-4">
+        <div class="card border-0 text-center bg-transparent">
+          <div class="card-img-container mb-4 mx-auto w-100">
+            <img src="https://placehold.co/600x600/8fbc8f/333?text=Weed+Cartoon" class="img-fluid rounded-4 shadow-sm w-100 object-fit-cover" alt="José Jiménez Casado">
+          </div>
+          <h3 class="fw-bold mb-1 fs-4">José Jiménez Casado</h3>
+          <p class="text-dark fs-5">Backend / Frontend</p>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="col-md-5 col-lg-4">
+        <div class="card border-0 text-center bg-transparent">
+          <div class="card-img-container mb-4 mx-auto w-100">
+            <img src="https://placehold.co/600x600/222/ddd?text=Casino+Guy" class="img-fluid rounded-4 shadow-sm w-100 object-fit-cover" alt="Alejandro García Benítez">
+          </div>
+          <h3 class="fw-bold mb-1 fs-4">Alejandro García Benítez</h3>
+          <p class="text-dark fs-5">Backend / Frontend</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-lowlife py-5 mt-auto">
+    <div class="container-fluid px-5">
+      <div class="row align-items-center justify-content-center justify-content-md-between">
+        
+        <!-- Socials (Left) -->
+        <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start gap-4 social-icons mb-5 mb-md-0">
+          <a href="#" class="text-white fs-4 text-decoration-none"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="text-white fs-4 text-decoration-none"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-white fs-4 text-decoration-none"><i class="bi bi-youtube"></i></a>
+          <a href="#" class="text-white fs-4 text-decoration-none"><i class="bi bi-linkedin"></i></a>
+        </div>
+        
+        <div class="col-12 col-md-8 row text-center text-md-start">
+          <!-- Footer links center -->
+          <div class="col-12 col-sm-6 mb-4 mb-sm-0 d-flex flex-column align-items-center align-items-md-start">
+            <h5 class="fw-bold mb-4 fs-6 text-white">Ayuda y contacto</h5>
+            <ul class="list-unstyled d-flex flex-column gap-3 opacity-100 small">
+              <li><a href="#" class="text-white text-decoration-none hover-underline">Centro de Ayuda / FAQ</a></li>
+              <li><a href="#" class="text-white text-decoration-none hover-underline">Cambios y devoluciones</a></li>
+              <li><a href="#" class="text-white text-decoration-none hover-underline">Envíos y Entregas</a></li>
+            </ul>
+          </div>
+
+          <!-- Footer links right -->
+          <div class="col-12 col-sm-6 d-flex flex-column align-items-center align-items-md-start">
+            <h5 class="fw-bold mb-4 fs-6 text-white">LowLife</h5>
+            <ul class="list-unstyled d-flex flex-column gap-3 opacity-100 small">
+              <li><a href="#" class="text-white text-decoration-none hover-underline">Trabaja con nosotros</a></li>
+              <li><a href="#" class="text-white text-decoration-none hover-underline">Programa de Afiliados</a></li>
+              <li><a href="#" class="text-white text-decoration-none hover-underline">Blog / Novedades</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+</div>
