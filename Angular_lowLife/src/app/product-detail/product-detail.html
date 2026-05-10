@@ -1,37 +1,42 @@
 <!-- Header / Navbar -->
-<nav class="navbar navbar-expand-lg navbar-lowlife mb-5">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="assets/imagenes/logo.png" alt="LowLife Logo" style="height: 40px; width: auto; object-fit: contain;">
-    </a>
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-4">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Catálogo</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Destacado</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Nosotros</a>
-        </li>
-      </ul>
-      <form class="d-flex me-4">
-        <div class="input-group">
-          <input class="form-control search-pill" type="search" placeholder="Buscar" aria-label="Search">
-          <span class="input-group-text bg-white border-0 search-pill-icon"><i class="bi bi-search"></i></span>
+  <nav class="navbar navbar-expand-lg navbar-lowlife">
+    <div class="container-fluid px-4 px-lg-5">
+      <a class="navbar-brand-logo me-5 d-flex align-items-center" routerLink="/index">
+        <img src="assets/imagenes/logo.png" alt="LF Logo" style="height: 60px;">
+      </a>
+      
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Center Links -->
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3 gap-lg-3 me-lg-3">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/index" style="cursor: pointer;">Catálogo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Destacado</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Nosotros</a>
+          </li>
+        </ul>
+        
+        <!-- Right Side: Search and Icons -->
+        <div class="d-flex align-items-center gap-4">
+          <div class="search-container d-none d-lg-block">
+            <input class="form-control search-pill bg-white" type="search" placeholder="Buscar" aria-label="Search">
+            <i class="bi bi-search search-icon"></i>
+          </div>
+          <div class="d-flex nav-icons gap-4">
+            <i class="bi bi-cart2" style="cursor: pointer;"></i>
+            <i class="bi bi-person" routerLink="/login" style="cursor: pointer;"></i>
+          </div>
         </div>
-      </form>
-      <div class="d-flex text-white fs-5 gap-3">
-        <i class="bi bi-cart3"></i>
-        <i class="bi bi-person"></i>
       </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
 <!-- Main Container -->
 <div class="container my-5" style="background-color: white; padding: 2rem; border-radius: 8px;">

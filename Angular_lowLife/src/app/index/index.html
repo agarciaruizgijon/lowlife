@@ -1,7 +1,7 @@
 <!-- Header / Navbar -->
   <nav class="navbar navbar-expand-lg navbar-lowlife">
     <div class="container-fluid px-4 px-lg-5">
-      <a class="navbar-brand-logo me-5 d-flex align-items-center" href="#">
+      <a class="navbar-brand-logo me-5 d-flex align-items-center" routerLink="/index">
         <img src="assets/imagenes/logo.png" alt="LF Logo" style="height: 60px;">
       </a>
       
@@ -13,7 +13,7 @@
         <!-- Center Links -->
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3 gap-lg-3 me-lg-3">
           <li class="nav-item">
-            <a class="nav-link" href="#">Catálogo</a>
+            <a class="nav-link" routerLink="/index" style="cursor: pointer;">Catálogo</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Destacado</a>
@@ -30,8 +30,8 @@
             <i class="bi bi-search search-icon"></i>
           </div>
           <div class="d-flex nav-icons gap-4">
-            <i class="bi bi-cart2"></i>
-            <i class="bi bi-person"></i>
+            <i class="bi bi-cart2" style="cursor: pointer;"></i>
+            <i class="bi bi-person" routerLink="/login" style="cursor: pointer;"></i>
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@
           
           <!-- Dynamic Products -->
           <div class="col" *ngFor="let articulo of articulos">
-            <div class="product-card">
+            <div class="product-card" routerLink="/producto" style="cursor: pointer;">
               <div class="product-img-wrapper">
                 <img [src]="articulo.image" [alt]="articulo.name" class="product-img">
               </div>
