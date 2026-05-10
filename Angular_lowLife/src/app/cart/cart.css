@@ -1,0 +1,47 @@
+.cart-wrapper {
+  min-height: calc(100vh - 80px); /* Fill space between header and footer */
+  background-image: url('/assets/imagenes/Hero%20Basic.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+
+.cart-box {
+  background-color: #ffffff;
+  padding: 4rem 2rem;
+  border-radius: 0.25rem;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cart-box h1 {
+  font-size: 2.5rem;
+  color: #111;
+}
+
+.suggestions-box {
+  background-color: #ffffff;
+  padding: 4rem 2rem;
+  border-radius: 0.25rem;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.suggestion-card {
+  aspect-ratio: 4 / 3;
+  border: 1px solid #e63b2e; /* Red border from mockup */
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.suggestion-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
