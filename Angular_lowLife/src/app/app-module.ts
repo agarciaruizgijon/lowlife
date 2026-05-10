@@ -5,9 +5,10 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { StyleGuide } from './style-guide/style-guide';
 import { Index } from './index/index';
+import { Login } from './auth/login/login';
 
 @NgModule({
-  declarations: [App, StyleGuide, Index],
+  declarations: [App, StyleGuide, Index, Login],
   imports: [BrowserModule, AppRoutingModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
