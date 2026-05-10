@@ -1,9 +1,10 @@
 /* ========================================
-   LOGIN PAGE STYLES
+   REGISTER PAGE STYLES
+   Mismo estilo que login para consistencia
    ======================================== */
 
-/* Sección principal del login con fondo de graffiti */
-.login-section {
+/* Sección principal del register con fondo de graffiti */
+.register-section {
   min-height: 70vh;
   background-image: url('https://images.unsplash.com/photo-1555448248-2571daf6344b?w=1920&q=80');
   background-size: cover;
@@ -16,8 +17,8 @@
   position: relative;
 }
 
-/* Tarjeta del formulario de login */
-.login-card {
+/* Tarjeta del formulario de registro */
+.register-card {
   background-color: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -28,14 +29,14 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
-.login-card h2 {
+.register-card h2 {
   font-family: 'Inter', sans-serif;
   font-size: 1.75rem;
   color: #1a1a1a;
 }
 
-/* Botón Acceder */
-.btn-acceder {
+/* Botón Registrarse */
+.btn-registrarse {
   background-color: #e63b2e;
   border-color: #e63b2e;
   font-weight: 600;
@@ -45,7 +46,7 @@
   transition: background-color 0.2s ease;
 }
 
-.btn-acceder:hover {
+.btn-registrarse:hover {
   background-color: #c9322a;
   border-color: #c9322a;
 }
@@ -90,50 +91,33 @@
   border: none;
 }
 
-/* Footer links */
-.footer-links li {
-  margin-bottom: 6px;
-}
-
-.footer-links a {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.85);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.footer-links a:hover {
-  color: white;
-  text-decoration: underline;
-}
-
-/* Link de "¿No tienes cuenta?" */
-.link-registro {
+/* Link de "¿Ya tienes cuenta?" */
+.link-login {
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   color: #555;
 }
 
-.link-crear-cuenta {
+.link-acceder {
   color: #e63b2e;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-.link-crear-cuenta:hover {
+.link-acceder:hover {
   color: #c9322a;
   text-decoration: underline;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .login-card {
+  .register-card {
     margin: 0 20px;
     padding: 30px 25px;
   }
 
-  .login-section {
+  .register-section {
     min-height: 60vh;
     padding: 40px 0;
   }
