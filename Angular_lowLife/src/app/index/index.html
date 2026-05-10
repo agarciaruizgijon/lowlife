@@ -1,8 +1,9 @@
 <!-- Header / Navbar -->
   <nav class="navbar navbar-expand-lg navbar-lowlife">
     <div class="container-fluid px-4 px-lg-5">
-      <!-- Logo -->
-      <a class="navbar-brand-logo me-5" href="#">LF</a>
+      <a class="navbar-brand-logo me-5 d-flex align-items-center" href="#">
+        <img src="assets/imagenes/logo.png" alt="LF Logo" style="height: 60px;">
+      </a>
       
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
@@ -10,7 +11,7 @@
       
       <div class="collapse navbar-collapse" id="navbarNav">
         <!-- Center Links -->
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-3 gap-lg-5">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3 gap-lg-3 me-lg-3">
           <li class="nav-item">
             <a class="nav-link" href="#">Catálogo</a>
           </li>
@@ -25,7 +26,7 @@
         <!-- Right Side: Search and Icons -->
         <div class="d-flex align-items-center gap-4">
           <div class="search-container d-none d-lg-block">
-            <input class="form-control search-pill" type="search" placeholder="Buscar" aria-label="Search">
+            <input class="form-control search-pill bg-white" type="search" placeholder="Buscar" aria-label="Search">
             <i class="bi bi-search search-icon"></i>
           </div>
           <div class="d-flex nav-icons gap-4">
@@ -78,9 +79,9 @@
         <div class="filter-section">
           <div class="d-flex justify-content-between align-items-center mb-2">
             <span class="filter-title mb-0">Precio:</span>
-            <span class="text-dark fw-medium" style="font-size: 0.9rem;">0-300€</span>
+            <span class="text-dark fw-medium" style="font-size: 0.9rem;">0-{{maxPrice}}€</span>
           </div>
-          <input type="range" class="form-range price-range" min="0" max="300" value="300">
+          <input type="range" class="form-range price-range" min="0" max="300" [value]="maxPrice" (input)="updatePrice($event)">
         </div>
 
         <!-- Color -->
@@ -108,95 +109,32 @@
         
         <!-- Sorting Buttons -->
         <div class="top-actions">
-          <button class="btn btn-sort active"><i class="bi bi-check2 me-1"></i> Destacado</button>
-          <button class="btn btn-sort">Mayor Precio</button>
-          <button class="btn btn-sort">Menor Precio</button>
-          <button class="btn btn-sort">Valoraciones</button>
+          <button class="btn btn-sort" [class.active]="activeSort === 'destacado'" (click)="sortArticles('destacado')"><i class="bi bi-check2 me-1" *ngIf="activeSort === 'destacado'"></i> Destacado</button>
+          <button class="btn btn-sort" [class.active]="activeSort === 'mayor_precio'" (click)="sortArticles('mayor_precio')"><i class="bi bi-check2 me-1" *ngIf="activeSort === 'mayor_precio'"></i> Mayor Precio</button>
+          <button class="btn btn-sort" [class.active]="activeSort === 'menor_precio'" (click)="sortArticles('menor_precio')"><i class="bi bi-check2 me-1" *ngIf="activeSort === 'menor_precio'"></i> Menor Precio</button>
+          <button class="btn btn-sort" [class.active]="activeSort === 'valoraciones'" (click)="sortArticles('valoraciones')"><i class="bi bi-check2 me-1" *ngIf="activeSort === 'valoraciones'"></i> Valoraciones</button>
         </div>
 
         <!-- Product Grid -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4 mb-5">
           
-          <!-- Product 1 -->
-          <div class="col">
+          <!-- Dynamic Products -->
+          <div class="col" *ngFor="let articulo of articulos">
             <div class="product-card">
               <div class="product-img-wrapper">
-                <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=500&q=80" alt="Sudadera Adidas" class="product-img">
+                <img [src]="articulo.image" [alt]="articulo.name" class="product-img">
               </div>
               <div class="product-info">
                 <div class="product-title-price">
-                  <h3 class="product-title">Sudadera Adidas</h3>
-                  <span class="product-price">45€</span>
+                  <h3 class="product-title">{{ articulo.name }}</h3>
+                  <span class="product-price">{{ articulo.price }}€</span>
                 </div>
                 <div class="product-colors">
-                  <div class="product-color-dot" style="background-color: #ffffff;"></div>
-                  <div class="product-color-dot" style="background-color: #e53935;"></div>
-                  <div class="product-color-dot" style="background-color: #ff9800;"></div>
-                  <div class="product-color-dot" style="background-color: #3f51b5;"></div>
+                  <div class="product-color-dot" *ngFor="let color of articulo.colors" [style.background-color]="color"></div>
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- Product 2 (Active border) -->
-          <div class="col">
-            <div class="product-card active-border">
-              <div class="product-img-wrapper">
-                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80" alt="Zapatos Nike" class="product-img">
-              </div>
-              <div class="product-info">
-                <div class="product-title-price">
-                  <h3 class="product-title">Zapatos Nike</h3>
-                  <span class="product-price">60€</span>
-                </div>
-                <div class="product-colors">
-                  <div class="product-color-dot" style="background-color: #f48fb1;"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Product 3 -->
-          <div class="col">
-            <div class="product-card">
-              <div class="product-img-wrapper">
-                <img src="https://images.unsplash.com/photo-1614666400503-911e48eb84db?auto=format&fit=crop&w=500&q=80" alt="Equipación Brasil" class="product-img">
-              </div>
-              <div class="product-info">
-                <div class="product-title-price">
-                  <h3 class="product-title">Equipación Brasil</h3>
-                  <span class="product-price">16€</span>
-                </div>
-                <div class="product-colors">
-                  <div class="product-color-dot" style="background-color: #5c0f20;"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Product 4 -->
-          <div class="col">
-            <div class="product-card">
-              <div class="product-img-wrapper">
-                <img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=500&q=80" alt="Reloj" class="product-img">
-              </div>
-              <div class="product-info">
-                <div class="product-title-price">
-                  <h3 class="product-title">Reloj</h3>
-                  <span class="product-price">110€</span>
-                </div>
-                <div class="product-colors">
-                  <div class="product-color-dot" style="background-color: #e53935;"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Empty Placeholders -->
-          <div class="col"><div class="empty-card"></div></div>
-          <div class="col"><div class="empty-card"></div></div>
-          <div class="col"><div class="empty-card"></div></div>
-          <div class="col"><div class="empty-card"></div></div>
 
         </div>
       </div>
@@ -205,7 +143,7 @@
 
   <!-- Footer -->
   <footer class="footer-lowlife">
-    <div class="container-fluid px-4 px-lg-5">
+    <div class="container">
       <div class="row gy-4">
         
         <!-- Social Column -->
