@@ -1,0 +1,58 @@
+<!-- Contact Section -->
+<section class="contact-section">
+  <div class="container d-flex justify-content-center align-items-center">
+    <div class="contact-card">
+      <h2 class="text-center fw-bold mb-1">Contáctanos</h2>
+      <p class="text-center contact-subtitle mb-4">LowLife</p>
+
+      <form (submit)="onSubmit($event)">
+        <!-- Nombre Completo / Usuario -->
+        <div class="mb-4">
+          <input
+            type="text"
+            class="form-control form-control-underline"
+            id="contactName"
+            placeholder="Nombre Completo / Usuario"
+            [(ngModel)]="contactName"
+            name="contactName"
+            required
+          />
+        </div>
+
+        <!-- Correo Electrónico -->
+        <div class="mb-4">
+          <input
+            type="email"
+            class="form-control form-control-underline"
+            id="contactEmail"
+            placeholder="Correo electrónico"
+            [(ngModel)]="contactEmail"
+            name="contactEmail"
+            required
+          />
+        </div>
+
+        <!-- Mensaje -->
+        <div class="mb-4">
+          <label class="form-label contact-label" for="contactMessage">Mensaje</label>
+          <textarea
+            class="form-control contact-textarea"
+            id="contactMessage"
+            rows="4"
+            [(ngModel)]="contactMessage"
+            name="contactMessage"
+            required
+          ></textarea>
+        </div>
+
+        <!-- Botón Enviar -->
+        <button type="submit" class="btn btn-primary w-100 btn-enviar">Enviar</button>
+      </form>
+
+      <!-- Feedback de envío -->
+      <div *ngIf="submitted" class="alert-success-contact mt-3 text-center">
+        ✅ ¡Mensaje enviado! Nos pondremos en contacto pronto.
+      </div>
+    </div>
+  </div>
+</section>

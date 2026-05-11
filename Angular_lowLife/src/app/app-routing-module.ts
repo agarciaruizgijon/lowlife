@@ -7,6 +7,8 @@ import { Login } from './auth/login/login';
 import { Register } from './auth/register/register';
 import { ProductDetail } from './product-detail/product-detail';
 import { Cart } from './cart/cart';
+import { Contact } from './contact/contact';
+import { About } from './about/about';
 
 const routes: Routes = [
   { path: 'guia-estilos', component: StyleGuide },
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: 'registro', component: Register },
   { path: 'producto', component: ProductDetail },
   { path: 'carrito', component: Cart },
+  { path: 'contacto', component: Contact },
+  { path: 'nosotros', component: About },
   { path: '', redirectTo: '/index', pathMatch: 'full' }
 ];
 
