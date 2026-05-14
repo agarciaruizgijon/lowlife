@@ -1,6 +1,6 @@
 <div class="container my-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="fw-bold mb-0">Crear Nuevo Producto</h1>
+    <h1 class="fw-bold mb-0">Editar Producto</h1>
     <a routerLink="/admin-productos" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-2"></i>Volver</a>
   </div>
 
@@ -14,22 +14,22 @@
             
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold">Título del Producto</label>
-              <input type="text" class="form-control form-control-underline" placeholder="Ej. Camiseta Oversize Negra" required>
+              <input type="text" class="form-control form-control-underline" value="Camiseta Básica Negra" required>
             </div>
 
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold">Descripción del Producto</label>
-              <textarea class="form-control" rows="4" placeholder="Describe las características, material y detalles del producto..."></textarea>
+              <textarea class="form-control" rows="4">Camiseta oversize negra, 100% algodón orgánico, con detalles sutiles en la espalda. Perfecta para un look casual.</textarea>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-4">
                 <label class="form-label text-muted small fw-bold">Precio (€)</label>
-                <input type="number" step="0.01" class="form-control form-control-underline" placeholder="0.00" required>
+                <input type="number" step="0.01" class="form-control form-control-underline" value="19.99" required>
               </div>
               <div class="col-md-6 mb-4">
                 <label class="form-label text-muted small fw-bold">Stock (Cantidad)</label>
-                <input type="number" class="form-control form-control-underline" placeholder="0" required>
+                <input type="number" class="form-control form-control-underline" value="45" required>
               </div>
             </div>
           </div>
@@ -45,13 +45,13 @@
                 <input type="checkbox" class="btn-check" id="tallaXS" autocomplete="off">
                 <label class="btn btn-outline-dark" for="tallaXS">XS</label>
 
-                <input type="checkbox" class="btn-check" id="tallaS" autocomplete="off">
+                <input type="checkbox" class="btn-check" id="tallaS" autocomplete="off" checked>
                 <label class="btn btn-outline-dark" for="tallaS">S</label>
 
-                <input type="checkbox" class="btn-check" id="tallaM" autocomplete="off">
+                <input type="checkbox" class="btn-check" id="tallaM" autocomplete="off" checked>
                 <label class="btn btn-outline-dark" for="tallaM">M</label>
 
-                <input type="checkbox" class="btn-check" id="tallaL" autocomplete="off">
+                <input type="checkbox" class="btn-check" id="tallaL" autocomplete="off" checked>
                 <label class="btn btn-outline-dark" for="tallaL">L</label>
 
                 <input type="checkbox" class="btn-check" id="tallaXL" autocomplete="off">
@@ -66,8 +66,8 @@
               <label class="form-label text-muted small fw-bold d-block">Colores</label>
               <div class="d-flex gap-3">
                 <div>
-                  <input type="checkbox" class="btn-check" id="colorNegro" autocomplete="off">
-                  <label class="btn p-0 color-circle bg-dark" for="colorNegro" title="Negro"></label>
+                  <input type="checkbox" class="btn-check" id="colorNegro" autocomplete="off" checked>
+                  <label class="btn p-0 color-circle bg-dark border-2 border-dark" for="colorNegro" title="Negro"></label>
                 </div>
                 <div>
                   <input type="checkbox" class="btn-check" id="colorBlanco" autocomplete="off">
@@ -101,11 +101,11 @@
             <div class="row">
               <div class="col-md-6 mb-4">
                 <label class="form-label text-muted small fw-bold">Nombre del Proveedor</label>
-                <input type="text" class="form-control form-control-underline" placeholder="Ej. Textil SL">
+                <input type="text" class="form-control form-control-underline" value="Textil SL">
               </div>
               <div class="col-md-6 mb-4">
                 <label class="form-label text-muted small fw-bold">Email del Proveedor</label>
-                <input type="email" class="form-control form-control-underline" placeholder="contacto@proveedor.com">
+                <input type="email" class="form-control form-control-underline" value="contacto@textilsl.com">
               </div>
             </div>
           </div>
@@ -121,8 +121,8 @@
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold">Estado</label>
               <select class="form-select">
-                <option value="draft" selected>Borrador</option>
-                <option value="active">Activo (Público)</option>
+                <option value="draft">Borrador</option>
+                <option value="active" selected>Activo (Público)</option>
                 <option value="inactive">Inactivo</option>
               </select>
             </div>
@@ -130,8 +130,8 @@
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold">Categoría</label>
               <select class="form-select">
-                <option value="" selected disabled>Seleccionar categoría...</option>
-                <option value="camisetas">Camisetas</option>
+                <option value="">Seleccionar categoría...</option>
+                <option value="camisetas" selected>Camisetas</option>
                 <option value="sudaderas">Sudaderas</option>
                 <option value="pantalones">Pantalones</option>
                 <option value="accesorios">Accesorios</option>
@@ -146,7 +146,7 @@
             
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold">URL de la imagen (Opcional)</label>
-              <input type="url" class="form-control form-control-underline mb-3" placeholder="https://ejemplo.com/imagen.jpg">
+              <input type="url" class="form-control form-control-underline mb-3" value="https://ejemplo.com/camiseta.jpg">
               
               <div class="text-center">
                 <span class="text-muted small fw-bold">O sube una imagen local</span>
@@ -162,7 +162,7 @@
         </div>
 
         <div class="d-grid gap-2">
-          <button type="submit" class="btn btn-primary btn-lg fw-bold">Guardar Producto</button>
+          <button type="submit" class="btn btn-primary btn-lg fw-bold">Guardar Cambios</button>
           <button type="button" class="btn btn-outline-danger fw-bold" routerLink="/admin-productos">Descartar</button>
         </div>
       </div>

@@ -17,6 +17,8 @@ import { PaymentMethod } from './payment-method/payment-method';
 import { AdminUserManagement } from './admin-user-management/admin-user-management';
 import { AdminProductCreation } from './admin-product-creation/admin-product-creation';
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
+import { AdminProductManagement } from './admin-product-management/admin-product-management';
+import { AdminProductEdit } from './admin-product-edit/admin-product-edit';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { AdminDashboard } from './admin-dashboard/admin-dashboard';
     AdminUserManagement,
     AdminProductCreation,
     AdminDashboard,
+    AdminProductManagement,
+    AdminProductEdit,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners()],
