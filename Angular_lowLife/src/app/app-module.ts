@@ -13,9 +13,10 @@ import { ProductDetail } from './product-detail/product-detail';
 import { Cart } from './cart/cart';
 import { Contact } from './contact/contact';
 import { About } from './about/about';
+import { PaymentMethod } from './payment-method/payment-method';
 
 @NgModule({
-  declarations: [App, StyleGuide, Index, Login, ProductDetail, Cart, Register, Contact, About],
+  declarations: [App, StyleGuide, Index, Login, ProductDetail, Cart, Register, Contact, About, PaymentMethod],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],

@@ -1,0 +1,67 @@
+<section class="payment-section">
+  <div class="container d-flex flex-column justify-content-center align-items-center h-100 py-5">
+    
+    <h1 class="fw-bold mb-3">Método de pago</h1>
+    <h3 class="fw-normal mb-4" style="font-size: 1.5rem;">Total: 129.99€</h3>
+
+    <div class="payment-card">
+      <div class="payment-card-header text-center py-2">
+        <span class="visa-logo text-info fw-bold fst-italic fs-5" style="color: #1DA1F2 !important;">VISA</span>
+      </div>
+      
+      <div class="payment-card-body p-4 p-md-5">
+        <form>
+          <!-- Número de tarjeta -->
+          <div class="mb-4">
+            <input type="text" class="form-control form-control-underline" placeholder="Número de tarjeta">
+          </div>
+
+          <!-- Fecha y Código -->
+          <div class="row mb-4">
+            <div class="col-6">
+              <input type="text" class="form-control form-control-underline" placeholder="Fecha de expiración">
+            </div>
+            <div class="col-6">
+              <input type="text" class="form-control form-control-underline" placeholder="Código de seguridad">
+            </div>
+          </div>
+
+          <!-- Titular -->
+          <div class="mb-4">
+            <input type="text" class="form-control form-control-underline" placeholder="Titular de la tarjeta">
+          </div>
+
+          <!-- Recordar -->
+          <div class="form-check mb-4 d-flex align-items-center">
+            <input class="form-check-input check-custom me-2 mt-0" type="checkbox" id="recordarPago" checked>
+            <label class="form-check-label text-muted" style="font-size: 0.9rem;" for="recordarPago">
+              Recordar para mi próximo pago
+            </label>
+          </div>
+
+          <!-- Botón Cyan (Olas) -->
+          <button type="button" class="btn btn-cyan w-100 mb-3 rounded-1 shadow-sm d-flex justify-content-center align-items-center">
+            <!-- svg para simular el logo que aparece -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 12H8L10 6L14 18L16 12H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <!-- Botón Google Pay -->
+          <button type="button" class="btn btn-gpay w-100 mb-5 rounded-1 border text-dark fw-semibold d-flex align-items-center justify-content-center shadow-sm">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="G" style="width: 18px; margin-right: 8px;">
+            Pay
+          </button>
+
+          <!-- Confirmar -->
+          <button type="submit" class="btn btn-danger w-100 mb-3 rounded-1 fw-semibold shadow-sm btn-confirmar" style="background-color: #df3a2a; border-color: #c9322a;">Confirmar</button>
+          
+          <!-- Volver -->
+          <div class="text-center">
+            <a routerLink="/carrito" class="text-dark text-decoration-underline text-muted" style="font-size: 0.95rem; cursor: pointer;">Volver</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

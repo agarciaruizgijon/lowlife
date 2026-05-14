@@ -9,6 +9,7 @@ import { ProductDetail } from './product-detail/product-detail';
 import { Cart } from './cart/cart';
 import { Contact } from './contact/contact';
 import { About } from './about/about';
+import { PaymentMethod } from './payment-method/payment-method';
 
 const routes: Routes = [
   { path: 'guia-estilos', component: StyleGuide },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'carrito', component: Cart },
   { path: 'contacto', component: Contact },
   { path: 'nosotros', component: About },
+  { path: 'metodo-pago', component: PaymentMethod },
   { path: '', redirectTo: '/index', pathMatch: 'full' }
 ];
 
