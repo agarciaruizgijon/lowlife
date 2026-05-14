@@ -11,6 +11,8 @@ import { Contact } from './contact/contact';
 import { About } from './about/about';
 import { PaymentMethod } from './payment-method/payment-method';
 
+import { AdminUserManagement } from './admin-user-management/admin-user-management';
+
 const routes: Routes = [
   { path: 'guia-estilos', component: StyleGuide },
   { path: 'index', component: Index },
@@ -21,6 +23,7 @@ const routes: Routes = [
   { path: 'contacto', component: Contact },
   { path: 'nosotros', component: About },
   { path: 'metodo-pago', component: PaymentMethod },
+  { path: 'admin-gestionUsuario', component: AdminUserManagement },
   { path: '', redirectTo: '/index', pathMatch: 'full' }
 ];
 

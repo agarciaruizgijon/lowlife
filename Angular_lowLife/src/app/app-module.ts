@@ -14,9 +14,22 @@ import { Cart } from './cart/cart';
 import { Contact } from './contact/contact';
 import { About } from './about/about';
 import { PaymentMethod } from './payment-method/payment-method';
+import { AdminUserManagement } from './admin-user-management/admin-user-management';
 
 @NgModule({
-  declarations: [App, StyleGuide, Index, Login, ProductDetail, Cart, Register, Contact, About, PaymentMethod],
+  declarations: [
+    App,
+    StyleGuide,
+    Index,
+    Login,
+    ProductDetail,
+    Cart,
+    Register,
+    Contact,
+    About,
+    PaymentMethod,
+    AdminUserManagement,
+  ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
