@@ -1,0 +1,171 @@
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold mb-0">Crear Nuevo Producto</h1>
+    <a routerLink="/admin-gestionUsuario" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-2"></i>Volver</a>
+  </div>
+
+  <form>
+    <div class="row g-4">
+      <!-- Columna Principal -->
+      <div class="col-lg-8">
+        <div class="card card-lowlife border-0 shadow-sm mb-4">
+          <div class="card-body p-4">
+            <h4 class="mb-4">Información General</h4>
+            
+            <div class="mb-4">
+              <label class="form-label text-muted small fw-bold">Título del Producto</label>
+              <input type="text" class="form-control form-control-underline" placeholder="Ej. Camiseta Oversize Negra" required>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label text-muted small fw-bold">Descripción del Producto</label>
+              <textarea class="form-control" rows="4" placeholder="Describe las características, material y detalles del producto..."></textarea>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-muted small fw-bold">Precio (€)</label>
+                <input type="number" step="0.01" class="form-control form-control-underline" placeholder="0.00" required>
+              </div>
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-muted small fw-bold">Stock (Cantidad)</label>
+                <input type="number" class="form-control form-control-underline" placeholder="0" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-lowlife border-0 shadow-sm mb-4">
+          <div class="card-body p-4">
+            <h4 class="mb-4">Variantes</h4>
+
+            <div class="mb-4">
+              <label class="form-label text-muted small fw-bold d-block">Tallas Disponibles</label>
+              <div class="btn-group" role="group">
+                <input type="checkbox" class="btn-check" id="tallaXS" autocomplete="off">
+                <label class="btn btn-outline-dark" for="tallaXS">XS</label>
+
+                <input type="checkbox" class="btn-check" id="tallaS" autocomplete="off">
+                <label class="btn btn-outline-dark" for="tallaS">S</label>
+
+                <input type="checkbox" class="btn-check" id="tallaM" autocomplete="off">
+                <label class="btn btn-outline-dark" for="tallaM">M</label>
+
+                <input type="checkbox" class="btn-check" id="tallaL" autocomplete="off">
+                <label class="btn btn-outline-dark" for="tallaL">L</label>
+
+                <input type="checkbox" class="btn-check" id="tallaXL" autocomplete="off">
+                <label class="btn btn-outline-dark" for="tallaXL">XL</label>
+                
+                <input type="checkbox" class="btn-check" id="tallaXXL" autocomplete="off">
+                <label class="btn btn-outline-dark" for="tallaXXL">XXL</label>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label text-muted small fw-bold d-block">Colores</label>
+              <div class="d-flex gap-3">
+                <div>
+                  <input type="checkbox" class="btn-check" id="colorNegro" autocomplete="off">
+                  <label class="btn p-0 color-circle bg-dark" for="colorNegro" title="Negro"></label>
+                </div>
+                <div>
+                  <input type="checkbox" class="btn-check" id="colorBlanco" autocomplete="off">
+                  <label class="btn p-0 color-circle bg-white border border-secondary border-opacity-25" for="colorBlanco" title="Blanco"></label>
+                </div>
+                <div>
+                  <input type="checkbox" class="btn-check" id="colorGris" autocomplete="off">
+                  <label class="btn p-0 color-circle bg-secondary" for="colorGris" title="Gris"></label>
+                </div>
+                <div>
+                  <input type="checkbox" class="btn-check" id="colorRojo" autocomplete="off">
+                  <label class="btn p-0 color-circle bg-danger" for="colorRojo" title="Rojo"></label>
+                </div>
+                <div>
+                  <input type="checkbox" class="btn-check" id="colorAzul" autocomplete="off">
+                  <label class="btn p-0 color-circle bg-primary" for="colorAzul" title="Azul"></label>
+                </div>
+                <div>
+                  <input type="checkbox" class="btn-check" id="colorBeige" autocomplete="off">
+                  <label class="btn p-0 color-circle" style="background-color: #F5F5DC;" for="colorBeige" title="Beige"></label>
+                </div>
+              </div>
+              <small class="text-muted mt-2 d-block">Selecciona los colores disponibles para este producto.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-lowlife border-0 shadow-sm mb-4">
+          <div class="card-body p-4">
+            <h4 class="mb-4">Información del Proveedor</h4>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-muted small fw-bold">Nombre del Proveedor</label>
+                <input type="text" class="form-control form-control-underline" placeholder="Ej. Textil SL">
+              </div>
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-muted small fw-bold">Email del Proveedor</label>
+                <input type="email" class="form-control form-control-underline" placeholder="contacto@proveedor.com">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna Lateral -->
+      <div class="col-lg-4">
+        <div class="card card-lowlife border-0 shadow-sm mb-4">
+          <div class="card-body p-4">
+            <h4 class="mb-4">Estado y Categoría</h4>
+            
+            <div class="mb-4">
+              <label class="form-label text-muted small fw-bold">Estado</label>
+              <select class="form-select">
+                <option value="draft" selected>Borrador</option>
+                <option value="active">Activo (Público)</option>
+                <option value="inactive">Inactivo</option>
+              </select>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label text-muted small fw-bold">Categoría</label>
+              <select class="form-select">
+                <option value="" selected disabled>Seleccionar categoría...</option>
+                <option value="camisetas">Camisetas</option>
+                <option value="sudaderas">Sudaderas</option>
+                <option value="pantalones">Pantalones</option>
+                <option value="accesorios">Accesorios</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-lowlife border-0 shadow-sm mb-4">
+          <div class="card-body p-4">
+            <h4 class="mb-4">Foto del Producto</h4>
+            
+            <div class="mb-4">
+              <label class="form-label text-muted small fw-bold">URL de la imagen (Opcional)</label>
+              <input type="url" class="form-control form-control-underline mb-3" placeholder="https://ejemplo.com/imagen.jpg">
+              
+              <div class="text-center">
+                <span class="text-muted small fw-bold">O sube una imagen local</span>
+              </div>
+              
+              <label class="mt-3 border border-2 border-dashed rounded p-4 text-center bg-light cursor-pointer d-block" style="transition: all 0.2s;">
+                <i class="bi bi-cloud-arrow-up fs-1 text-secondary"></i>
+                <p class="mb-0 mt-2 text-muted small">Haz clic o arrastra una imagen aquí</p>
+                <input type="file" class="d-none" accept="image/*">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary btn-lg fw-bold">Guardar Producto</button>
+          <button type="button" class="btn btn-outline-danger fw-bold">Descartar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

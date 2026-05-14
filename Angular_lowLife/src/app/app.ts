@@ -10,12 +10,19 @@ import { Router, NavigationEnd } from '@angular/router';
 export class App {
   protected readonly title = signal('Angular_lowLife');
   isNavbarOpen: boolean = false;
+  isAdminMode: boolean = false;
 
   constructor(public router: Router) {
     // Close navbar on route change
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.isNavbarOpen = false;
+        
+        if (this.router.url.includes('/admin-')) {
+          this.isAdminMode = true;
+        } else {
+          this.isAdminMode = false;
+        }
       }
     });
   }
@@ -30,5 +37,14 @@ export class App {
 
   closeNavbar() {
     this.isNavbarOpen = false;
+  }
+
+  toggleAdminMode() {
+    this.isAdminMode = !this.isAdminMode;
+    if (this.isAdminMode) {
+      this.router.navigate(['/admin-dashboard']);
+    } else {
+      this.router.navigate(['/index']);
+    }
   }
 }

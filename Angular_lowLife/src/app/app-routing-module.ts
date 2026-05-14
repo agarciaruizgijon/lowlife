@@ -12,6 +12,8 @@ import { About } from './about/about';
 import { PaymentMethod } from './payment-method/payment-method';
 
 import { AdminUserManagement } from './admin-user-management/admin-user-management';
+import { AdminProductCreation } from './admin-product-creation/admin-product-creation';
+import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 
 const routes: Routes = [
   { path: 'guia-estilos', component: StyleGuide },
@@ -24,6 +26,8 @@ const routes: Routes = [
   { path: 'nosotros', component: About },
   { path: 'metodo-pago', component: PaymentMethod },
   { path: 'admin-gestionUsuario', component: AdminUserManagement },
+  { path: 'admin-crearProducto', component: AdminProductCreation },
+  { path: 'admin-dashboard', component: AdminDashboard },
   { path: '', redirectTo: '/index', pathMatch: 'full' }
 ];
 
