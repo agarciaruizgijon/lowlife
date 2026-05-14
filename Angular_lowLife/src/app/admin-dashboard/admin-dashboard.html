@@ -1,54 +1,129 @@
-<div class="container py-5 mt-5">
-  <div class="row mb-4">
-    <div class="col-12">
-      <h2 class="fw-bold mb-1">Dashboard</h2>
-      <p class="text-muted">Resumen general de la plataforma</p>
+<div class="container py-5 mt-4">
+  <!-- Header & Quick Welcome -->
+  <div class="row mb-5 align-items-center">
+    <div class="col-md-8">
+      <h1 class="fw-bold mb-1 text-dark">Panel de Control</h1>
+      <p class="text-muted mb-0">Bienvenido de nuevo, <span class="fw-semibold text-primary">Administrador LowLife</span>. Aquí tienes el resumen de hoy.</p>
+    </div>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+      <div class="d-inline-flex align-items-center bg-white border px-3 py-2 rounded-pill shadow-sm">
+        <i class="bi bi-calendar3 text-primary me-2"></i>
+        <span class="small fw-medium">{{ currentDate | date:'fullDate' }}</span>
+      </div>
     </div>
   </div>
 
-  <!-- KPI Cards -->
-  <div class="row g-4 mb-5">
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h6 class="text-muted mb-0">Pedidos Totales</h6>
-            <div class="icon-circle bg-primary bg-opacity-10 text-primary">
-              <i class="bi bi-box-seam fs-5"></i>
-            </div>
-          </div>
-          <h3 class="fw-bold mb-0">1,245</h3>
-          <p class="text-success small mt-2 mb-0"><i class="bi bi-arrow-up-short"></i> +12% este mes</p>
-        </div>
-      </div>
+  <!-- Quick Actions Section -->
+  <div class="row g-3 mb-5">
+    <div class="col-6 col-md-3">
+      <button class="btn btn-action w-100 py-3 shadow-sm" routerLink="/admin-crearProducto">
+        <i class="bi bi-plus-circle-dotted d-block fs-3 mb-2 text-primary"></i>
+        <span class="fw-bold small">Añadir Producto</span>
+      </button>
     </div>
-    
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h6 class="text-muted mb-0">Productos</h6>
-            <div class="icon-circle bg-success bg-opacity-10 text-success">
-              <i class="bi bi-tag fs-5"></i>
+    <div class="col-6 col-md-3">
+      <button class="btn btn-action w-100 py-3 shadow-sm" routerLink="/admin-usuarios">
+        <i class="bi bi-people d-block fs-3 mb-2 text-primary"></i>
+        <span class="fw-bold small">Gestionar Usuarios</span>
+      </button>
+    </div>
+    <div class="col-6 col-md-3">
+      <button class="btn btn-action w-100 py-3 shadow-sm">
+        <i class="bi bi-megaphone d-block fs-3 mb-2 text-primary"></i>
+        <span class="fw-bold small">Crear Oferta</span>
+      </button>
+    </div>
+    <div class="col-6 col-md-3">
+      <button class="btn btn-action w-100 py-3 shadow-sm">
+        <i class="bi bi-gear d-block fs-3 mb-2 text-primary"></i>
+        <span class="fw-bold small">Configuración</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- KPI Cards & Analytics Preview -->
+  <div class="row g-4 mb-5">
+    <!-- Main Stats -->
+    <div class="col-lg-8">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card kpi-card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6 class="text-muted text-uppercase small ls-1 fw-bold mb-3">Ventas Mensuales</h6>
+                  <h2 class="fw-black mb-1">€12,450.00</h2>
+                  <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill">
+                    <i class="bi bi-arrow-up-short"></i> +15.3%
+                  </span>
+                </div>
+                <div class="icon-shape bg-primary bg-opacity-10 text-primary rounded-3">
+                  <i class="bi bi-currency-euro fs-4"></i>
+                </div>
+              </div>
+              <!-- Mini Chart Placeholder -->
+              <div class="mini-chart mt-4 d-flex align-items-end gap-1">
+                <div class="bar" style="height: 40%;"></div>
+                <div class="bar" style="height: 60%;"></div>
+                <div class="bar" style="height: 35%;"></div>
+                <div class="bar" style="height: 70%;"></div>
+                <div class="bar" style="height: 50%;"></div>
+                <div class="bar" style="height: 85%;"></div>
+                <div class="bar active" style="height: 100%;"></div>
+              </div>
             </div>
           </div>
-          <h3 class="fw-bold mb-0">342</h3>
-          <p class="text-success small mt-2 mb-0"><i class="bi bi-arrow-up-short"></i> +5 nuevos</p>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card kpi-card border-0 shadow-sm rounded-4 h-100">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6 class="text-muted text-uppercase small ls-1 fw-bold mb-3">Nuevos Clientes</h6>
+                  <h2 class="fw-black mb-1">284</h2>
+                  <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill">
+                    <i class="bi bi-person-plus me-1"></i> +42 hoy
+                  </span>
+                </div>
+                <div class="icon-shape bg-info bg-opacity-10 text-info rounded-3">
+                  <i class="bi bi-people fs-4"></i>
+                </div>
+              </div>
+              <div class="mt-4 avatar-group d-flex">
+                <div class="avatar-sm bg-primary text-white rounded-circle border border-2 border-white d-flex align-items-center justify-content-center fw-bold small">JP</div>
+                <div class="avatar-sm bg-success text-white rounded-circle border border-2 border-white d-flex align-items-center justify-content-center fw-bold small ms-n2">MG</div>
+                <div class="avatar-sm bg-warning text-dark rounded-circle border border-2 border-white d-flex align-items-center justify-content-center fw-bold small ms-n2">CL</div>
+                <div class="avatar-sm bg-light text-muted rounded-circle border border-2 border-white d-flex align-items-center justify-content-center fw-bold small ms-n2">+39</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h6 class="text-muted mb-0">Usuarios Activos</h6>
-            <div class="icon-circle bg-info bg-opacity-10 text-info">
-              <i class="bi bi-people fs-5"></i>
+    <!-- Inventory Alert Card -->
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm rounded-4 h-100 bg-dark text-white">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-4">Alertas de Stock</h5>
+          <div class="stock-alert-item d-flex align-items-center mb-3">
+            <div class="alert-indicator bg-danger me-3"></div>
+            <div class="flex-grow-1">
+              <h6 class="mb-0 small fw-bold">Pantalón Cargo XL</h6>
+              <span class="text-white-50 tiny">Agotado por completo</span>
             </div>
+            <span class="badge bg-danger">0</span>
           </div>
-          <h3 class="fw-bold mb-0">8,592</h3>
-          <p class="text-success small mt-2 mb-0"><i class="bi bi-arrow-up-short"></i> +3% esta semana</p>
+          <div class="stock-alert-item d-flex align-items-center mb-3">
+            <div class="alert-indicator bg-warning me-3"></div>
+            <div class="flex-grow-1">
+              <h6 class="mb-0 small fw-bold">Camiseta Básica M</h6>
+              <span class="text-white-50 tiny">Solo quedan 3 unidades</span>
+            </div>
+            <span class="badge bg-warning text-dark">3</span>
+          </div>
+          <button class="btn btn-outline-light btn-sm w-100 mt-3 border-secondary text-white-50">Gestionar Inventario</button>
         </div>
       </div>
     </div>
@@ -57,50 +132,67 @@
   <!-- Recent Orders Table -->
   <div class="row">
     <div class="col-12">
-      <div class="card border-0 shadow-sm rounded-4 p-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h5 class="fw-bold mb-0">Últimos Pedidos</h5>
-          <button class="btn btn-sm btn-outline-dark rounded-pill px-3">Ver todos</button>
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
+          <h5 class="fw-bold mb-0">Pedidos Recientes</h5>
+          <button class="btn btn-link text-decoration-none text-primary fw-bold p-0">Ver historial completo <i class="bi bi-arrow-right small ms-1"></i></button>
         </div>
         <div class="table-responsive">
-          <table class="table align-middle">
-            <thead class="table-light">
+          <table class="table align-middle mb-0">
+            <thead class="bg-light bg-opacity-50">
               <tr>
-                <th>ID Pedido</th>
+                <th class="ps-4">Código</th>
                 <th>Cliente</th>
-                <th>Fecha</th>
+                <th>Artículos</th>
                 <th>Estado</th>
-                <th>Total</th>
+                <th class="text-end pe-4">Total</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><span class="fw-bold">#ORD-001</span></td>
-                <td>Juan Pérez</td>
-                <td>14 May, 2026</td>
-                <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">Completado</span></td>
-                <td>€120.50</td>
+              <tr class="order-row">
+                <td class="ps-4 fw-bold text-muted">#ORD-9921</td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="avatar-sm bg-light text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold me-2">AR</div>
+                    <div>
+                      <h6 class="mb-0 fw-bold small">Alejandro Ruiz</h6>
+                      <span class="text-muted tiny">alejandro@example.com</span>
+                    </div>
+                  </div>
+                </td>
+                <td>3 unidades</td>
+                <td><span class="status-pill completed">Completado</span></td>
+                <td class="text-end pe-4 fw-bold">€154.00</td>
               </tr>
-              <tr>
-                <td><span class="fw-bold">#ORD-002</span></td>
-                <td>María García</td>
-                <td>13 May, 2026</td>
-                <td><span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3">Pendiente</span></td>
-                <td>€85.00</td>
+              <tr class="order-row">
+                <td class="ps-4 fw-bold text-muted">#ORD-9920</td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="avatar-sm bg-light text-danger rounded-circle d-flex align-items-center justify-content-center fw-bold me-2">BE</div>
+                    <div>
+                      <h6 class="mb-0 fw-bold small">Beatriz E.</h6>
+                      <span class="text-muted tiny">beatriz@example.com</span>
+                    </div>
+                  </div>
+                </td>
+                <td>1 unidad</td>
+                <td><span class="status-pill pending">Pendiente</span></td>
+                <td class="text-end pe-4 fw-bold">€45.90</td>
               </tr>
-              <tr>
-                <td><span class="fw-bold">#ORD-003</span></td>
-                <td>Carlos López</td>
-                <td>12 May, 2026</td>
-                <td><span class="badge bg-info bg-opacity-10 text-info rounded-pill px-3">Enviado</span></td>
-                <td>€210.00</td>
-              </tr>
-              <tr>
-                <td><span class="fw-bold">#ORD-004</span></td>
-                <td>Ana Martínez</td>
-                <td>11 May, 2026</td>
-                <td><span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3">Cancelado</span></td>
-                <td>€45.90</td>
+              <tr class="order-row">
+                <td class="ps-4 fw-bold text-muted">#ORD-9919</td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="avatar-sm bg-light text-success rounded-circle d-flex align-items-center justify-content-center fw-bold me-2">DV</div>
+                    <div>
+                      <h6 class="mb-0 fw-bold small">David Vera</h6>
+                      <span class="text-muted tiny">d.vera@example.com</span>
+                    </div>
+                  </div>
+                </td>
+                <td>2 unidades</td>
+                <td><span class="status-pill shipping">En camino</span></td>
+                <td class="text-end pe-4 fw-bold">€89.00</td>
               </tr>
             </tbody>
           </table>

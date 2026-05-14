@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css',
 })
-export class AdminDashboard {}
+export class AdminDashboard {
+  currentDate: Date = new Date();
+}

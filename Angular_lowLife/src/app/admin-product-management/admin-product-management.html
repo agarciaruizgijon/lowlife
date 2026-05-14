@@ -12,59 +12,56 @@
       <h3 class="mb-0">Gestión de Productos</h3>
     </div>
     
-    <div class="card-body p-0">
-      <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-          <thead class="table-light">
-            <tr>
-              <th scope="col" class="ps-4">ID</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Categoría</th>
-              <th scope="col">Precio</th>
-              <th scope="col">Stock</th>
-              <th scope="col">Estado</th>
-              <th scope="col" class="text-end pe-4">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let product of products">
-              <td class="ps-4 fw-medium text-muted">#{{ product.id }}</td>
-              <td>
-                <div class="d-flex align-items-center">
-                  <div class="bg-light rounded d-flex justify-content-center align-items-center me-3" style="width: 40px; height: 40px;">
-                    <i class="bi bi-box-seam text-secondary"></i>
-                  </div>
-                  <span class="fw-semibold">{{ product.name }}</span>
-                </div>
-              </td>
-              <td class="text-muted">{{ product.category }}</td>
-              <td class="fw-medium">{{ product.price }}</td>
-              <td>
+    <div class="card-body p-4 bg-light-subtle">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+        <div class="col" *ngFor="let product of products">
+          <div class="product-admin-card h-100 shadow-sm border-0 rounded-3 overflow-hidden bg-white">
+            <div class="product-image-container position-relative">
+              <img [src]="product.image" [alt]="product.name" class="img-fluid w-100" style="height: 200px; object-fit: cover;">
+              <div class="position-absolute top-0 start-0 m-2">
+                <span class="badge bg-dark opacity-75">#{{ product.id }}</span>
+              </div>
+              <div class="position-absolute top-0 end-0 m-2">
                 <span class="badge" 
                   [ngClass]="{
-                    'bg-success': product.stock > 10,
-                    'bg-warning text-dark': product.stock > 0 && product.stock <= 10,
-                    'bg-danger': product.stock === 0
-                  }">
-                  {{ product.stock }} ud.
-                </span>
-              </td>
-              <td>
-                <span class="badge px-3 py-2" 
-                  [ngClass]="{
-                    'bg-success-subtle text-success-emphasis fw-bold border border-success-subtle': product.status === 'Activo',
-                    'bg-danger-subtle text-danger-emphasis fw-bold border border-danger-subtle': product.status === 'Agotado'
+                    'bg-success': product.status === 'Activo',
+                    'bg-danger': product.status === 'Agotado'
                   }">
                   {{ product.status }}
                 </span>
-              </td>
-              <td class="text-end pe-4">
-                <button class="btn btn-sm btn-outline-secondary me-2" [routerLink]="['/admin-editarProducto', product.id]"><i class="bi bi-pencil"></i></button>
-                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </div>
+            </div>
+            
+            <div class="p-3">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="card-title fw-bold mb-0 text-truncate" style="max-width: 70%;">{{ product.name }}</h5>
+                <span class="fw-bold text-primary">{{ product.price }}</span>
+              </div>
+              
+              <div class="mb-3">
+                <span class="badge-category small">{{ product.category }}</span>
+              </div>
+
+              <div class="d-flex align-items-center mb-3">
+                <div class="me-2 text-muted small">
+                  <i class="bi bi-stack me-1"></i>Stock:
+                </div>
+                <span class="fw-medium small" [ngClass]="{'text-danger': product.stock === 0, 'text-warning': product.stock > 0 && product.stock <= 10}">
+                  {{ product.stock }} unidades
+                </span>
+              </div>
+
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-dark btn-sm flex-grow-1" [routerLink]="['/admin-editarProducto', product.id]">
+                  <i class="bi bi-pencil me-1"></i> Editar
+                </button>
+                <button class="btn btn-outline-danger btn-sm px-3">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     
