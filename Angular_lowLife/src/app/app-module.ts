@@ -19,6 +19,7 @@ import { AdminProductCreation } from './admin-product-creation/admin-product-cre
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { AdminProductManagement } from './admin-product-management/admin-product-management';
 import { AdminProductEdit } from './admin-product-edit/admin-product-edit';
+import { AdminUserEdit } from './admin-user-edit/admin-user-edit';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { AdminProductEdit } from './admin-product-edit/admin-product-edit';
     AdminDashboard,
     AdminProductManagement,
     AdminProductEdit,
+    AdminUserEdit,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners()],

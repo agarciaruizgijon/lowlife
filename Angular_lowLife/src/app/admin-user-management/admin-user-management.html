@@ -55,7 +55,9 @@
               </td>
               <td class="text-muted small">{{ user.lastLogin }}</td>
               <td class="text-end pe-4">
-                <button class="btn btn-sm btn-outline-secondary me-2"><i class="bi bi-pencil"></i></button>
+                <a [routerLink]="['/admin-editarUsuario', user.id]" class="btn btn-sm btn-outline-secondary me-2">
+                  <i class="bi bi-pencil"></i>
+                </a>
                 <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
               </td>
             </tr>

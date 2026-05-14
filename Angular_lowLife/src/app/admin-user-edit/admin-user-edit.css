@@ -1,0 +1,23 @@
+.card-lowlife {
+  border-radius: 12px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.form-control-underline:read-only {
+  background-color: #f8f9fa !important;
+  border-bottom-color: #dee2e6;
+  cursor: not-allowed;
+}
+
+/* Ajustes para los radio buttons con badges */
+.form-check-input:checked + .form-check-label .badge {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(0,0,0,0.1);
+  transform: scale(1.05);
+}
+
+.form-check-label {
+  cursor: pointer;
+}
