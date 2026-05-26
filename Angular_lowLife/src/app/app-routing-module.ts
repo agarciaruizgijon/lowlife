@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { StyleGuide } from './style-guide/style-guide';
 
 const routes: Routes = [
-  { path: 'guia-estilos', component: StyleGuide },
-  { path: '', redirectTo: '/guia-estilos', pathMatch: 'full' }
+  { path: 'quienes-somos', component: StyleGuide },
+  { path: '', redirectTo: '/quienes-somos', pathMatch: 'full' }
 ];
 
 @NgModule({
