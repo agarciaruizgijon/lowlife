@@ -9,6 +9,14 @@ import { ProductDetail } from './product-detail/product-detail';
 import { Cart } from './cart/cart';
 import { Contact } from './contact/contact';
 import { About } from './about/about';
+import { PaymentMethod } from './payment-method/payment-method';
+
+import { AdminUserManagement } from './admin-user-management/admin-user-management';
+import { AdminProductCreation } from './admin-product-creation/admin-product-creation';
+import { AdminDashboard } from './admin-dashboard/admin-dashboard';
+import { AdminProductManagement } from './admin-product-management/admin-product-management';
+import { AdminProductEdit } from './admin-product-edit/admin-product-edit';
+import { AdminUserEdit } from './admin-user-edit/admin-user-edit';
 
 const routes: Routes = [
   { path: 'guia-estilos', component: StyleGuide },
@@ -19,6 +27,13 @@ const routes: Routes = [
   { path: 'carrito', component: Cart },
   { path: 'contacto', component: Contact },
   { path: 'nosotros', component: About },
+  { path: 'metodo-pago', component: PaymentMethod },
+  { path: 'admin-gestionUsuario', component: AdminUserManagement },
+  { path: 'admin-productos', component: AdminProductManagement },
+  { path: 'admin-crearProducto', component: AdminProductCreation },
+  { path: 'admin-editarProducto/:id', component: AdminProductEdit },
+  { path: 'admin-editarUsuario/:id', component: AdminUserEdit },
+  { path: 'admin-dashboard', component: AdminDashboard },
   { path: '', redirectTo: '/index', pathMatch: 'full' }
 ];
 

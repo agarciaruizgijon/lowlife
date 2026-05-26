@@ -13,9 +13,33 @@ import { ProductDetail } from './product-detail/product-detail';
 import { Cart } from './cart/cart';
 import { Contact } from './contact/contact';
 import { About } from './about/about';
+import { PaymentMethod } from './payment-method/payment-method';
+import { AdminUserManagement } from './admin-user-management/admin-user-management';
+import { AdminProductCreation } from './admin-product-creation/admin-product-creation';
+import { AdminDashboard } from './admin-dashboard/admin-dashboard';
+import { AdminProductManagement } from './admin-product-management/admin-product-management';
+import { AdminProductEdit } from './admin-product-edit/admin-product-edit';
+import { AdminUserEdit } from './admin-user-edit/admin-user-edit';
 
 @NgModule({
-  declarations: [App, StyleGuide, Index, Login, ProductDetail, Cart, Register, Contact, About],
+  declarations: [
+    App,
+    StyleGuide,
+    Index,
+    Login,
+    ProductDetail,
+    Cart,
+    Register,
+    Contact,
+    About,
+    PaymentMethod,
+    AdminUserManagement,
+    AdminProductCreation,
+    AdminDashboard,
+    AdminProductManagement,
+    AdminProductEdit,
+    AdminUserEdit,
+  ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],

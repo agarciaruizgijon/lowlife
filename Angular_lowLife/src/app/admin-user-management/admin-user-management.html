@@ -1,0 +1,74 @@
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold mb-0">Panel de Administración</h1>
+    <!-- Botón Añadir Usuario eliminado -->
+  </div>
+
+  <div class="card card-lowlife border-0 shadow-sm">
+    <div class="card-header bg-white border-bottom p-4">
+      <h3 class="mb-0">Gestión de Usuarios</h3>
+    </div>
+    
+    <div class="card-body p-4 bg-light-subtle">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
+        <div class="col" *ngFor="let user of users">
+          <div class="user-profile-card h-100 shadow-sm border-0 rounded-4 overflow-hidden bg-white text-center p-4">
+            <!-- User Status Indicator -->
+            <div class="status-indicator position-absolute" 
+                 [ngClass]="user.status === 'Activo' ? 'bg-success' : 'bg-danger'"></div>
+            
+            <!-- Avatar Container -->
+            <div class="avatar-container mb-3 position-relative d-inline-block">
+              <img [src]="user.avatar" [alt]="user.name" class="rounded-circle border border-4 border-white shadow-sm" style="width: 100px; height: 100px; object-fit: cover;">
+              <span class="id-badge position-absolute bottom-0 end-0 bg-dark text-white rounded-pill px-2 py-1 tiny fw-bold">#{{ user.id }}</span>
+            </div>
+
+            <!-- User Info -->
+            <h5 class="fw-bold mb-1">{{ user.name }}</h5>
+            <p class="text-muted small mb-3 text-truncate">{{ user.email }}</p>
+
+            <div class="d-flex justify-content-center gap-2 mb-4">
+              <span class="badge rounded-pill px-3 py-2" 
+                [ngClass]="{
+                  'bg-primary': user.role === 'Admin',
+                  'bg-dark': user.role === 'Editor',
+                  'bg-secondary bg-opacity-25 text-dark': user.role === 'Usuario'
+                }">
+                {{ user.role }}
+              </span>
+            </div>
+
+            <div class="last-login border-top pt-3 mt-auto">
+              <div class="text-muted tiny text-uppercase fw-bold mb-3 ls-1">Último acceso: {{ user.lastLogin }}</div>
+              
+              <div class="d-flex gap-2 justify-content-center">
+                <a [routerLink]="['/admin-editarUsuario', user.id]" class="btn btn-action-user flex-grow-1 py-2">
+                  <i class="bi bi-pencil-square me-2"></i>Editar
+                </a>
+                <button class="btn btn-outline-danger btn-action-delete px-3 py-2">
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card-footer bg-white border-top p-4 d-flex justify-content-between align-items-center">
+      <span class="text-muted small">Mostrando {{ users.length }} usuarios</span>
+      <nav aria-label="Page navigation">
+        <ul class="pagination pagination-sm mb-0">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+          </li>
+          <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Siguiente</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+.card-lowlife {
+  border-radius: 12px;
+}
+
+.color-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.color-circle:hover {
+  transform: scale(1.1);
+}
+
+.btn-check:checked + .color-circle {
+  border-color: #000;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #000;
+}
+
+.btn-check:checked + .color-circle.bg-dark {
+  border-color: #fff;
+  box-shadow: 0 0 0 2px #000, 0 0 0 4px #fff;
+}
+
+.border-dashed {
+  border-style: dashed !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

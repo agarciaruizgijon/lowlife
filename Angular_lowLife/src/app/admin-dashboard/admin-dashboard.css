@@ -1,0 +1,97 @@
+.icon-shape {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Quick Actions */
+.btn-action {
+  background-color: white;
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 1rem;
+  transition: all 0.2s ease;
+  color: #444;
+}
+.btn-action:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.05) !important;
+  border-color: var(--bs-primary, #e63b2e);
+}
+
+/* KPI Cards */
+.kpi-card {
+  transition: all 0.3s ease;
+}
+.kpi-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.08) !important;
+}
+
+.ls-1 { letter-spacing: 1px; }
+.fw-black { font-weight: 900; }
+.tiny { font-size: 0.7rem; }
+
+/* Mini Chart */
+.mini-chart {
+  height: 60px;
+}
+.mini-chart .bar {
+  flex: 1;
+  background-color: rgba(230, 59, 46, 0.1);
+  border-radius: 4px;
+  transition: height 1s ease;
+}
+.mini-chart .bar.active {
+  background-color: var(--bs-primary, #e63b2e);
+}
+
+/* Avatars */
+.avatar-group .avatar-sm {
+  width: 32px;
+  height: 32px;
+  font-size: 0.75rem;
+}
+.avatar-sm {
+  width: 40px;
+  height: 40px;
+}
+.ms-n2 { margin-left: -0.5rem; }
+
+/* Stock Alerts */
+.alert-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Status Pills */
+.status-pill {
+  padding: 0.35rem 1rem;
+  border-radius: 50rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.status-pill.completed { background-color: #d1e7dd; color: #0f5132; }
+.status-pill.pending { background-color: #fff3cd; color: #664d03; }
+.status-pill.shipping { background-color: #cff4fc; color: #055160; }
+
+/* Table Enhancements */
+.order-row {
+  transition: background-color 0.2s;
+}
+.order-row:hover {
+  background-color: #f8f9fa;
+}
+
+.table th {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  color: #6c757d;
+  padding: 1.2rem 1rem;
+}

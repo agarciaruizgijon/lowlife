@@ -1,0 +1,121 @@
+.payment-section {
+  min-height: calc(100vh - 100px); /* Adjust based on navbar/footer */
+  background-image: url('https://images.unsplash.com/photo-1555448248-2571daf6344b?w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  background-attachment: fixed;
+}
+
+.payment-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 15%;
+  right: 15%;
+  background-color: #ffffff;
+  z-index: 0;
+}
+
+.payment-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+h1, h3 {
+  font-family: 'Inter', sans-serif;
+  color: #000;
+}
+
+.payment-card {
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  background-color: #f7f7f7;
+}
+
+.payment-card-header {
+  background-color: #000;
+  color: #fff;
+  border-bottom: 2px solid #ccc;
+}
+
+.payment-card-body {
+  background-color: #f4f4f4;
+}
+
+.form-control-underline {
+  border: none;
+  border-bottom: 2px solid #999;
+  border-radius: 0;
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 0.95rem;
+  color: #333;
+  box-shadow: none !important;
+}
+
+.form-control-underline:focus {
+  border-bottom-color: #333;
+  background-color: transparent;
+}
+
+.form-control-underline::placeholder {
+  color: #888;
+}
+
+.check-custom {
+  background-color: #e63b2e;
+  border-color: #e63b2e;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.check-custom:checked {
+  background-color: #e63b2e;
+  border-color: #e63b2e;
+}
+
+.btn-cyan {
+  background-color: #00c2c7;
+  border: none;
+}
+.btn-cyan:hover {
+  background-color: #00a0a5;
+}
+
+.btn-gpay {
+  background-color: #ffffff;
+  border: 1px solid #ddd !important;
+  color: #5f6368 !important;
+  font-family: "Product Sans", Roboto, Arial, sans-serif;
+}
+.btn-gpay:hover {
+  background-color: #f8f8f8;
+}
+
+.btn-confirmar {
+  background-color: #df3a2a;
+  border-color: #c9322a;
+  color: white;
+}
+.btn-confirmar:hover {
+  background-color: #c9322a;
+}
+
+@media (max-width: 992px) {
+  .payment-section::before {
+    left: 5%;
+    right: 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .payment-section::before {
+    left: 0;
+    right: 0;
+  }
+}

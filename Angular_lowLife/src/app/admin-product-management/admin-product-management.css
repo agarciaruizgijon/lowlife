@@ -1,0 +1,48 @@
+.product-admin-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0,0,0,0.05) !important;
+}
+
+.product-admin-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.product-image-container {
+  overflow: hidden;
+  background-color: #f8f9fa;
+}
+
+.product-image-container img {
+  transition: transform 0.5s ease;
+}
+
+.product-admin-card:hover .product-image-container img {
+  transform: scale(1.05);
+}
+
+.badge-category {
+  background-color: var(--bs-primary, #e63b2e);
+  color: white;
+  padding: 0.35em 0.8em;
+  border-radius: 50rem;
+  font-weight: 500;
+  font-size: 0.75rem;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-lowlife {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+/* Custom badge colors for stock */
+.text-warning {
+  color: #ff9800 !important;
+}
+
+.text-danger {
+  color: #f44336 !important;
+}

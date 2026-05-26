@@ -1,0 +1,68 @@
+.user-profile-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-profile-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  top: 20px;
+  right: 20px;
+  border: 2px solid white;
+}
+
+.avatar-container {
+  transition: transform 0.3s ease;
+}
+
+.user-profile-card:hover .avatar-container {
+  transform: scale(1.05);
+}
+
+.tiny {
+  font-size: 0.65rem;
+}
+
+.ls-1 {
+  letter-spacing: 1px;
+}
+
+.btn-action-user {
+  background-color: #f8f9fa;
+  border: 1px solid #eee;
+  color: #333;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.btn-action-user:hover {
+  background-color: var(--bs-primary, #e63b2e);
+  color: white;
+  border-color: var(--bs-primary, #e63b2e);
+}
+
+.btn-action-delete {
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.btn-action-delete:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.card-lowlife {
+  border-radius: 1rem;
+  overflow: hidden;
+}
