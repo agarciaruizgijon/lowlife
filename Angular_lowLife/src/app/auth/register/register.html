@@ -1,0 +1,75 @@
+<!-- Register Section -->
+<section class="register-section">
+  <div class="container d-flex justify-content-center align-items-center">
+    <div class="register-card">
+      <h2 class="text-center mb-4 fw-bold">Únete a LowLife</h2>
+
+      <form>
+        <!-- Usuario -->
+        <div class="mb-4">
+          <input
+            type="text"
+            class="form-control form-control-underline"
+            id="registerUser"
+            placeholder="Usuario"
+          />
+        </div>
+
+        <!-- Correo electrónico -->
+        <div class="mb-4">
+          <input
+            type="email"
+            class="form-control form-control-underline"
+            id="registerEmail"
+            placeholder="Correo electrónico"
+          />
+        </div>
+
+        <!-- Contraseña -->
+        <div class="mb-4">
+          <input
+            type="password"
+            class="form-control form-control-underline"
+            id="registerPassword"
+            placeholder="Contraseña"
+          />
+        </div>
+
+        <!-- Confirmar contraseña -->
+        <div class="mb-4">
+          <input
+            type="password"
+            class="form-control form-control-underline"
+            id="registerConfirmPassword"
+            placeholder="Confirmar contraseña"
+          />
+        </div>
+
+        <!-- Botón Registrarse -->
+        <button type="submit" class="btn btn-primary w-100 mb-3 btn-registrarse">Registrarse</button>
+      </form>
+
+      <!-- Botones de redes sociales -->
+      <div class="d-flex gap-2 social-buttons">
+        <button class="btn btn-social btn-google flex-fill">
+          <i class="bi bi-google"></i>
+        </button>
+        <button class="btn btn-social btn-apple flex-fill">
+          <i class="bi bi-apple"></i>
+        </button>
+        <button class="btn btn-social btn-facebook flex-fill">
+          <i class="bi bi-facebook"></i>
+        </button>
+        <button class="btn btn-social btn-x flex-fill">
+          <i class="bi bi-twitter-x"></i>
+        </button>
+      </div>
+
+      <!-- Link al login -->
+      <p class="text-center mt-3 mb-0 link-login">
+        ¿Ya tienes cuenta?
+        <a routerLink="/login" class="link-acceder">Inicia sesión</a>
+      </p>
+    </div>
+  </div>
+</section>

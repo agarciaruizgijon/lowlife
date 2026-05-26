@@ -1,0 +1,45 @@
+/* About Hero Section */
+.about-hero-section {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1555448248-2571daf6344b?w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+}
+
+.about-hero-content h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Team Section */
+.team-section {
+  background-color: #f8f9fa;
+}
+
+.team-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.team-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #e63b2e;
+}
+
+.team-card h4 {
+  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
+}

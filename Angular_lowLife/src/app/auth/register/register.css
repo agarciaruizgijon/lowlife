@@ -1,0 +1,124 @@
+/* ========================================
+   REGISTER PAGE STYLES
+   Mismo estilo que login para consistencia
+   ======================================== */
+
+/* Sección principal del register con fondo de graffiti */
+.register-section {
+  min-height: 70vh;
+  background-image: url('https://images.unsplash.com/photo-1555448248-2571daf6344b?w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  position: relative;
+}
+
+/* Tarjeta del formulario de registro */
+.register-card {
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 40px 50px;
+  max-width: 480px;
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.register-card h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.75rem;
+  color: #1a1a1a;
+}
+
+/* Botón Registrarse */
+.btn-registrarse {
+  background-color: #e63b2e;
+  border-color: #e63b2e;
+  font-weight: 600;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-registrarse:hover {
+  background-color: #c9322a;
+  border-color: #c9322a;
+}
+
+/* Botones de redes sociales */
+.social-buttons .btn-social {
+  padding: 8px 16px;
+  font-size: 1.1rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+  min-height: 42px;
+}
+
+.social-buttons .btn-social:hover {
+  opacity: 0.85;
+}
+
+.btn-google {
+  background-color: #4285F4;
+  color: white;
+  border: none;
+}
+
+.btn-apple {
+  background-color: #ffffff;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+.btn-facebook {
+  background-color: #1877F2;
+  color: white;
+  border: none;
+}
+
+.btn-x {
+  background-color: #000000;
+  color: white;
+  border: none;
+}
+
+/* Link de "¿Ya tienes cuenta?" */
+.link-login {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.link-acceder {
+  color: #e63b2e;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link-acceder:hover {
+  color: #c9322a;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .register-card {
+    margin: 0 20px;
+    padding: 30px 25px;
+  }
+
+  .register-section {
+    min-height: 60vh;
+    padding: 40px 0;
+  }
+}

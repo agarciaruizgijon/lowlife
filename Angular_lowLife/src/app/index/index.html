@@ -1,0 +1,185 @@
+  <!-- Main Content Layout -->
+  <div class="main-wrapper">
+    
+    <!-- Left Sidebar (Filters) -->
+    <aside class="sidebar-wrapper d-none d-md-block">
+      <div class="card-filter">
+        <!-- Categorías -->
+        <div class="filter-section">
+          <div class="filter-title">Categorías:</div>
+          <div class="d-flex flex-wrap">
+            <span class="badge-category">Reloj <i class="bi bi-x"></i></span>
+            <span class="badge-category">Zapato <i class="bi bi-x"></i></span>
+            <span class="badge-category">Sudadera <i class="bi bi-x"></i></span>
+          </div>
+        </div>
+
+        <!-- Tallas -->
+        <div class="filter-section">
+          <div class="filter-title">Tallas:</div>
+          <label class="custom-checkbox">
+            <input type="checkbox" checked>
+            XS-S
+          </label>
+          <label class="custom-checkbox">
+            <input type="checkbox" checked>
+            M
+          </label>
+          <label class="custom-checkbox">
+            <input type="checkbox" checked>
+            L
+          </label>
+          <label class="custom-checkbox">
+            <input type="checkbox" checked>
+            XL
+          </label>
+        </div>
+
+        <!-- Precio -->
+        <div class="filter-section">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="filter-title mb-0">Precio:</span>
+            <span class="text-dark fw-medium" style="font-size: 0.9rem;">0-{{maxPrice}}€</span>
+          </div>
+          <input type="range" class="form-range price-range" min="0" max="300" [value]="maxPrice" (input)="updatePrice($event)">
+        </div>
+
+        <!-- Color -->
+        <div class="filter-section">
+          <div class="filter-title">Color:</div>
+          <label class="custom-checkbox color-swatch-container">
+            <input type="checkbox" checked>
+            <span class="color-swatch" style="background-color: #ff5722;"></span>
+          </label>
+          <label class="custom-checkbox color-swatch-container">
+            <input type="checkbox" checked>
+            <span class="color-swatch" style="background-color: #f48fb1;"></span>
+          </label>
+          <label class="custom-checkbox color-swatch-container">
+            <input type="checkbox" checked>
+            <span class="color-swatch" style="background-color: #42a5f5;"></span>
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Content Area (Products) -->
+    <main class="content-area">
+      <div class="container-fluid px-0">
+        
+        <!-- Sorting Buttons -->
+        <div class="top-actions">
+          <button class="btn btn-filter-mobile d-md-none" (click)="openFilterModal()">
+            <i class="bi bi-sliders me-2"></i>Filtros
+          </button>
+          <button class="btn btn-sort" [class.active]="activeSort === 'destacado'" (click)="sortArticles('destacado')"><i class="bi bi-check2 me-1" *ngIf="activeSort === 'destacado'"></i> Destacado</button>
+          <button class="btn btn-sort" [class.active]="activeSort === 'mayor_precio'" (click)="sortArticles('mayor_precio')"><i class="bi bi-check2 me-1" *ngIf="activeSort === 'mayor_precio'"></i> Mayor Precio</button>
+          <button class="btn btn-sort" [class.active]="activeSort === 'menor_precio'" (click)="sortArticles('menor_precio')"><i class="bi bi-check2 me-1" *ngIf="activeSort === 'menor_precio'"></i> Menor Precio</button>
+          <button class="btn btn-sort" [class.active]="activeSort === 'valoraciones'" (click)="sortArticles('valoraciones')"><i class="bi bi-check2 me-1" *ngIf="activeSort === 'valoraciones'"></i> Valoraciones</button>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="row row-cols-2 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3 g-sm-4 mb-5">
+          
+          <!-- Dynamic Products -->
+          <div class="col" *ngFor="let articulo of articulos">
+            <div class="product-card" routerLink="/producto" style="cursor: pointer;">
+              <div class="product-img-wrapper">
+                <img [src]="articulo.image" [alt]="articulo.name" class="product-img">
+              </div>
+              <div class="product-info">
+                <div class="product-title-price">
+                  <h3 class="product-title">{{ articulo.name }}</h3>
+                  <span class="product-price">{{ articulo.price }}€</span>
+                </div>
+                <div class="product-colors">
+                  <div class="product-color-dot" *ngFor="let color of articulo.colors" [style.background-color]="color"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Mobile Filter Modal -->
+  <div class="filter-modal-overlay" [class.active]="isFilterModalOpen" (click)="closeFilterModal()"></div>
+  <div class="filter-modal-drawer" [class.active]="isFilterModalOpen">
+    <div class="filter-modal-header">
+      <h5 class="filter-modal-title"><i class="bi bi-sliders me-2"></i>Filtros</h5>
+      <button class="filter-modal-close" (click)="closeFilterModal()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <div class="filter-modal-body">
+
+      <!-- Categorías -->
+      <div class="filter-section">
+        <div class="filter-title">Categorías:</div>
+        <div class="d-flex flex-wrap">
+          <span class="badge-category">Reloj <i class="bi bi-x"></i></span>
+          <span class="badge-category">Zapato <i class="bi bi-x"></i></span>
+          <span class="badge-category">Sudadera <i class="bi bi-x"></i></span>
+        </div>
+      </div>
+
+      <!-- Tallas -->
+      <div class="filter-section">
+        <div class="filter-title">Tallas:</div>
+        <div class="size-grid">
+          <label class="custom-checkbox">
+            <input type="checkbox" checked>
+            XS-S
+          </label>
+          <label class="custom-checkbox">
+            <input type="checkbox" checked>
+            M
+          </label>
+          <label class="custom-checkbox">
+            <input type="checkbox" checked>
+            L
+          </label>
+          <label class="custom-checkbox">
+            <input type="checkbox" checked>
+            XL
+          </label>
+        </div>
+      </div>
+
+      <!-- Precio -->
+      <div class="filter-section">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="filter-title mb-0">Precio:</span>
+          <span class="text-dark fw-medium" style="font-size: 0.9rem;">0-{{maxPrice}}€</span>
+        </div>
+        <input type="range" class="form-range price-range" min="0" max="300" [value]="maxPrice" (input)="updatePrice($event)">
+      </div>
+
+      <!-- Color -->
+      <div class="filter-section">
+        <div class="filter-title">Color:</div>
+        <div class="d-flex flex-wrap gap-2">
+          <label class="custom-checkbox color-swatch-container">
+            <input type="checkbox" checked>
+            <span class="color-swatch" style="background-color: #ff5722;"></span>
+          </label>
+          <label class="custom-checkbox color-swatch-container">
+            <input type="checkbox" checked>
+            <span class="color-swatch" style="background-color: #f48fb1;"></span>
+          </label>
+          <label class="custom-checkbox color-swatch-container">
+            <input type="checkbox" checked>
+            <span class="color-swatch" style="background-color: #42a5f5;"></span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+    <div class="filter-modal-footer">
+      <button class="btn btn-apply-filters w-100" (click)="closeFilterModal()">
+        <i class="bi bi-check2 me-2"></i>Aplicar Filtros
+      </button>
+    </div>
+  </div>

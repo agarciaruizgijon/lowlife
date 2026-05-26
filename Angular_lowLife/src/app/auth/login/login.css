@@ -1,0 +1,116 @@
+/* ========================================
+   LOGIN PAGE STYLES
+   ======================================== */
+
+.login-section {
+  min-height: calc(100vh - 80px); /* Adjust for header/footer if needed */
+  background-image: url('https://images.unsplash.com/photo-1555448248-2571daf6344b?w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  position: relative;
+}
+
+.login-card {
+  background-color: #ffffff;
+  padding: 50px;
+  max-width: 500px;
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.login-card h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.8rem;
+  color: #111;
+  font-weight: 400;
+}
+
+/* Inputs */
+.form-control-underline {
+  border: none;
+  border-bottom: 2px solid #555;
+  border-radius: 0;
+  padding: 10px 0;
+  background-color: transparent;
+  box-shadow: none !important;
+  font-size: 1rem;
+  color: #333;
+}
+.form-control-underline:focus {
+  border-bottom-color: #000;
+}
+.form-control-underline::placeholder {
+  color: #888;
+}
+
+/* Botón Acceder */
+.btn-acceder {
+  background-color: #e33b29; /* Red from image */
+  color: white;
+  border: 1px solid #c2291a;
+  font-weight: 400;
+  padding: 10px;
+  font-size: 1.1rem;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+}
+.btn-acceder:hover {
+  opacity: 0.9;
+  color: white;
+}
+
+/* Botones de redes sociales */
+.social-buttons .btn-social {
+  padding: 8px 0;
+  font-size: 1.2rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+.social-buttons .btn-social:hover {
+  opacity: 0.85;
+}
+
+.btn-google {
+  background-color: #000000;
+  border: 1px solid #000;
+}
+.btn-google .bi-google {
+  background: -webkit-linear-gradient(45deg, #4285F4, #34A853, #FBBC05, #EA4335);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-apple {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #555;
+}
+
+.btn-facebook {
+  background-color: #4da6ff;
+  color: #ffffff;
+  border: 1px solid #4da6ff;
+}
+
+.btn-x {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #000;
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    margin: 0 15px;
+    padding: 30px 20px;
+  }
+}

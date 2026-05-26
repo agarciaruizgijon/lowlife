@@ -1,0 +1,111 @@
+<div class="container py-5 mt-5">
+  <div class="row mb-4">
+    <div class="col-12">
+      <h2 class="fw-bold mb-1">Dashboard</h2>
+      <p class="text-muted">Resumen general de la plataforma</p>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="row g-4 mb-5">
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="text-muted mb-0">Pedidos Totales</h6>
+            <div class="icon-circle bg-primary bg-opacity-10 text-primary">
+              <i class="bi bi-box-seam fs-5"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold mb-0">1,245</h3>
+          <p class="text-success small mt-2 mb-0"><i class="bi bi-arrow-up-short"></i> +12% este mes</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="text-muted mb-0">Productos</h6>
+            <div class="icon-circle bg-success bg-opacity-10 text-success">
+              <i class="bi bi-tag fs-5"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold mb-0">342</h3>
+          <p class="text-success small mt-2 mb-0"><i class="bi bi-arrow-up-short"></i> +5 nuevos</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm rounded-4 h-100 p-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="text-muted mb-0">Usuarios Activos</h6>
+            <div class="icon-circle bg-info bg-opacity-10 text-info">
+              <i class="bi bi-people fs-5"></i>
+            </div>
+          </div>
+          <h3 class="fw-bold mb-0">8,592</h3>
+          <p class="text-success small mt-2 mb-0"><i class="bi bi-arrow-up-short"></i> +3% esta semana</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Orders Table -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm rounded-4 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 class="fw-bold mb-0">Últimos Pedidos</h5>
+          <button class="btn btn-sm btn-outline-dark rounded-pill px-3">Ver todos</button>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>ID Pedido</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="fw-bold">#ORD-001</span></td>
+                <td>Juan Pérez</td>
+                <td>14 May, 2026</td>
+                <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">Completado</span></td>
+                <td>€120.50</td>
+              </tr>
+              <tr>
+                <td><span class="fw-bold">#ORD-002</span></td>
+                <td>María García</td>
+                <td>13 May, 2026</td>
+                <td><span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3">Pendiente</span></td>
+                <td>€85.00</td>
+              </tr>
+              <tr>
+                <td><span class="fw-bold">#ORD-003</span></td>
+                <td>Carlos López</td>
+                <td>12 May, 2026</td>
+                <td><span class="badge bg-info bg-opacity-10 text-info rounded-pill px-3">Enviado</span></td>
+                <td>€210.00</td>
+              </tr>
+              <tr>
+                <td><span class="fw-bold">#ORD-004</span></td>
+                <td>Ana Martínez</td>
+                <td>11 May, 2026</td>
+                <td><span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3">Cancelado</span></td>
+                <td>€45.90</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
