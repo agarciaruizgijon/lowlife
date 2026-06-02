@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'index', component: Index },
   { path: 'login', component: Login },
   { path: 'registro', component: Register },
-  { path: 'producto', component: ProductDetail },
+  { path: 'producto/:id', component: ProductDetail },
   { path: 'carrito', component: Cart },
   { path: 'contacto', component: Contact },
   { path: 'nosotros', component: About },

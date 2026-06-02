@@ -1,5 +1,5 @@
 <!-- Main Container -->
-<div class="container my-5" style="background-color: white; padding: 2rem; border-radius: 8px;">
+<div class="container my-5" style="background-color: white; padding: 2rem; border-radius: 8px;" *ngIf="producto">
   
   <div class="row g-5 align-items-center">
     
@@ -9,19 +9,19 @@
         <span class="position-absolute top-0 start-0 m-3 p-2 bg-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
           <i class="bi bi-heart-fill text-danger"></i>
         </span>
-        <img src="assets/imagenes/reloj.png" alt="Reloj de lujo" class="img-fluid rounded" style="width: 100%; object-fit: cover; max-height: 500px;">
+        <img [src]="producto.image" [alt]="producto.name" class="img-fluid rounded" style="width: 100%; object-fit: cover; max-height: 500px;">
       </div>
     </div>
 
     <!-- Detalles del Producto -->
     <div class="col-md-6">
       <div class="card card-lowlife p-4 border-0 h-100" style="box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-        <h2 class="mb-3 fw-bold">Reloj de lujo</h2>
+        <h2 class="mb-3 fw-bold">{{ producto.name }}</h2>
         <div class="mb-2">
           <span class="badge bg-success text-success bg-opacity-25 border border-success border-opacity-50">Verificado</span>
         </div>
         <div class="mb-4">
-          <span class="fs-1 fw-bold">€500</span>
+          <span class="fs-1 fw-bold">€{{ producto.price }}</span>
         </div>
 
         <div class="row mb-4">
@@ -31,18 +31,18 @@
               <option selected>Unitalla</option>
             </select>
           </div>
-          <div class="col-6">
+          <div class="col-6" *ngIf="producto.colors.length">
             <label class="form-label text-muted">Color:</label>
             <select class="form-select">
-              <option selected>Burdeo</option>
+              <option *ngFor="let color of producto.colors" [value]="color">{{ color }}</option>
             </select>
           </div>
         </div>
 
-        <button class="btn btn-primary w-100 py-2 mb-4 fw-bold fs-5" style="border-radius: 4px;">Añadir al carro</button>
+        <button class="btn btn-primary w-100 py-2 mb-4 fw-bold fs-5" style="border-radius: 4px;" (click)="addToCart()">Añadir al carro</button>
 
         <div class="border rounded p-3 text-muted">
-          Reloj de buceo de lujo con bisel rojo, esfera negra y brazalete de acero inoxidable.
+          {{ producto['descripcion'] || 'Sin descripción adicional.' }}
         </div>
       </div>
     </div>

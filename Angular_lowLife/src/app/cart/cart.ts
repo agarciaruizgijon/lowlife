@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { CartService, CartItem } from '../services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -6,20 +7,32 @@ import { Component } from '@angular/core';
   styleUrls: ['./cart.css'],
   standalone: false
 })
-export class Cart {
-  // Mock data para los productos recomendados como en la imagen
-  recomendados = [
-    {
-      name: "Zapatillas Urban",
-      image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=500&q=80"
-    },
-    {
-      name: "Equipación Brasil",
-      image: "https://images.unsplash.com/photo-1583316174775-bd6dc0e9f298?auto=format&fit=crop&w=500&q=80"
-    },
-    {
-      name: "Sudadera Casual",
-      image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=500&q=80"
-    }
-  ];
+export class Cart implements OnInit {
+  cesta: CartItem[] = [];
+  total: number = 0;
+
+  constructor(
+    private cartService: CartService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.cartService.getCart().subscribe({
+      next: (data) => {
+        this.cesta = data;
+        this.calculateTotal();
+        this.cdr.detectChanges(); // Forzar actualización de la vista
+      },
+      error: (err) => console.error('Error fetching cart', err)
+    });
+  }
+
+  calculateTotal(): void {
+    this.total = this.cesta.reduce((acc, item) => {
+      // The price is stored in item.producto.precio (from DB)
+      const price = Number(item.producto?.precio || 0);
+      return acc + (price * item.cantidad);
+    }, 0);
+  }
 }
+

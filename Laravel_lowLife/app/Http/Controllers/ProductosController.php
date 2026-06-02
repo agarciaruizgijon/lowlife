@@ -12,7 +12,7 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Productos::all());
     }
 
     /**
@@ -26,9 +26,13 @@ class ProductosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Productos $productos)
+    public function show($id)
     {
-        //
+        $producto = Productos::find($id);
+        if (!$producto) {
+            return response()->json(['message' => 'Not Found'], 404);
+        }
+        return response()->json($producto);
     }
 
     /**

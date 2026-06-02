@@ -83,7 +83,7 @@
           
           <!-- Dynamic Products -->
           <div class="col" *ngFor="let articulo of articulos">
-            <div class="product-card" routerLink="/producto" style="cursor: pointer;">
+            <div class="product-card" [routerLink]="['/producto', articulo.id]" style="cursor: pointer;">
               <div class="product-img-wrapper">
                 <img [src]="articulo.image" [alt]="articulo.name" class="product-img">
               </div>
