@@ -2,16 +2,25 @@
 <section class="login-section">
   <div class="container d-flex justify-content-center align-items-center">
     <div class="login-card">
-      <h2 class="text-center mb-5 text-dark">Iniciar Sesión</h2>
+      <h2 class="text-center mb-4 fw-bold">Iniciar Sesión</h2>
 
-      <form>
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        
+        <!-- Mensaje de error -->
+        <div *ngIf="errorMessage" class="alert alert-danger p-2 text-center" style="font-size: 0.9rem;">
+          {{ errorMessage }}
+        </div>
+
         <!-- Usuario / Correo -->
         <div class="mb-4">
           <input
             type="text"
             class="form-control form-control-underline"
             id="loginUser"
-            placeholder="Usuario / Correo electronico"
+            name="identificador"
+            [(ngModel)]="credentials.identificador"
+            placeholder="Usuario / Correo electrónico"
+            required
           />
         </div>
 
@@ -21,29 +30,29 @@
             type="password"
             class="form-control form-control-underline"
             id="loginPassword"
+            name="password"
+            [(ngModel)]="credentials.password"
             placeholder="Contraseña"
+            required
           />
         </div>
 
         <!-- Botón Acceder -->
-        <button type="submit" class="btn btn-acceder w-100 mb-3">Acceder</button>
+        <button type="submit" class="btn btn-acceder w-100 mb-3" [disabled]="!loginForm.form.valid">Acceder</button>
       </form>
 
       <!-- Botones de redes sociales -->
-      <div class="d-flex gap-2 social-buttons">
-        <button type="button" class="btn btn-social btn-google flex-fill">
-          <i class="bi bi-google"></i>
-        </button>
-        <button type="button" class="btn btn-social btn-apple flex-fill">
-          <i class="bi bi-apple"></i>
-        </button>
-        <button type="button" class="btn btn-social btn-facebook flex-fill">
-          <i class="bi bi-facebook"></i>
-        </button>
-        <button type="button" class="btn btn-social btn-x flex-fill">
-          <i class="bi bi-twitter-x"></i>
+      <div class="d-flex flex-column gap-2 social-buttons">
+        <button type="button" class="btn btn-social btn-google-original w-100" (click)="loginWithGoogle()">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo" class="google-icon me-2">
+          Continuar con Google
         </button>
       </div>
+
+      <!-- Link al registro -->
+      <p class="text-center mt-4 mb-0" style="font-size: 0.9rem;">
+        ¿No tienes cuenta? <a routerLink="/registro" class="text-dark fw-bold text-decoration-none">Regístrate</a>
+      </p>
     </div>
   </div>
 </section>

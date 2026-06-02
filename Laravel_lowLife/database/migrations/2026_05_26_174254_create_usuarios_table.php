@@ -21,15 +21,21 @@ return new class extends Migration {
             // nombre: Texto - Nombre completo del cliente
             $table->string('nombre');
 
+            // email: Texto - Correo electrónico del usuario (único)
+            $table->string('email')->unique();
+
+            // password: Texto - Contraseña para iniciar sesión
+            $table->string('password');
+
             // direccion: Texto - Calle, número, código postal, etc.
-            // Uso 'text' en lugar de 'string' porque las direcciones pueden ser largas
-            $table->text('direccion');
+            // Puede ser nulo porque se rellena en el perfil
+            $table->text('direccion')->nullable();
 
             // pais: Texto - País de residencia
-            $table->string('pais');
+            $table->string('pais')->nullable();
 
             // telefono: Texto - Número de contacto
-            $table->string('telefono');
+            $table->string('telefono')->nullable();
 
             // Esto crea los campos 'created_at' y 'updated_at' automáticamente (muy recomendado)
             $table->timestamps();

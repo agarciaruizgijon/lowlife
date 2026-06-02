@@ -8,19 +8,24 @@ use Illuminate\Http\Request;
 class PedidosController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Comentario: Devuelve el historial de pedidos del usuario autenticado
      */
-    public function index()
+    public function misPedidos(Request $request)
     {
-        //
-    }
+        $usuario = $request->user();
+        if (!$usuario) {
+            return response()->json(['error' => 'No autorizado'], 401);
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        // Buscamos los pedidos del usuario. 
+        // Con 'with' traemos también los detalles y, de cada detalle, el producto asociado.
+        // Los ordenamos de más nuevo a más viejo usando latest().
+        $pedidos = Pedidos::with('detalles.producto')
+                          ->where('usuario_id', $usuario->id)
+                          ->latest()
+                          ->get();
+                          
+        return response()->json($pedidos);
     }
 
     /**

@@ -2,8 +2,9 @@
    LOGIN PAGE STYLES
    ======================================== */
 
+/* Sección principal del login con fondo de graffiti */
 .login-section {
-  min-height: calc(100vh - 80px); /* Adjust for header/footer if needed */
+  min-height: calc(100vh - 280px);
   background-image: url('https://images.unsplash.com/photo-1555448248-2571daf6344b?w=1920&q=80');
   background-size: cover;
   background-position: center;
@@ -11,24 +12,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 0;
+  padding: 40px 0;
   position: relative;
 }
 
+/* Tarjeta del formulario de login */
 .login-card {
-  background-color: #ffffff;
-  padding: 50px;
-  max-width: 500px;
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 40px 50px;
+  max-width: 480px;
   width: 100%;
-  border-radius: 6px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 .login-card h2 {
   font-family: 'Inter', sans-serif;
-  font-size: 1.8rem;
-  color: #111;
-  font-weight: 400;
+  font-size: 1.75rem;
+  color: #1a1a1a;
 }
 
 /* Inputs */
@@ -51,66 +54,61 @@
 
 /* Botón Acceder */
 .btn-acceder {
-  background-color: #e33b29; /* Red from image */
+  background-color: #e63b2e;
   color: white;
-  border: 1px solid #c2291a;
-  font-weight: 400;
+  border-color: #e63b2e;
+  font-weight: 600;
   padding: 10px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   border-radius: 4px;
-  transition: opacity 0.2s ease;
+  transition: background-color 0.2s ease;
 }
+
 .btn-acceder:hover {
-  opacity: 0.9;
+  background-color: #c9322a;
+  border-color: #c9322a;
   color: white;
 }
 
-/* Botones de redes sociales */
-.social-buttons .btn-social {
-  padding: 8px 0;
-  font-size: 1.2rem;
+/* Botones de redes sociales - Estilo Original Google */
+.social-buttons {
+  margin-top: 15px;
+}
+
+.btn-google-original {
+  background-color: #ffffff;
+  color: #3c4043;
+  border: 1px solid #dadce0;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 10px 16px;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s ease;
-}
-.social-buttons .btn-social:hover {
-  opacity: 0.85;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn-google {
-  background-color: #000000;
-  border: 1px solid #000;
-}
-.btn-google .bi-google {
-  background: -webkit-linear-gradient(45deg, #4285F4, #34A853, #FBBC05, #EA4335);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.btn-google-original:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,0.30), 0 1px 3px 1px rgba(60,64,67,0.15);
 }
 
-.btn-apple {
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid #555;
+.google-icon {
+  width: 20px;
+  height: 20px;
 }
 
-.btn-facebook {
-  background-color: #4da6ff;
-  color: #ffffff;
-  border: 1px solid #4da6ff;
-}
-
-.btn-x {
-  background-color: #000000;
-  color: #ffffff;
-  border: 1px solid #000;
-}
-
+/* Responsive */
 @media (max-width: 768px) {
   .login-card {
-    margin: 0 15px;
-    padding: 30px 20px;
+    margin: 0 20px;
+    padding: 30px 25px;
+  }
+
+  .login-section {
+    min-height: 60vh;
+    padding: 40px 0;
   }
 }

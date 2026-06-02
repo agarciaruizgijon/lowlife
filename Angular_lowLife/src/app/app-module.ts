@@ -10,6 +10,7 @@ import { Index } from './index/index';
 import { Login } from './auth/login/login';
 import { Register } from './auth/register/register';
 import { ProductDetail } from './product-detail/product-detail';
+import { AuthCallbackComponent } from './auth/auth-callback/auth-callback.component';
 
 import { Cart } from './cart/cart';
 import { Contact } from './contact/contact';
@@ -31,6 +32,7 @@ import { AdminUserEdit } from './admin-user-edit/admin-user-edit';
     ProductDetail,
     Cart,
     Register,
+    AuthCallbackComponent,
     Contact,
     About,
     PaymentMethod,

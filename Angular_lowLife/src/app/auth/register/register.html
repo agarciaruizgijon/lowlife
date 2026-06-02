@@ -4,14 +4,24 @@
     <div class="register-card">
       <h2 class="text-center mb-4 fw-bold">Únete a LowLife</h2>
 
-      <form>
+      <!-- Añadimos (ngSubmit) para llamar a la función al enviar y #registerForm para controlarlo -->
+      <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+        
+        <!-- Mensaje de error -->
+        <div *ngIf="errorMessage" class="alert alert-danger p-2 text-center" style="font-size: 0.9rem;">
+          {{ errorMessage }}
+        </div>
+
         <!-- Usuario -->
         <div class="mb-4">
           <input
             type="text"
             class="form-control form-control-underline"
             id="registerUser"
+            name="nombre"
+            [(ngModel)]="userData.nombre"
             placeholder="Usuario"
+            required
           />
         </div>
 
@@ -21,7 +31,10 @@
             type="email"
             class="form-control form-control-underline"
             id="registerEmail"
+            name="email"
+            [(ngModel)]="userData.email"
             placeholder="Correo electrónico"
+            required
           />
         </div>
 
@@ -31,7 +44,10 @@
             type="password"
             class="form-control form-control-underline"
             id="registerPassword"
+            name="password"
+            [(ngModel)]="userData.password"
             placeholder="Contraseña"
+            required
           />
         </div>
 
@@ -41,27 +57,22 @@
             type="password"
             class="form-control form-control-underline"
             id="registerConfirmPassword"
+            name="confirmPassword"
+            [(ngModel)]="userData.confirmPassword"
             placeholder="Confirmar contraseña"
+            required
           />
         </div>
 
-        <!-- Botón Registrarse -->
-        <button type="submit" class="btn btn-primary w-100 mb-3 btn-registrarse">Registrarse</button>
+        <!-- Botón Registrarse (se deshabilita si el formulario no es válido) -->
+        <button type="submit" class="btn btn-primary w-100 mb-3 btn-registrarse" [disabled]="!registerForm.form.valid">Registrarse</button>
       </form>
 
       <!-- Botones de redes sociales -->
-      <div class="d-flex gap-2 social-buttons">
-        <button class="btn btn-social btn-google flex-fill">
-          <i class="bi bi-google"></i>
-        </button>
-        <button class="btn btn-social btn-apple flex-fill">
-          <i class="bi bi-apple"></i>
-        </button>
-        <button class="btn btn-social btn-facebook flex-fill">
-          <i class="bi bi-facebook"></i>
-        </button>
-        <button class="btn btn-social btn-x flex-fill">
-          <i class="bi bi-twitter-x"></i>
+      <div class="d-flex flex-column gap-2 social-buttons">
+        <button type="button" class="btn btn-social btn-google-original w-100" (click)="loginWithGoogle()">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo" class="google-icon me-2">
+          Continuar con Google
         </button>
       </div>
 

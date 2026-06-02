@@ -6,8 +6,12 @@
     <!-- Imagen del Producto -->
     <div class="col-md-6">
       <div class="position-relative">
-        <span class="position-absolute top-0 start-0 m-3 p-2 bg-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-          <i class="bi bi-heart-fill text-danger"></i>
+        <span class="position-absolute top-0 start-0 m-3 p-2 bg-white rounded-circle d-flex align-items-center justify-content-center" 
+              style="width: 40px; height: 40px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 10;"
+              (click)="toggleLike()"
+              [class.heart-pop]="animateHeart">
+          <!-- Comentario: Muestra un corazón relleno si tiene 'like', o vacío si no -->
+          <i class="bi text-danger" [ngClass]="isLiked ? 'bi-heart-fill' : 'bi-heart'"></i>
         </span>
         <img [src]="producto.image" [alt]="producto.name" class="img-fluid rounded" style="width: 100%; object-fit: cover; max-height: 500px;">
       </div>
@@ -39,7 +43,19 @@
           </div>
         </div>
 
-        <button class="btn btn-primary w-100 py-2 mb-4 fw-bold fs-5" style="border-radius: 4px;" (click)="addToCart()">Añadir al carro</button>
+        <div class="product-actions d-flex gap-3 mb-4">
+          <button class="btn btn-primary add-to-cart-btn flex-grow-1 py-2 fw-bold fs-5" style="border-radius: 4px;" (click)="addToCart()">
+            <i class="bi bi-cart-plus me-2"></i> Añadir al carro
+          </button>
+          
+          <!-- Comentario: Botón grande para dar like/deseados -->
+          <button class="btn btn-outline-danger shadow-sm like-btn d-flex justify-content-center align-items-center" 
+                  (click)="toggleLike()" 
+                  style="width: 55px; border-radius: 8px;"
+                  [class.heart-pop]="animateHeart">
+            <i class="bi fs-5" [ngClass]="isLiked ? 'bi-heart-fill' : 'bi-heart'"></i>
+          </button>
+        </div>
 
         <div class="border rounded p-3 text-muted">
           {{ producto['descripcion'] || 'Sin descripción adicional.' }}

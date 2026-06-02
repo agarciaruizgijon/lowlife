@@ -8,8 +8,10 @@
     <!-- Mobile right icons (always visible) -->
     <div class="d-flex align-items-center gap-3 ms-auto d-lg-none me-2" *ngIf="!isLoginPage()">
       <i class="bi bi-cart2 nav-icon-mobile" routerLink="/carrito" style="cursor: pointer;" *ngIf="!isAdminMode"></i>
-      <i class="bi bi-person nav-icon-mobile" routerLink="/login" style="cursor: pointer;" *ngIf="!isAdminMode"></i>
-      <i class="bi bi-shield-lock nav-icon-mobile" *ngIf="!isAdminMode" (click)="toggleAdminMode()" style="cursor: pointer;" title="Modo Administrador"></i>
+      <!-- Foto de usuario o icono por defecto -->
+      <img *ngIf="!isAdminMode && getUserPhoto()" [src]="getUserPhoto()" routerLink="/perfil" style="cursor: pointer; width: 28px; height: 28px; object-fit: cover;" class="rounded-circle nav-icon-mobile shadow-sm">
+      <i *ngIf="!isAdminMode && !getUserPhoto()" class="bi bi-person nav-icon-mobile" [routerLink]="authService.isLoggedIn() ? '/perfil' : '/login'" style="cursor: pointer;"></i>
+      <i class="bi bi-shield-lock nav-icon-mobile" *ngIf="!isAdminMode && isAdminUser()" (click)="toggleAdminMode()" style="cursor: pointer;" title="Modo Administrador"></i>
       <i class="bi bi-box-arrow-left nav-icon-mobile" *ngIf="isAdminMode" (click)="toggleAdminMode()" style="cursor: pointer; font-size: 1.5rem;" title="Volver a la Tienda"></i>
     </div>
 
@@ -61,8 +63,10 @@
         </div>
         <div class="d-none d-lg-flex nav-icons gap-4 align-items-center">
           <i class="bi bi-cart2" routerLink="/carrito" style="cursor: pointer;" *ngIf="!isAdminMode"></i>
-          <i class="bi bi-person" routerLink="/login" style="cursor: pointer;" *ngIf="!isAdminMode"></i>
-          <i class="bi bi-shield-lock" *ngIf="!isAdminMode" (click)="toggleAdminMode()" style="cursor: pointer; font-size: 1.2rem;" title="Modo Administrador"></i>
+          <!-- Foto de usuario o icono por defecto (Desktop) -->
+          <img *ngIf="!isAdminMode && getUserPhoto()" [src]="getUserPhoto()" routerLink="/perfil" style="cursor: pointer; width: 32px; height: 32px; object-fit: cover;" class="rounded-circle shadow-sm">
+          <i *ngIf="!isAdminMode && !getUserPhoto()" class="bi bi-person" [routerLink]="authService.isLoggedIn() ? '/perfil' : '/login'" style="cursor: pointer;"></i>
+          <i class="bi bi-shield-lock" *ngIf="!isAdminMode && isAdminUser()" (click)="toggleAdminMode()" style="cursor: pointer; font-size: 1.2rem;" title="Modo Administrador"></i>
           <i class="bi bi-box-arrow-left" *ngIf="isAdminMode" (click)="toggleAdminMode()" style="cursor: pointer; font-size: 1.5rem;" title="Volver a la Tienda"></i>
         </div>
       </div>

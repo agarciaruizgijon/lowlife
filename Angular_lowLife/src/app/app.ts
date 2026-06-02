@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class App {
   isNavbarOpen: boolean = false;
   isAdminMode: boolean = false;
 
-  constructor(public router: Router) {
+  constructor(public router: Router, public authService: AuthService) {
     // Close navbar on route change
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -29,6 +30,22 @@ export class App {
 
   isLoginPage(): boolean {
     return this.router.url === '/login' || this.router.url === '/registro';
+  }
+
+  /**
+   * Comprueba si el usuario logueado tiene el rol de admin
+   */
+  isAdminUser(): boolean {
+    const user = this.authService.getUser();
+    return user && user.rol === 'admin';
+  }
+
+  /**
+   * Obtiene la foto de perfil del usuario si la tiene
+   */
+  getUserPhoto(): string | null {
+    const user = this.authService.getUser();
+    return (user && user.foto_perfil) ? user.foto_perfil : null;
   }
 
   toggleNavbar() {

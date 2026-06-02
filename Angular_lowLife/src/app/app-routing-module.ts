@@ -10,6 +10,8 @@ import { Cart } from './cart/cart';
 import { Contact } from './contact/contact';
 import { About } from './about/about';
 import { PaymentMethod } from './payment-method/payment-method';
+import { Perfil } from './perfil/perfil';
+import { AuthCallbackComponent } from './auth/auth-callback/auth-callback.component';
 
 import { AdminUserManagement } from './admin-user-management/admin-user-management';
 import { AdminProductCreation } from './admin-product-creation/admin-product-creation';
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: 'index', component: Index },
   { path: 'login', component: Login },
   { path: 'registro', component: Register },
+  { path: 'auth/callback', component: AuthCallbackComponent },
+  { path: 'perfil', component: Perfil }, // Añadimos la ruta para acceder a /perfil
   { path: 'producto/:id', component: ProductDetail },
   { path: 'carrito', component: Cart },
   { path: 'contacto', component: Contact },

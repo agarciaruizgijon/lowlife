@@ -16,12 +16,12 @@ class Pedidos extends Model
     // Relación: Un Pedido pertenece a un Usuario (N a 1)
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(Usuarios::class, 'usuario_id');
     }
 
     // Relación: Un Pedido tiene muchos Detalles (1 a N)
     public function detalles()
     {
-        return $this->hasMany(DetallePedido::class);
+        return $this->hasMany(Detalles_Pedido::class, 'pedido_id');
     }
 }

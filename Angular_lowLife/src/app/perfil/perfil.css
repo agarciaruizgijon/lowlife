@@ -1,0 +1,75 @@
+/* Estilos normales y limpios para el perfil */
+.perfil-section {
+  background-color: #f8f9fa; /* bg-light de Bootstrap */
+  min-height: calc(100vh - 70px);
+  padding-bottom: 3rem;
+}
+
+.perfil-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Cabecera */
+.avatar-container {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 4px solid white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.upload-btn {
+  width: 35px;
+  height: 35px;
+  background-color: #0d6efd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+.upload-btn:hover {
+  background-color: #0b5ed7;
+}
+
+/* Pestañas (Nav Pills) */
+.nav-pills .nav-link {
+  color: #495057;
+  font-weight: 500;
+  border-radius: 8px;
+  margin: 0 0.25rem;
+  transition: all 0.2s;
+}
+.nav-pills .nav-link:hover {
+  background-color: #e9ecef;
+}
+.nav-pills .nav-link.active {
+  background-color: #0d6efd;
+  color: white;
+  box-shadow: 0 2px 5px rgba(13, 110, 253, 0.3);
+}
+
+/* Tarjetas de Deseados */
+.wishlist-card {
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.wishlist-card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Historial de Pedidos */
+.accordion-button:not(.collapsed) {
+  background-color: #f1f7ff;
+  color: #0d6efd;
+}

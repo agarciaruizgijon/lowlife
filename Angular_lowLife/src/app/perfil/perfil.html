@@ -1,0 +1,165 @@
+<!-- Sección de Perfil Normal a Ancho Completo -->
+<section class="perfil-section pt-4">
+  <div class="container-fluid px-4 px-lg-5 d-flex justify-content-center align-items-start">
+    
+    <div class="perfil-card w-100 p-4 p-md-5" *ngIf="user">
+      
+      <!-- Cabecera con la foto de perfil -->
+      <div class="perfil-header text-center mb-5">
+        <div class="avatar-container mb-3 position-relative d-inline-block">
+          <img [src]="isEditing ? (previewUrl || 'assets/default-avatar.png') : (user.foto_perfil || 'assets/default-avatar.png')" 
+               alt="Foto de perfil" class="avatar-img rounded-circle shadow-sm">
+          
+          <label *ngIf="isEditing" for="fileInput" class="upload-btn position-absolute bottom-0 end-0 text-white rounded-circle cursor-pointer shadow">
+            <i class="bi bi-camera-fill"></i>
+          </label>
+          <input *ngIf="isEditing" type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" class="d-none">
+        </div>
+        <h2 class="text-dark m-0 fw-bold">{{ user.nombre }}</h2>
+        <p class="text-muted text-capitalize badge bg-light text-dark border mt-2 px-3 py-2">{{ user.rol }}</p>
+      </div>
+
+      <!-- Navegación de Pestañas -->
+      <ul class="nav nav-pills justify-content-center mb-4 border-bottom pb-3">
+        <li class="nav-item">
+          <a class="nav-link cursor-pointer" [class.active]="activeTab === 'datos'" (click)="setTab('datos')"><i class="bi bi-person-lines-fill me-2"></i> Mis Datos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link cursor-pointer" [class.active]="activeTab === 'pedidos'" (click)="setTab('pedidos')"><i class="bi bi-box-seam me-2"></i> Mis Pedidos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link cursor-pointer" [class.active]="activeTab === 'deseados'" (click)="setTab('deseados')"><i class="bi bi-heart-fill me-2" [class.text-white]="activeTab === 'deseados'" [class.text-danger]="activeTab !== 'deseados'"></i> Deseados</a>
+        </li>
+      </ul>
+
+      <!-- PESTAÑA: MIS DATOS -->
+      <div *ngIf="activeTab === 'datos'" class="px-md-4">
+        <!-- MODO VISUALIZACIÓN -->
+        <div *ngIf="!isEditing" class="perfil-info">
+          <ul class="list-group list-group-flush mb-4 text-start">
+            <li class="list-group-item py-3"><i class="bi bi-envelope-fill me-3 text-secondary"></i> <strong>Email:</strong> <span class="float-end">{{ user.email }}</span></li>
+            <li class="list-group-item py-3"><i class="bi bi-geo-alt-fill me-3 text-secondary"></i> <strong>Dirección:</strong> <span class="float-end">{{ user.direccion || 'No especificada' }}</span></li>
+            <li class="list-group-item py-3"><i class="bi bi-globe-americas me-3 text-secondary"></i> <strong>País:</strong> <span class="float-end">{{ user.pais || 'No especificado' }}</span></li>
+            <li class="list-group-item py-3"><i class="bi bi-telephone-fill me-3 text-secondary"></i> <strong>Teléfono:</strong> <span class="float-end">{{ user.telefono || 'No especificado' }}</span></li>
+          </ul>
+
+          <div class="d-flex gap-2 justify-content-end">
+            <button (click)="toggleEdit()" class="btn btn-primary"><i class="bi bi-pencil-square me-1"></i> Editar Perfil</button>
+            <button (click)="logout()" class="btn btn-outline-danger"><i class="bi bi-box-arrow-right me-1"></i> Salir</button>
+          </div>
+        </div>
+
+        <!-- MODO EDICIÓN -->
+        <div *ngIf="isEditing" class="perfil-edit-form text-start bg-light p-4 rounded border">
+          <form (ngSubmit)="saveChanges()">
+            <div class="mb-3">
+              <label class="form-label fw-bold">O pega la URL de una foto</label>
+              <input type="text" class="form-control" name="fotoUrl" [(ngModel)]="editData.foto_perfil_url" placeholder="https://...">
+            </div>
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Nombre</label>
+                <input type="text" class="form-control" name="nombre" [(ngModel)]="editData.nombre" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Email</label>
+                <input type="email" class="form-control" name="email" [(ngModel)]="editData.email" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Dirección</label>
+              <input type="text" class="form-control" name="direccion" [(ngModel)]="editData.direccion" placeholder="Calle Ejemplo 123">
+            </div>
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">País</label>
+                <input type="text" class="form-control" name="pais" [(ngModel)]="editData.pais" placeholder="España">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Teléfono</label>
+                <input type="text" class="form-control" name="telefono" [(ngModel)]="editData.telefono" placeholder="+34 600000000">
+              </div>
+            </div>
+            <div class="d-flex gap-2 justify-content-end">
+              <button type="button" (click)="toggleEdit()" class="btn btn-secondary"><i class="bi bi-x-circle me-1"></i> Cancelar</button>
+              <button type="submit" class="btn btn-success"><i class="bi bi-check-circle me-1"></i> Guardar Cambios</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- PESTAÑA: MIS PEDIDOS -->
+      <div *ngIf="activeTab === 'pedidos'" class="pedidos-tab px-md-4">
+        <h4 class="mb-4 text-center">Historial de Compras</h4>
+        <div *ngIf="pedidos.length === 0" class="alert alert-secondary text-center">Aún no has realizado ningún pedido.</div>
+        
+        <div class="accordion" id="pedidosAccordion">
+          <div class="accordion-item mb-3 border rounded overflow-hidden shadow-sm" *ngFor="let pedido of pedidos; let i = index">
+            <h2 class="accordion-header" [id]="'heading' + i">
+              <button class="accordion-button collapsed py-3" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i">
+                <strong class="me-3">Pedido #{{ pedido.id }}</strong> 
+                <span class="text-muted me-auto">{{ pedido.fecha | date:'dd/MM/yyyy' }}</span>
+                <span class="badge" [ngClass]="pedido.procesado ? 'bg-success' : 'bg-warning text-dark'">
+                  {{ pedido.procesado ? 'Enviado' : 'Procesando' }}
+                </span>
+              </button>
+            </h2>
+            <div [id]="'collapse' + i" class="accordion-collapse collapse" [attr.data-bs-parent]="'#pedidosAccordion'">
+              <div class="accordion-body bg-light">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0 border-bottom" *ngFor="let detalle of pedido.detalles; let last = last" [class.border-bottom-0]="last">
+                    <div class="d-flex align-items-center">
+                      <img [src]="detalle.producto?.foto_url || 'assets/default-product.png'" alt="{{ detalle.producto?.titulo }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;" class="me-3 border">
+                      <div>
+                        <h6 class="mb-0 text-dark">{{ detalle.producto?.titulo }}</h6>
+                        <small class="text-muted">Cantidad: {{ detalle.cantidad }}</small>
+                      </div>
+                    </div>
+                    <strong class="text-dark">{{ (detalle.producto?.precio * detalle.cantidad) | currency:'EUR' }}</strong>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PESTAÑA: DESEADOS -->
+      <div *ngIf="activeTab === 'deseados'" class="deseados-tab px-md-4">
+        <h4 class="mb-4 text-center">Tus Productos Favoritos</h4>
+        <div *ngIf="deseados.length === 0" class="alert alert-secondary text-center">Aún no tienes productos en tu lista de deseados.</div>
+        
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          <div class="col" *ngFor="let deseado of deseados">
+            <div class="card h-100 wishlist-card bg-white">
+              <div class="row g-0 h-100 align-items-center">
+                <div class="col-4 h-100 border-end">
+                  <img [src]="deseado.producto?.foto_url || 'assets/default-product.png'" class="img-fluid h-100 w-100 object-fit-cover" alt="{{ deseado.producto?.titulo }}" style="min-height: 120px;">
+                </div>
+                <div class="col-8">
+                  <div class="card-body p-3 d-flex flex-column justify-content-between h-100">
+                    <div>
+                      <h6 class="card-title fw-bold text-dark mb-1 text-truncate" [title]="deseado.producto?.titulo">{{ deseado.producto?.titulo }}</h6>
+                      <p class="card-text text-success fw-bold fs-5 mb-2">{{ deseado.producto?.precio | currency:'EUR' }}</p>
+                    </div>
+                    <div class="d-flex gap-2 mt-auto">
+                      <a [routerLink]="['/producto', deseado.producto?.id]" class="btn btn-sm btn-primary flex-grow-1"><i class="bi bi-cart-plus me-1"></i> Comprar</a>
+                      <button class="btn btn-sm btn-outline-danger" style="width: 35px; height: 35px; display: flex; align-items: center; justify-content: center;" (click)="removeLike(deseado.producto_id)" title="Quitar de deseados"><i class="bi bi-trash3-fill"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Cargando -->
+    <div *ngIf="!user" class="text-center mt-5 w-100">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="mt-2 text-muted">Cargando información del usuario...</p>
+    </div>
+  </div>
+</section>
