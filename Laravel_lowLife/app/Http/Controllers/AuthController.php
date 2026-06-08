@@ -5,44 +5,92 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usuarios;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\ValidationException;
 use Laravel\Socialite\Facades\Socialite;
+use App\Mail\VerifyEmailMailable;
 
 class AuthController extends Controller
 {
     /**
-     * Registra un nuevo usuario en la base de datos.
-     * Recibe los datos desde Angular, cifra la contraseña y crea el usuario.
+     * Registro de nuevo usuario
      */
-    public function register(Request $request)
+    public function registro(Request $request)
     {
-        // 1. Validamos los datos que nos llegan (solo nombre, email y password obligatorios)
-        $request->validate([
+        // 1. Validar los datos de entrada (asegurarnos de que recibimos nombre, email único y contraseña)
+        $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:usuarios',
             'password' => 'required|string|min:6',
         ]);
 
-        // 2. Creamos el usuario en la base de datos
+        // Si la validación falla, devolvemos un error 400 (Bad Request)
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        // 2. Crear el usuario en la base de datos con los datos validados
         $usuario = Usuarios::create([
             'nombre' => $request->nombre,
             'email' => $request->email,
-            'password' => Hash::make($request->password), // Contraseña encriptada
-            'direccion' => null, // Se rellenará luego en el perfil
-            'pais' => null,
-            'telefono' => null,
-            'rol' => 'usuario', // Rol forzado
+            'password' => Hash::make($request->password), // Encriptamos la contraseña
+            'rol' => 'usuario' // Todos los nuevos registrados son 'usuarios' por defecto
         ]);
 
-        // 3. Generamos un token de acceso
-        $token = $usuario->createToken('auth_token')->plainTextToken;
+        // 3. Generar la URL firmada para la verificación de correo
+        // 'temporarySignedRoute' crea un enlace seguro y único que caduca en 60 minutos
+        $verifyUrl = URL::temporarySignedRoute(
+            'verification.verify', // Nombre de la ruta en api.php
+            now()->addMinutes(60), // Tiempo de expiración del enlace
+            ['id' => $usuario->id, 'hash' => sha1($usuario->email)] // Parámetros seguros que enviamos
+        );
 
-        // 4. Devolvemos la respuesta
+        // 4. Enviar el correo electrónico con el enlace usando la plantilla VerifyEmailMailable
+        try {
+            Mail::to($usuario->email)->send(new VerifyEmailMailable($usuario, $verifyUrl));
+        } catch (\Exception $e) {
+            // Si el correo falla (por ejemplo, Mailtrap está caído), ignoramos el error para no bloquear el registro
+        }
+
+        // Responder al cliente (Angular) que todo ha ido bien
         return response()->json([
-            'mensaje' => 'Usuario registrado con éxito',
-            'usuario' => $usuario,
-            'token' => $token,
+            'mensaje' => 'Usuario registrado con éxito. Por favor, verifica tu correo.',
+            'usuario' => $usuario
         ], 201);
+    }
+
+    /**
+     * Verificar correo electrónico a través del enlace que llega al mail.
+     */
+    public function verifyEmail(Request $request, $id, $hash)
+    {
+        // 1. Buscamos al usuario por su ID
+        $user = Usuarios::find($id);
+
+        // Si no existe, redirigimos al frontend mostrando un error
+        if (!$user) {
+            return redirect('http://localhost:4200/login?error=user_not_found');
+        }
+
+        // 2. Verificamos que el código (hash) sea correcto comparándolo con el email del usuario
+        if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
+            return redirect('http://localhost:4200/login?error=invalid_hash');
+        }
+
+        // 3. Si el usuario ya había verificado su correo antes, le avisamos
+        if ($user->hasVerifiedEmail()) {
+            return redirect('http://localhost:4200/login?verified=already');
+        }
+
+        // 4. Si todo es correcto, marcamos su cuenta como verificada en la base de datos
+        if ($user->markEmailAsVerified()) {
+            // Aquí podríamos enviar un evento extra si el sistema lo requiriera
+        }
+
+        // 5. Redirigimos al usuario a Angular con el parámetro 'verified=success' para que le salga la alerta verde
+        return redirect('http://localhost:4200/login?verified=success');
     }
 
     /**
@@ -66,6 +114,16 @@ class AuthController extends Controller
         if (!$usuario || !Hash::check($request->password, $usuario->password)) {
             throw ValidationException::withMessages([
                 'credenciales' => ['Las credenciales proporcionadas son incorrectas.'],
+            ]);
+        }
+
+        // 3.5. Comprobamos si el usuario ha verificado su cuenta de correo.
+        // Si la columna email_verified_at es nula, significa que no ha clicado en el correo de verificación.
+        // En ese caso, bloqueamos el inicio de sesión y lanzamos un error que el frontend puede mostrar.
+        if (!$usuario->hasVerifiedEmail()) {
+            throw ValidationException::withMessages([
+                // Mandamos un mensaje claro indicando que falta la verificación
+                'verificacion' => ['Por favor, verifica tu cuenta desde el enlace que enviamos a tu correo antes de iniciar sesión.'],
             ]);
         }
 

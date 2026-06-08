@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 // Importamos el trait HasApiTokens para poder generar tokens de autenticación
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 
-class Usuarios extends Model
+class Usuarios extends Authenticatable implements MustVerifyEmail
 {
-    // Añadimos el trait HasApiTokens para que este modelo pueda emitir tokens de Sanctum
-    use HasApiTokens;
+    // Añadimos Notifiable y HasApiTokens
+    use HasApiTokens, Notifiable;
 
     // 1. Campos que se pueden llenar masivamente
     protected $fillable = [

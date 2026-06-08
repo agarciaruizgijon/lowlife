@@ -14,8 +14,16 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// Rutas públicas de autenticación tradicional
-Route::post('/register', [AuthController::class, 'register']);
+// --- RUTAS DE AUTENTICACIÓN Y USUARIOS ---
+
+// 1. Registro de usuario: Recibe nombre, email, password y crea la cuenta (enviando el correo de verificación)
+Route::post('/registro', [AuthController::class, 'registro']);
+
+// 2. Verificación de email: Ruta a la que llega el usuario cuando hace clic en el enlace de su correo
+// Tiene que tener el nombre 'verification.verify' para que URL::temporarySignedRoute de Laravel funcione
+Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+
+// 3. Login de usuario: Recibe identificador y password y devuelve el token de sesión
 Route::post('/login', [AuthController::class, 'login']);
 
 // Rutas públicas de autenticación con Google

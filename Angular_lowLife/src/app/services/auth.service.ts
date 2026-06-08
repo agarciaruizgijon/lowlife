@@ -19,12 +19,14 @@ export class AuthService {
    * @param userData Los datos del formulario de registro (nombre, password, etc)
    */
   register(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData).pipe(
+    return this.http.post(`${this.apiUrl}/registro`, userData).pipe(
       // 'tap' nos permite ejecutar código secundario si la petición tiene éxito sin modificar la respuesta
       tap((response: any) => {
         // Si el registro devuelve un token, lo guardamos para auto-loguear al usuario
-        if (response.token) {
-          this.setToken(response.token);
+        // Actualizado para buscar access_token (como devuelve ahora el backend) o token (legacy)
+        const tokenToSave = response.access_token || response.token;
+        if (tokenToSave) {
+          this.setToken(tokenToSave);
           this.setUser(response.usuario);
         }
       })
@@ -40,8 +42,9 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       tap((response: any) => {
         // Guardamos el token en localStorage para mantener la sesión
-        if (response.token) {
-          this.setToken(response.token);
+        const tokenToSave = response.access_token || response.token;
+        if (tokenToSave) {
+          this.setToken(tokenToSave);
           this.setUser(response.usuario);
         }
       })

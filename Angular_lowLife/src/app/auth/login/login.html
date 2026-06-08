@@ -2,15 +2,16 @@
 <section class="login-section">
   <div class="container d-flex justify-content-center align-items-center">
     <div class="login-card">
-      <h2 class="text-center mb-4 fw-bold">Iniciar Sesión</h2>
+      <h2 class="text-center mb-4 text-dark fw-bold">Inicia Sesión en LowLife</h2>
+
+      <!-- Alerta de éxito (para el correo verificado) -->
+      <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ successMessage }}
+        <button type="button" class="btn-close" (click)="successMessage = ''" aria-label="Close"></button>
+      </div>
 
       <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
         
-        <!-- Mensaje de error -->
-        <div *ngIf="errorMessage" class="alert alert-danger p-2 text-center" style="font-size: 0.9rem;">
-          {{ errorMessage }}
-        </div>
-
         <!-- Usuario / Correo -->
         <div class="mb-4">
           <input

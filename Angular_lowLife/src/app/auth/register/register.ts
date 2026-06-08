@@ -49,12 +49,23 @@ export class Register implements OnInit {
 
     this.authService.register(dataToSend).subscribe({
       next: (res) => {
-        // Si sale bien, redirigimos al catálogo
-        this.router.navigate(['/index']);
+        // Si sale bien, redirigimos al login avisando de que tienen que verificar el correo
+        this.router.navigate(['/login'], { queryParams: { registered: 'true' } });
       },
       error: (err) => {
-        // Si hay error, lo mostramos
-        this.errorMessage = 'Error al registrar. Revisa que el usuario o email no existan ya.';
+        // Mejorar la captura de errores para ser específicos
+        if (err.status === 422 && err.error && err.error.errors) {
+          const errors = err.error.errors;
+          let mensajes = [];
+          
+          if (errors.nombre_usuario) mensajes.push('El nombre de usuario ya está en uso o es inválido.');
+          if (errors.email) mensajes.push('El email ya está registrado o no es válido.');
+          if (errors.password) mensajes.push('La contraseña debe tener al menos 8 caracteres.');
+          
+          this.errorMessage = mensajes.length > 0 ? mensajes.join(' ') : 'Los datos introducidos no son válidos.';
+        } else {
+          this.errorMessage = 'Error al registrar. Revisa tu conexión o inténtalo más tarde.';
+        }
         console.error(err);
       }
     });
