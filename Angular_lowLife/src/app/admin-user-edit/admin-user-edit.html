@@ -14,12 +14,29 @@
             
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold">Nombre Completo</label>
-              <input type="text" class="form-control form-control-underline" [(ngModel)]="user.name" name="name" required>
+              <input type="text" class="form-control form-control-underline" [(ngModel)]="user.nombre" name="nombre" required>
             </div>
 
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold">Correo Electrónico</label>
               <input type="email" class="form-control form-control-underline" [(ngModel)]="user.email" name="email" required>
+            </div>
+
+            <!-- Nuevos campos añadidos: Dirección, País y Teléfono -->
+            <div class="mb-4">
+              <label class="form-label text-muted small fw-bold">Dirección</label>
+              <input type="text" class="form-control form-control-underline" [(ngModel)]="user.direccion" name="direccion">
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-muted small fw-bold">País</label>
+                <input type="text" class="form-control form-control-underline" [(ngModel)]="user.pais" name="pais">
+              </div>
+              <div class="col-md-6 mb-4">
+                <label class="form-label text-muted small fw-bold">Teléfono</label>
+                <input type="tel" class="form-control form-control-underline" [(ngModel)]="user.telefono" name="telefono">
+              </div>
             </div>
 
             <div class="row">
@@ -30,7 +47,7 @@
               </div>
               <div class="col-md-6 mb-4">
                 <label class="form-label text-muted small fw-bold">Último Acceso</label>
-                <input type="text" class="form-control form-control-underline bg-light" [value]="user.lastLogin" readonly>
+                <input type="text" class="form-control form-control-underline bg-light" [value]="user.updated_at | date:'shortDate'" readonly>
               </div>
             </div>
           </div>
@@ -42,30 +59,11 @@
             
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold">Rol del Sistema</label>
-              <select class="form-select" [(ngModel)]="user.role" name="role">
-                <option value="Admin">Administrador</option>
-                <option value="Editor">Editor</option>
-                <option value="Usuario">Usuario Estándar</option>
+              <select class="form-select" [(ngModel)]="user.rol" name="rol">
+                <option value="admin">Administrador</option>
+                <option value="usuario">Usuario Estándar</option>
               </select>
               <small class="text-muted mt-2 d-block">Define el nivel de acceso que tendrá este usuario en la plataforma.</small>
-            </div>
-
-            <div class="mb-0">
-              <label class="form-label text-muted small fw-bold d-block mb-3">Estado de la Cuenta</label>
-              <div class="d-flex gap-4">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="status" id="statusActive" value="Activo" [(ngModel)]="user.status">
-                  <label class="form-check-label" for="statusActive">
-                    <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle px-3 py-2">Activo</span>
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="status" id="statusInactive" value="Inactivo" [(ngModel)]="user.status">
-                  <label class="form-check-label" for="statusInactive">
-                    <span class="badge bg-danger-subtle text-danger-emphasis border border-danger-subtle px-3 py-2">Inactivo</span>
-                  </label>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -77,14 +75,26 @@
           <div class="card-body p-4 text-center">
             <h4 class="mb-4 text-start">Perfil</h4>
             <div class="mb-4">
-              <div class="bg-light rounded-circle d-inline-flex justify-content-center align-items-center mb-3" style="width: 120px; height: 120px;">
-                <i class="bi bi-person text-secondary" style="font-size: 4rem;"></i>
+              <div class="bg-light rounded-circle d-inline-flex justify-content-center align-items-center mb-3" style="width: 120px; height: 120px; overflow: hidden;">
+                <!-- Si hay un previewUrl se muestra primero, si no, la foto del usuario. Si ninguna existe, icono por defecto -->
+                <img *ngIf="previewUrl || user.foto_perfil" [src]="previewUrl || user.foto_perfil" alt="Perfil" style="width: 100%; height: 100%; object-fit: cover;">
+                <i *ngIf="!(previewUrl || user.foto_perfil)" class="bi bi-person text-secondary" style="font-size: 4rem;"></i>
               </div>
-              <h5 class="fw-bold mb-1">{{ user.name }}</h5>
+              <h5 class="fw-bold mb-1">{{ user.nombre }}</h5>
               <p class="text-muted small mb-0">{{ user.email }}</p>
             </div>
-            <button type="button" class="btn btn-outline-dark btn-sm w-100 mb-2">Cambiar Foto</button>
-            <button type="button" class="btn btn-outline-danger btn-sm w-100">Restablecer Contraseña</button>
+            <!-- Input de archivo oculto conectado al botón -->
+            <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" class="d-none">
+            <label for="fileInput" class="btn btn-outline-dark btn-sm w-100 mb-2">Subir Foto (Archivo local)</label>
+
+            <!-- Campo de texto alternativo para pegar la URL de una imagen -->
+            <div class="mt-2 text-start">
+              <label class="form-label text-muted small fw-bold">O URL de la imagen:</label>
+              <!-- Enlazamos con user.foto_perfil. Al cambiar, limpiamos cualquier archivo local que se hubiera seleccionado -->
+              <input type="url" class="form-control form-control-sm form-control-underline" 
+                     [(ngModel)]="user.foto_perfil" name="foto_perfil_url" 
+                     placeholder="https://ejemplo.com/foto.jpg" (input)="onUrlChanged()">
+            </div>
           </div>
         </div>
 
@@ -92,8 +102,7 @@
           <div class="card-body p-4">
             <h4 class="mb-4">Acciones Críticas</h4>
             <div class="d-grid gap-2">
-              <button type="button" class="btn btn-outline-warning fw-bold">Suspender Cuenta</button>
-              <button type="button" class="btn btn-outline-danger fw-bold">Eliminar Usuario</button>
+              <button type="button" class="btn btn-outline-danger fw-bold" (click)="deleteUser()">Eliminar Usuario</button>
             </div>
           </div>
         </div>
