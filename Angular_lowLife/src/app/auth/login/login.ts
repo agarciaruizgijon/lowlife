@@ -64,12 +64,12 @@ export class Login implements OnInit {
       error: (err) => {
         // Comprobamos si el backend nos ha devuelto un error de validación
         // y si dentro de esos errores viene el de 'verificacion' (email no verificado)
-        if (err.error && err.error.verificacion) {
-          this.errorMessage = err.error.verificacion[0];
+        if (err.error?.errors?.verificacion) {
+          this.errorMessage = err.error.errors.verificacion[0];
         } 
         // Si nos devuelve el error de credenciales incorrectas
-        else if (err.error && err.error.credenciales) {
-          this.errorMessage = err.error.credenciales[0];
+        else if (err.error?.errors?.credenciales) {
+          this.errorMessage = err.error.errors.credenciales[0];
         } 
         // Para cualquier otro error genérico
         else {

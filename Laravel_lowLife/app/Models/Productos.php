@@ -13,7 +13,12 @@ class Productos extends Model
         'foto_url',
         'colores',
         'precio',
-        'stock'
+        'stock',
+        'tallas',
+        'estado',
+        'categoria',
+        'proveedor_nombre',
+        'proveedor_email'
     ];
 
     // Relación: Un Producto puede estar en muchos Detalles de Pedido (1 a N)

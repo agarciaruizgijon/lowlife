@@ -73,17 +73,26 @@
 
 /* Badges */
 .badge-category {
-  background-color: var(--bs-primary, #e63b2e);
-  color: white;
-  padding: 0.35em 0.65em;
-  border-radius: 0.3rem;
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 0.4em 0.8em;
+  border-radius: 20px;
   font-weight: 500;
   font-size: 0.85rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.4rem;
   margin-bottom: 0.5rem;
   margin-right: 0.3rem;
+  transition: all 0.2s ease;
+  user-select: none;
+  cursor: pointer;
+}
+.badge-category:hover {
+  border-color: #111;
+  background-color: #f8f9fa;
+  color: #111;
 }
 .badge-category i {
   cursor: pointer;

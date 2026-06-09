@@ -7,31 +7,22 @@
         <!-- Categorías -->
         <div class="filter-section">
           <div class="filter-title">Categorías:</div>
-          <div class="d-flex flex-wrap">
-            <span class="badge-category">Reloj <i class="bi bi-x"></i></span>
-            <span class="badge-category">Zapato <i class="bi bi-x"></i></span>
-            <span class="badge-category">Sudadera <i class="bi bi-x"></i></span>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge-category"
+                  *ngFor="let cat of availableCategories" 
+                  [class.selected]="selectedCategories.includes(cat)"
+                  (click)="toggleCategory(cat)">
+              {{ cat }} <i class="bi bi-x" *ngIf="selectedCategories.includes(cat)"></i>
+            </span>
           </div>
         </div>
 
         <!-- Tallas -->
         <div class="filter-section">
           <div class="filter-title">Tallas:</div>
-          <label class="custom-checkbox">
-            <input type="checkbox" checked>
-            XS-S
-          </label>
-          <label class="custom-checkbox">
-            <input type="checkbox" checked>
-            M
-          </label>
-          <label class="custom-checkbox">
-            <input type="checkbox" checked>
-            L
-          </label>
-          <label class="custom-checkbox">
-            <input type="checkbox" checked>
-            XL
+          <label class="custom-checkbox d-block mb-2" *ngFor="let size of availableSizes">
+            <input type="checkbox" [checked]="selectedSizes.includes(size)" (change)="toggleSize(size)">
+            {{ size }}
           </label>
         </div>
 
@@ -47,18 +38,12 @@
         <!-- Color -->
         <div class="filter-section">
           <div class="filter-title">Color:</div>
-          <label class="custom-checkbox color-swatch-container">
-            <input type="checkbox" checked>
-            <span class="color-swatch" style="background-color: #ff5722;"></span>
-          </label>
-          <label class="custom-checkbox color-swatch-container">
-            <input type="checkbox" checked>
-            <span class="color-swatch" style="background-color: #f48fb1;"></span>
-          </label>
-          <label class="custom-checkbox color-swatch-container">
-            <input type="checkbox" checked>
-            <span class="color-swatch" style="background-color: #42a5f5;"></span>
-          </label>
+          <div class="d-flex flex-wrap gap-2">
+            <label class="custom-checkbox color-swatch-container" *ngFor="let color of baseColors" [title]="color.name">
+              <input type="checkbox" [checked]="selectedColors.includes(color.name)" (change)="toggleColor(color.name)">
+              <span class="color-swatch" [style.background-color]="color.hex"></span>
+            </label>
+          </div>
         </div>
       </div>
     </aside>
@@ -118,10 +103,13 @@
       <!-- Categorías -->
       <div class="filter-section">
         <div class="filter-title">Categorías:</div>
-        <div class="d-flex flex-wrap">
-          <span class="badge-category">Reloj <i class="bi bi-x"></i></span>
-          <span class="badge-category">Zapato <i class="bi bi-x"></i></span>
-          <span class="badge-category">Sudadera <i class="bi bi-x"></i></span>
+        <div class="d-flex flex-wrap gap-2">
+          <span class="badge-category"
+                *ngFor="let cat of availableCategories" 
+                [class.selected]="selectedCategories.includes(cat)"
+                (click)="toggleCategory(cat)">
+            {{ cat }} <i class="bi bi-x" *ngIf="selectedCategories.includes(cat)"></i>
+          </span>
         </div>
       </div>
 
@@ -129,21 +117,9 @@
       <div class="filter-section">
         <div class="filter-title">Tallas:</div>
         <div class="size-grid">
-          <label class="custom-checkbox">
-            <input type="checkbox" checked>
-            XS-S
-          </label>
-          <label class="custom-checkbox">
-            <input type="checkbox" checked>
-            M
-          </label>
-          <label class="custom-checkbox">
-            <input type="checkbox" checked>
-            L
-          </label>
-          <label class="custom-checkbox">
-            <input type="checkbox" checked>
-            XL
+          <label class="custom-checkbox" *ngFor="let size of availableSizes">
+            <input type="checkbox" [checked]="selectedSizes.includes(size)" (change)="toggleSize(size)">
+            {{ size }}
           </label>
         </div>
       </div>
@@ -161,17 +137,9 @@
       <div class="filter-section">
         <div class="filter-title">Color:</div>
         <div class="d-flex flex-wrap gap-2">
-          <label class="custom-checkbox color-swatch-container">
-            <input type="checkbox" checked>
-            <span class="color-swatch" style="background-color: #ff5722;"></span>
-          </label>
-          <label class="custom-checkbox color-swatch-container">
-            <input type="checkbox" checked>
-            <span class="color-swatch" style="background-color: #f48fb1;"></span>
-          </label>
-          <label class="custom-checkbox color-swatch-container">
-            <input type="checkbox" checked>
-            <span class="color-swatch" style="background-color: #42a5f5;"></span>
+          <label class="custom-checkbox color-swatch-container" *ngFor="let color of baseColors" [title]="color.name">
+            <input type="checkbox" [checked]="selectedColors.includes(color.name)" (change)="toggleColor(color.name)">
+            <span class="color-swatch" [style.background-color]="color.hex"></span>
           </label>
         </div>
       </div>

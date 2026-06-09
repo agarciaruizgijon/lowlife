@@ -1,9 +1,166 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-admin-product-edit',
   standalone: false,
   templateUrl: './admin-product-edit.html',
-  styleUrl: './admin-product-edit.css',
+  styleUrl: './admin-product-edit.css'
 })
-export class AdminProductEdit {}
+export class AdminProductEdit implements OnInit {
+  productId!: number;
+  
+  producto: {
+    titulo: string;
+    descripcion: string;
+    precio: number | null;
+    stock: number | null;
+    estado: string;
+    categoria: string;
+    proveedor_nombre: string;
+    proveedor_email: string;
+    foto_url: string;
+  } = {
+    titulo: '',
+    descripcion: '',
+    precio: null,
+    stock: null,
+    estado: 'draft',
+    categoria: '',
+    proveedor_nombre: '',
+    proveedor_email: '',
+    foto_url: ''
+  };
+
+  // Archivo seleccionado
+  selectedFile: File | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
+
+  // Tallas disponibles
+  tallasOptions = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Unitalla'];
+  selectedTallas: string[] = [];
+
+  // Selector dinámico de colores
+  currentColor: string = '#000000';
+  selectedColors: string[] = [];
+
+  constructor(
+    private productService: ProductService, 
+    private router: Router,
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit() {
+    this.productId = Number(this.route.snapshot.paramMap.get('id'));
+    if (this.productId) {
+      this.loadProduct();
+    }
+  }
+
+  loadProduct() {
+    this.productService.getProduct(this.productId).subscribe({
+      next: (data: any) => {
+        this.producto.titulo = data.titulo || data.name || '';
+        this.producto.descripcion = data.descripcion || '';
+        this.producto.precio = data.precio || data.price || 0;
+        this.producto.stock = data.stock || 0;
+        this.producto.estado = data.estado || 'draft';
+        this.producto.categoria = data.categoria || '';
+        this.producto.proveedor_nombre = data.proveedor_nombre || '';
+        this.producto.proveedor_email = data.proveedor_email || '';
+        this.producto.foto_url = data.foto_url || data.image || '';
+        
+        if (this.producto.foto_url) {
+            this.imagePreview = this.producto.foto_url;
+        }
+
+        if (data.tallas) {
+            this.selectedTallas = data.tallas.split(',');
+        }
+        
+        if (data.colores) {
+            this.selectedColors = typeof data.colores === 'string' ? data.colores.split(',') : data.colores;
+        }
+
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error cargando producto', err)
+    });
+  }
+
+  toggleTalla(talla: string) {
+    const index = this.selectedTallas.indexOf(talla);
+    if (index > -1) {
+      this.selectedTallas.splice(index, 1);
+    } else {
+      this.selectedTallas.push(talla);
+    }
+  }
+
+  addColor() {
+    if (!this.selectedColors.includes(this.currentColor)) {
+      this.selectedColors.push(this.currentColor);
+    }
+  }
+
+  removeColor(color: string) {
+    this.selectedColors = this.selectedColors.filter(c => c !== color);
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      this.producto.foto_url = ''; // Limpiar la URL si se elige un archivo local
+      
+      const reader = new FileReader();
+      reader.onload = e => this.imagePreview = reader.result;
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onSubmit() {
+    const formData = new FormData();
+    formData.append('titulo', this.producto.titulo);
+    formData.append('descripcion', this.producto.descripcion);
+    formData.append('precio', this.producto.precio?.toString() || '0');
+    formData.append('stock', this.producto.stock?.toString() || '0');
+    if (this.producto.estado) formData.append('estado', this.producto.estado);
+    if (this.producto.categoria) formData.append('categoria', this.producto.categoria);
+    if (this.producto.proveedor_nombre) formData.append('proveedor_nombre', this.producto.proveedor_nombre);
+    if (this.producto.proveedor_email) formData.append('proveedor_email', this.producto.proveedor_email);
+
+    if (this.selectedTallas.length > 0) {
+      formData.append('tallas', this.selectedTallas.join(','));
+    }
+
+    if (this.selectedColors.length > 0) {
+      formData.append('colores', this.selectedColors.join(','));
+    }
+
+    if (this.selectedFile) {
+      formData.append('foto_url', this.selectedFile);
+    } else if (this.producto.foto_url) {
+      formData.append('foto_url', this.producto.foto_url);
+    }
+
+    this.productService.updateProduct(this.productId, formData).subscribe({
+      next: (res) => {
+        alert('Producto actualizado exitosamente!');
+        this.router.navigate(['/admin-productos']);
+      },
+      error: (err) => {
+        console.error('Error al actualizar producto', err);
+        let errorMsg = 'Ocurrió un error al actualizar el producto.';
+        if (err.error && err.error.errors) {
+            errorMsg += '\n' + JSON.stringify(err.error.errors);
+        } else if (err.error && err.error.message) {
+            errorMsg += '\n' + err.error.message;
+        }
+        alert(errorMsg);
+      }
+    });
+  }
+}

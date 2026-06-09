@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ProductService, Product } from '../services/product.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { ProductService, Product } from '../services/product.service';
 export class AdminProductManagement implements OnInit {
   products: Product[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -20,6 +20,7 @@ export class AdminProductManagement implements OnInit {
     this.productService.getProducts().subscribe({
       next: (data) => {
         this.products = data;
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error fetching products', err)
     });

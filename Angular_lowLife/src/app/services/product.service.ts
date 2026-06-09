@@ -35,6 +35,15 @@ export class ProductService {
     );
   }
 
+  createProduct(formData: FormData): Observable<any> {
+    return this.http.post<any>(this.apiUrl, formData);
+  }
+
+  updateProduct(id: number, formData: FormData): Observable<any> {
+    formData.append('_method', 'PUT'); // Fake PUT request for Laravel multipart
+    return this.http.post<any>(`${this.apiUrl}/${id}`, formData);
+  }
+
   private mapToProduct(item: any): Product {
     return {
       ...item,
@@ -42,8 +51,8 @@ export class ProductService {
       price: Number(item.precio || item.price),
       image: item.foto_url || item.image,
       stock: Number(item.stock || 0),
-      status: 'Activo', // Hardcoded status for now since it's not in DB
-      category: 'Sin Categoría', // Hardcoded category since it's not in DB
+      status: item.estado === 'active' ? 'Activo' : (item.estado === 'inactive' ? 'Inactivo' : 'Borrador'),
+      category: item.categoria || 'Sin Categoría',
       colors: item.colores ? item.colores.split(',') : []
     };
   }
