@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cesta extends Model
 {
-    protected $fillable = ['usuario_id', 'producto_id', 'cantidad'];
+    protected $fillable = [
+        'usuario_id',
+        'producto_id',
+        'cantidad',
+        'color',
+        'talla'
+    ];
 
     public function producto()
     {

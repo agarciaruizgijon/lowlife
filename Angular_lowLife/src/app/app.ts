@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { CartService } from './services/cart.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class App {
   isNavbarOpen: boolean = false;
   isAdminMode: boolean = false;
 
-  constructor(public router: Router, public authService: AuthService) {
+  constructor(public router: Router, public authService: AuthService, public cartService: CartService) {
     // Close navbar on route change
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

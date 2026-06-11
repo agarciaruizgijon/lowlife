@@ -31,14 +31,14 @@
         <div class="row mb-4">
           <div class="col-6">
             <label class="form-label text-muted">Talla:</label>
-            <select class="form-select">
-              <option selected>Unitalla</option>
+            <select class="form-select" [(ngModel)]="selectedSize">
+              <option *ngFor="let size of parsedSizes" [value]="size">{{ size }}</option>
             </select>
           </div>
           <div class="col-6" *ngIf="producto.colors.length">
             <label class="form-label text-muted">Color:</label>
-            <select class="form-select">
-              <option *ngFor="let color of producto.colors" [value]="color.hex || color">{{ color.name || color }}</option>
+            <select class="form-select" [(ngModel)]="selectedColor">
+              <option *ngFor="let color of producto.colors" [value]="color.name || color.hex || color">{{ color.name || color }}</option>
             </select>
           </div>
         </div>

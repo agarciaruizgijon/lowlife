@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService, Product } from '../services/product.service';
 import { CartService } from '../services/cart.service';
 import { WishlistService } from '../services/wishlist.service';
@@ -15,9 +15,13 @@ export class ProductDetail implements OnInit {
   producto: Product | null = null;
   isLiked: boolean = false; // Comentario: Estado para saber si el usuario le ha dado like
   animateHeart: boolean = false; // Comentario: Para activar la animación
+  selectedColor: string = '';
+  selectedSize: string = 'Unitalla';
+  parsedSizes: string[] = ['Unitalla'];
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private productService: ProductService,
     private cartService: CartService,
     private wishlistService: WishlistService,
@@ -31,6 +35,17 @@ export class ProductDetail implements OnInit {
       this.productService.getProduct(+id).subscribe({
         next: (data) => {
           this.producto = data;
+          if (this.producto && this.producto.colors && this.producto.colors.length > 0) {
+            const firstColor = this.producto.colors[0];
+            this.selectedColor = firstColor.name || firstColor.hex || firstColor;
+          }
+          if (this.producto && this.producto['tallas']) {
+            const tArray = typeof this.producto['tallas'] === 'string' ? this.producto['tallas'].split(',') : this.producto['tallas'];
+            if (tArray.length > 0) {
+              this.parsedSizes = tArray.map((t: string) => t.trim());
+              this.selectedSize = this.parsedSizes[0];
+            }
+          }
           this.checkIfLiked(); // Comprobamos si ya le había dado like
           this.cdr.detectChanges(); // Forzar actualización de la vista
         },
@@ -83,8 +98,10 @@ export class ProductDetail implements OnInit {
 
   addToCart(): void {
     if (this.producto) {
-      this.cartService.addToCart(this.producto.id, 1).subscribe({
-        next: (res) => alert('¡Producto añadido a la cesta!'),
+      this.cartService.addToCart(this.producto.id, 1, this.selectedColor, this.selectedSize).subscribe({
+        next: (res) => {
+            this.router.navigate(['/'], { state: { toastMessage: 'Producto añadido a la cesta' } });
+        },
         error: (err) => alert('Error al añadir a la cesta')
       });
     }

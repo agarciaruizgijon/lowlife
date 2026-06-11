@@ -11,6 +11,7 @@ export class Index implements OnInit {
   activeSort: string = 'destacado';
   maxPrice: number = 300;
   isFilterModalOpen: boolean = false;
+  toastMessage: string | null = null;
   
   allArticulos: Product[] = [];
   articulos: Product[] = [];
@@ -43,6 +44,11 @@ export class Index implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (history.state && history.state.toastMessage) {
+      this.toastMessage = history.state.toastMessage;
+      // El mensaje desaparecerá al cambiar de página porque al navegar `history.state` cambia.
+    }
+
     this.productService.getProducts().subscribe({
       next: (data) => {
         this.allArticulos = data;

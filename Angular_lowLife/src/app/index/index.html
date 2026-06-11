@@ -60,6 +60,11 @@
     <main class="content-area">
       <div class="container-fluid px-0">
         
+        <div *ngIf="toastMessage" class="alert alert-success alert-dismissible fade show m-3" role="alert">
+          {{ toastMessage }}
+          <button type="button" class="btn-close" (click)="toastMessage = null" aria-label="Close"></button>
+        </div>
+
         <!-- Sorting Buttons -->
         <div class="top-actions">
           <button class="btn btn-filter-mobile d-md-none" (click)="openFilterModal()">

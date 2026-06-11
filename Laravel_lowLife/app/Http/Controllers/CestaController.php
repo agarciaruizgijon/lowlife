@@ -19,12 +19,16 @@ class CestaController extends Controller
         $request->validate([
             'usuario_id' => 'required|exists:usuarios,id',
             'producto_id' => 'required|exists:productos,id',
-            'cantidad' => 'integer|min:1'
+            'cantidad' => 'integer|min:1',
+            'color' => 'nullable|string',
+            'talla' => 'nullable|string'
         ]);
 
-        // Check if product already exists in cart for this user
+        // Check if product already exists in cart for this user with the same color and size
         $cesta = Cesta::where('usuario_id', $request->usuario_id)
                       ->where('producto_id', $request->producto_id)
+                      ->where('color', $request->color)
+                      ->where('talla', $request->talla)
                       ->first();
 
         if ($cesta) {
@@ -37,6 +41,8 @@ class CestaController extends Controller
             $cesta->usuario_id = $request->usuario_id;
             $cesta->producto_id = $request->producto_id;
             $cesta->cantidad = $request->input('cantidad', 1);
+            $cesta->color = $request->color;
+            $cesta->talla = $request->talla;
             $cesta->save();
         }
 
