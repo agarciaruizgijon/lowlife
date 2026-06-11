@@ -94,10 +94,43 @@
   background-color: #f8f9fa;
   color: #111;
 }
+.badge-category.selected {
+  background-color: var(--bs-primary, #e63b2e);
+  color: white;
+  border-color: var(--bs-primary, #e63b2e);
+}
 .badge-category i {
   cursor: pointer;
   font-size: 1rem;
   line-height: 1;
+}
+
+/* Size Badges (replaces native checkboxes) */
+.badge-size {
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 0.4em 0.8em;
+  border-radius: 8px; /* Slightly squarer than categories */
+  font-weight: 500;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.badge-size:hover {
+  border-color: #111;
+  background-color: #f8f9fa;
+  color: #111;
+}
+.badge-size.selected {
+  background-color: var(--bs-primary, #e63b2e);
+  color: white;
+  border-color: var(--bs-primary, #e63b2e);
 }
 
 /* Custom Checkboxes */
@@ -148,7 +181,32 @@
   margin-bottom: 0.5rem;
 }
 
+/* Price Badge */
+.badge-price {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #111;
+}
+
 /* Color Swatches */
+.color-swatch-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 2px; /* Creates space for the outline */
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+  margin-bottom: 0.5rem;
+}
+.color-swatch-wrapper.selected {
+  border-color: var(--bs-primary, #e63b2e); /* Highlight ring when selected */
+}
 .color-swatch-container {
   display: inline-flex;
   align-items: center;
@@ -157,8 +215,8 @@
   cursor: pointer;
 }
 .color-swatch {
-  width: 16px;
-  height: 16px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   display: inline-block;
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2);

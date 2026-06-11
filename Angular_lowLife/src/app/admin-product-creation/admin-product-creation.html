@@ -52,15 +52,23 @@
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold d-block">Añadir Colores</label>
               
-              <div class="d-flex align-items-center gap-2 mb-3">
-                <input type="color" class="form-control form-control-color" [(ngModel)]="currentColor" name="currentColor" id="colorPicker">
-                <button type="button" class="btn btn-secondary" (click)="addColor()">Añadir Color</button>
+              <div class="row g-2 mb-3 align-items-center">
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" [(ngModel)]="currentColorName" name="currentColorName" placeholder="Nombre (ej. Azul Marino)">
+                </div>
+                <div class="col-sm-3">
+                  <input type="color" class="form-control form-control-color w-100" [(ngModel)]="currentColor" name="currentColor" id="colorPicker" title="Selecciona el color">
+                </div>
+                <div class="col-sm-4 d-grid">
+                  <button type="button" class="btn btn-secondary" (click)="addColor()">Añadir Color</button>
+                </div>
               </div>
 
               <div class="d-flex gap-3 flex-wrap">
-                <div *ngFor="let color of selectedColors" class="position-relative">
-                  <div class="color-circle border border-secondary border-opacity-25" [style.background-color]="color" [title]="color"></div>
-                  <button type="button" class="btn btn-danger btn-sm position-absolute top-0 start-100 translate-middle rounded-circle p-0" style="width: 20px; height: 20px; line-height: 1;" (click)="removeColor(color)">&times;</button>
+                <div *ngFor="let color of selectedColors" class="position-relative d-flex flex-column align-items-center">
+                  <div class="color-circle border border-secondary border-opacity-25 mb-1" [style.background-color]="color.hex" [title]="color.name + ' (' + color.hex + ')'"></div>
+                  <small class="text-muted" style="font-size: 0.7rem;">{{ color.name }}</small>
+                  <button type="button" class="btn btn-danger btn-sm position-absolute top-0 start-100 translate-middle rounded-circle p-0" style="width: 20px; height: 20px; line-height: 1;" (click)="removeColor(color.hex)">&times;</button>
                 </div>
               </div>
               <small class="text-muted mt-2 d-block" *ngIf="selectedColors.length === 0">No se han seleccionado colores.</small>
@@ -108,6 +116,7 @@
                 <option value="sudaderas">Sudaderas</option>
                 <option value="pantalones">Pantalones</option>
                 <option value="accesorios">Accesorios</option>
+                <option value="zapatos">Zapatos</option>
               </select>
             </div>
           </div>

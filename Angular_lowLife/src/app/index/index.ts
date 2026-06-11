@@ -48,8 +48,12 @@ export class Index implements OnInit {
         this.allArticulos = data;
         
         // Listas fijas según diseño original
-        this.availableCategories = ['Camisetas', 'Sudaderas', 'Pantalones', 'Accesorios'];
+        // Ordenamos alfabéticamente las categorías para mayor facilidad de uso
+        this.availableCategories = ['Camisetas', 'Sudaderas', 'Pantalones', 'Accesorios', 'Zapatos'].sort();
+        // Las tallas mantienen su orden lógico natural de menor a mayor
         this.availableSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Unitalla'];
+        // Ordenamos los colores alfabéticamente por su nombre
+        this.baseColors.sort((a, b) => a.name.localeCompare(b.name));
         
         this.applyFilters();
         this.cdr.detectChanges(); // Forzar actualización de la vista
@@ -116,7 +120,7 @@ export class Index implements OnInit {
       if (this.selectedColors.length > 0) {
         let hasColor = false;
         if (p.colors && p.colors.length > 0) {
-            hasColor = p.colors.some(c => this.selectedColors.includes(this.mapColorToBase(c)));
+            hasColor = p.colors.some(c => this.selectedColors.includes(this.mapColorToBase(c.name || c.hex || c)));
         }
         if (!hasColor) return false;
       }

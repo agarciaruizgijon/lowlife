@@ -41,7 +41,8 @@ export class AdminProductCreation {
 
   // Selector dinámico de colores
   currentColor: string = '#000000';
-  selectedColors: string[] = [];
+  currentColorName: string = '';
+  selectedColors: { name: string, hex: string }[] = [];
 
   constructor(private productService: ProductService, private router: Router) {}
 
@@ -55,13 +56,16 @@ export class AdminProductCreation {
   }
 
   addColor() {
-    if (!this.selectedColors.includes(this.currentColor)) {
-      this.selectedColors.push(this.currentColor);
+    if (this.currentColorName.trim() !== '' && !this.selectedColors.some(c => c.hex === this.currentColor)) {
+      this.selectedColors.push({ name: this.currentColorName, hex: this.currentColor });
+      this.currentColorName = ''; // reset after add
+    } else if (this.currentColorName.trim() === '') {
+      alert('Por favor, ingresa un nombre para el color.');
     }
   }
 
-  removeColor(color: string) {
-    this.selectedColors = this.selectedColors.filter(c => c !== color);
+  removeColor(colorHex: string) {
+    this.selectedColors = this.selectedColors.filter(c => c.hex !== colorHex);
   }
 
   onFileSelected(event: any) {
@@ -92,7 +96,7 @@ export class AdminProductCreation {
     }
 
     if (this.selectedColors.length > 0) {
-      formData.append('colores', this.selectedColors.join(','));
+      formData.append('colores', JSON.stringify(this.selectedColors));
     }
 
     if (this.selectedFile) {

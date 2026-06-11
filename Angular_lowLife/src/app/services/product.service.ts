@@ -11,7 +11,7 @@ export interface Product {
   status: string;
   category: string;
   image: string;
-  colors: string[];
+  colors: any[];
   [key: string]: any; 
 }
 
@@ -45,6 +45,15 @@ export class ProductService {
   }
 
   private mapToProduct(item: any): Product {
+    let parsedColors = [];
+    if (item.colores) {
+      try {
+        parsedColors = item.colores.startsWith('[') ? JSON.parse(item.colores) : item.colores.split(',');
+      } catch(e) {
+        parsedColors = item.colores.split(',');
+      }
+    }
+
     return {
       ...item,
       name: item.titulo || item.name,
@@ -53,7 +62,7 @@ export class ProductService {
       stock: Number(item.stock || 0),
       status: item.estado === 'active' ? 'Activo' : (item.estado === 'inactive' ? 'Inactivo' : 'Borrador'),
       category: item.categoria || 'Sin Categoría',
-      colors: item.colores ? item.colores.split(',') : []
+      colors: parsedColors
     };
   }
 }

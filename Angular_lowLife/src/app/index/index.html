@@ -4,43 +4,51 @@
     <!-- Left Sidebar (Filters) -->
     <aside class="sidebar-wrapper d-none d-md-block">
       <div class="card-filter">
-        <!-- Categorías -->
+        <!-- Categorías: Mostradas como badges clicables -->
         <div class="filter-section">
-          <div class="filter-title">Categorías:</div>
+          <div class="filter-title"><i class="bi bi-tags me-2"></i>Categorías:</div>
           <div class="d-flex flex-wrap gap-2">
+            <!-- Iteramos sobre las categorías ordenadas alfabéticamente -->
             <span class="badge-category"
                   *ngFor="let cat of availableCategories" 
                   [class.selected]="selectedCategories.includes(cat)"
                   (click)="toggleCategory(cat)">
-              {{ cat }} <i class="bi bi-x" *ngIf="selectedCategories.includes(cat)"></i>
+              {{ cat }} <i class="bi bi-check-circle-fill ms-1" *ngIf="selectedCategories.includes(cat)"></i>
             </span>
           </div>
         </div>
 
-        <!-- Tallas -->
+        <!-- Tallas: Ahora mostradas como botones tipo "pill" en lugar de checkboxes genéricos -->
         <div class="filter-section">
-          <div class="filter-title">Tallas:</div>
-          <label class="custom-checkbox d-block mb-2" *ngFor="let size of availableSizes">
-            <input type="checkbox" [checked]="selectedSizes.includes(size)" (change)="toggleSize(size)">
-            {{ size }}
-          </label>
+          <div class="filter-title"><i class="bi bi-rulers me-2"></i>Tallas:</div>
+          <div class="d-flex flex-wrap gap-2">
+            <!-- Iteramos sobre las tallas en orden lógico (XS a XXL) -->
+            <span class="badge-size"
+                  *ngFor="let size of availableSizes"
+                  [class.selected]="selectedSizes.includes(size)"
+                  (click)="toggleSize(size)">
+              {{ size }}
+            </span>
+          </div>
         </div>
 
-        <!-- Precio -->
+        <!-- Precio: Rango visual interactivo -->
         <div class="filter-section">
           <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="filter-title mb-0">Precio:</span>
-            <span class="text-dark fw-medium" style="font-size: 0.9rem;">0-{{maxPrice}}€</span>
+            <span class="filter-title mb-0"><i class="bi bi-currency-euro me-2"></i>Precio:</span>
+            <!-- Etiqueta de precio dinámica -->
+            <span class="badge-price">0 - {{maxPrice}}€</span>
           </div>
           <input type="range" class="form-range price-range" min="0" max="300" [value]="maxPrice" (input)="updatePrice($event)">
         </div>
 
-        <!-- Color -->
+        <!-- Color: Círculos de colores que se iluminan al seleccionarse, ocultando el checkbox nativo -->
         <div class="filter-section">
-          <div class="filter-title">Color:</div>
+          <div class="filter-title"><i class="bi bi-palette me-2"></i>Color:</div>
           <div class="d-flex flex-wrap gap-2">
-            <label class="custom-checkbox color-swatch-container" *ngFor="let color of baseColors" [title]="color.name">
-              <input type="checkbox" [checked]="selectedColors.includes(color.name)" (change)="toggleColor(color.name)">
+            <!-- Los colores están ordenados alfabéticamente -->
+            <label class="color-swatch-wrapper" *ngFor="let color of baseColors" [title]="color.name" [class.selected]="selectedColors.includes(color.name)">
+              <input type="checkbox" class="d-none" [checked]="selectedColors.includes(color.name)" (change)="toggleColor(color.name)">
               <span class="color-swatch" [style.background-color]="color.hex"></span>
             </label>
           </div>
@@ -78,7 +86,7 @@
                   <span class="product-price">{{ articulo.price }}€</span>
                 </div>
                 <div class="product-colors">
-                  <div class="product-color-dot" *ngFor="let color of articulo.colors" [style.background-color]="color"></div>
+                  <div class="product-color-dot" *ngFor="let color of articulo.colors" [style.background-color]="color.hex || color" [title]="color.name || color"></div>
                 </div>
               </div>
             </div>
@@ -100,45 +108,51 @@
     </div>
     <div class="filter-modal-body">
 
-      <!-- Categorías -->
+      <!-- Categorías: Mostradas como badges clicables -->
       <div class="filter-section">
-        <div class="filter-title">Categorías:</div>
+        <div class="filter-title"><i class="bi bi-tags me-2"></i>Categorías:</div>
         <div class="d-flex flex-wrap gap-2">
+          <!-- Iteramos sobre las categorías ordenadas alfabéticamente -->
           <span class="badge-category"
                 *ngFor="let cat of availableCategories" 
                 [class.selected]="selectedCategories.includes(cat)"
                 (click)="toggleCategory(cat)">
-            {{ cat }} <i class="bi bi-x" *ngIf="selectedCategories.includes(cat)"></i>
+            {{ cat }} <i class="bi bi-check-circle-fill ms-1" *ngIf="selectedCategories.includes(cat)"></i>
           </span>
         </div>
       </div>
 
-      <!-- Tallas -->
+      <!-- Tallas: Ahora mostradas como botones tipo "pill" en lugar de checkboxes genéricos -->
       <div class="filter-section">
-        <div class="filter-title">Tallas:</div>
-        <div class="size-grid">
-          <label class="custom-checkbox" *ngFor="let size of availableSizes">
-            <input type="checkbox" [checked]="selectedSizes.includes(size)" (change)="toggleSize(size)">
+        <div class="filter-title"><i class="bi bi-rulers me-2"></i>Tallas:</div>
+        <div class="d-flex flex-wrap gap-2">
+          <!-- Iteramos sobre las tallas en orden lógico (XS a XXL) -->
+          <span class="badge-size"
+                *ngFor="let size of availableSizes"
+                [class.selected]="selectedSizes.includes(size)"
+                (click)="toggleSize(size)">
             {{ size }}
-          </label>
+          </span>
         </div>
       </div>
 
-      <!-- Precio -->
+      <!-- Precio: Rango visual interactivo -->
       <div class="filter-section">
         <div class="d-flex justify-content-between align-items-center mb-2">
-          <span class="filter-title mb-0">Precio:</span>
-          <span class="text-dark fw-medium" style="font-size: 0.9rem;">0-{{maxPrice}}€</span>
+          <span class="filter-title mb-0"><i class="bi bi-currency-euro me-2"></i>Precio:</span>
+          <!-- Etiqueta de precio dinámica -->
+          <span class="badge-price">0 - {{maxPrice}}€</span>
         </div>
         <input type="range" class="form-range price-range" min="0" max="300" [value]="maxPrice" (input)="updatePrice($event)">
       </div>
 
-      <!-- Color -->
+      <!-- Color: Círculos de colores que se iluminan al seleccionarse, ocultando el checkbox nativo -->
       <div class="filter-section">
-        <div class="filter-title">Color:</div>
+        <div class="filter-title"><i class="bi bi-palette me-2"></i>Color:</div>
         <div class="d-flex flex-wrap gap-2">
-          <label class="custom-checkbox color-swatch-container" *ngFor="let color of baseColors" [title]="color.name">
-            <input type="checkbox" [checked]="selectedColors.includes(color.name)" (change)="toggleColor(color.name)">
+          <!-- Los colores están ordenados alfabéticamente -->
+          <label class="color-swatch-wrapper" *ngFor="let color of baseColors" [title]="color.name" [class.selected]="selectedColors.includes(color.name)">
+            <input type="checkbox" class="d-none" [checked]="selectedColors.includes(color.name)" (change)="toggleColor(color.name)">
             <span class="color-swatch" [style.background-color]="color.hex"></span>
           </label>
         </div>
