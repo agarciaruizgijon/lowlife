@@ -48,4 +48,17 @@ class CestaController extends Controller
 
         return response()->json(['message' => 'Añadido a la cesta', 'cesta' => $cesta], 201);
     }
+
+    public function destroy($id)
+    {
+        $cesta = Cesta::find($id);
+        
+        if (!$cesta) {
+            return response()->json(['message' => 'Elemento no encontrado en la cesta'], 404);
+        }
+
+        $cesta->delete();
+
+        return response()->json(['message' => 'Producto eliminado de la cesta'], 200);
+    }
 }

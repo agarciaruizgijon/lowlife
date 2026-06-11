@@ -49,3 +49,4 @@ Route::apiResource('detalles_pedidos', DetallesPedidoController::class);
 
 Route::get('cesta/{usuario_id}', [CestaController::class, 'index']);
 Route::post('cesta', [CestaController::class, 'store']);
+Route::delete('cesta/{id}', [CestaController::class, 'destroy']);

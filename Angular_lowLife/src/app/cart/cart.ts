@@ -17,6 +17,10 @@ export class Cart implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadCart();
+  }
+
+  loadCart(): void {
     this.cartService.getCart().subscribe({
       next: (data) => {
         this.cesta = data;
@@ -25,6 +29,20 @@ export class Cart implements OnInit {
       },
       error: (err) => console.error('Error fetching cart', err)
     });
+  }
+
+  removeItem(item: CartItem): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este producto de la cesta?')) {
+      this.cartService.removeFromCart(item.id).subscribe({
+        next: () => {
+          this.loadCart();
+        },
+        error: (err) => {
+          console.error('Error al eliminar el producto:', err);
+          alert('Hubo un error al eliminar el producto.');
+        }
+      });
+    }
   }
 
   calculateTotal(): void {

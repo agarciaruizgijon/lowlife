@@ -87,4 +87,18 @@ export class CartService {
       tap(() => this.refreshCartCount())
     );
   }
+
+  /**
+   * Elimina un producto de la cesta por su ID de cesta.
+   */
+  removeFromCart(cestaId: number): Observable<any> {
+    const user = this.authService.getUser();
+    if (!user || !user.id) {
+      return throwError(() => new Error('Debes iniciar sesión para modificar la cesta.'));
+    }
+
+    return this.http.delete<any>(`${this.apiUrl}/${cestaId}`).pipe(
+      tap(() => this.refreshCartCount())
+    );
+  }
 }
