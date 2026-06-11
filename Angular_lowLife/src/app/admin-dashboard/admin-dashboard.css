@@ -95,3 +95,18 @@
   color: #6c757d;
   padding: 1.2rem 1rem;
 }
+
+/* Comentario: Clase personalizada para el botón de 'Gestionar Inventario' */
+.btn-inventory {
+  /* Establecemos el color inicial con transparencia */
+  color: rgba(255, 255, 255, 0.5) !important;
+  transition: all 0.2s ease;
+}
+
+/* Comentario: Efecto visual al pasar el ratón por encima del botón */
+.btn-inventory:hover {
+  background-color: white !important;
+  color: #000 !important; /* Color negro fuerte al pasar el ratón para asegurar que se lea sobre el fondo blanco */
+  border-color: white !important;
+  font-weight: bold;
+}

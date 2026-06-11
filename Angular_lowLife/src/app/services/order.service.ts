@@ -22,4 +22,14 @@ export class OrderService {
       headers: { 'Authorization': `Bearer ${token}` }
     });
   }
+
+  /**
+   * Comentario añadido:
+   * Obtiene la lista completa de todos los pedidos registrados en el sistema.
+   * A diferencia de getMyOrders(), este método no filtra por usuario.
+   * Se utiliza en el panel de control del Administrador para calcular ventas totales y mostrar pedidos recientes.
+   */
+  getAllOrders(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:8000/api/pedidos');
+  }
 }

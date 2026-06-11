@@ -29,26 +29,41 @@ class PedidosController extends Controller
     }
 
     /**
+     * Comentario añadido: 
+     * Display a listing of the resource.
+     * Este método se encarga de extraer todos los pedidos de la base de datos para el panel de administración.
+     * Incluye las relaciones 'detalles.producto' y 'usuario' para mostrar la info completa en la tabla de recientes.
+     */
+    public function index()
+    {
+        // Traemos todos los pedidos ordenados del más nuevo al más viejo
+        $pedidos = Pedidos::with(['detalles.producto', 'usuario'])->latest()->get();
+        return response()->json($pedidos);
+    }
+
+    /**
      * Display the specified resource.
      */
-    public function show(Pedidos $pedidos)
+    public function show(Pedidos $pedido)
     {
-        //
+        return response()->json($pedido->load(['detalles.producto', 'usuario']));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pedidos $pedidos)
+    public function update(Request $request, Pedidos $pedido)
     {
-        //
+        $pedido->update($request->all());
+        return response()->json($pedido);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pedidos $pedidos)
+    public function destroy(Pedidos $pedido)
     {
-        //
+        $pedido->delete();
+        return response()->json(null, 204);
     }
 }
