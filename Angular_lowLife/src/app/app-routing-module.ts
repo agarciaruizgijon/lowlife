@@ -19,6 +19,8 @@ import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { AdminProductManagement } from './admin-product-management/admin-product-management';
 import { AdminProductEdit } from './admin-product-edit/admin-product-edit';
 import { AdminUserEdit } from './admin-user-edit/admin-user-edit';
+import { AdminOrders } from './admin-orders/admin-orders';
+import { AdminOrderEdit } from './admin-order-edit/admin-order-edit';
 
 const routes: Routes = [
   { path: 'guia-estilos', component: StyleGuide },
@@ -37,6 +39,8 @@ const routes: Routes = [
   { path: 'admin-crearProducto', component: AdminProductCreation },
   { path: 'admin-editarProducto/:id', component: AdminProductEdit },
   { path: 'admin-editarUsuario/:id', component: AdminUserEdit },
+  { path: 'admin-pedidos', component: AdminOrders },
+  { path: 'admin-editarPedido/:id', component: AdminOrderEdit },
   { path: 'admin-dashboard', component: AdminDashboard },
   { path: '', redirectTo: '/index', pathMatch: 'full' }
 ];

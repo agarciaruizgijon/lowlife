@@ -52,26 +52,27 @@ export class AdminDashboard implements OnInit {
       orders: this.orderService.getAllOrders().pipe(catchError(() => of([])))
     }).subscribe({
       next: (data) => {
-        // --- Procesamiento de Productos ---
-        // Filtramos productos con stock bajo (menor a 5), los ordenamos de menor a mayor y tomamos los 5 primeros
-        this.stockAlerts = data.products
-          .filter(p => p.stock < 5)
-          .sort((a, b) => a.stock - b.stock)
-          .slice(0, 5);
+        try {
+          // --- Procesamiento de Productos ---
+          this.stockAlerts = (data.products || [])
+            .filter((p: any) => p.stock < 5)
+            .sort((a: any, b: any) => a.stock - b.stock)
+            .slice(0, 5);
 
-        // --- Procesamiento de Usuarios ---
-        // Contamos la cantidad total de usuarios devueltos
-        this.totalUsuarios = data.users.length;
+          // --- Procesamiento de Usuarios ---
+          this.totalUsuarios = (data.users || []).length;
 
-        // --- Procesamiento de Pedidos ---
-        // Guardamos los últimos 5 para la tabla reciente
-        this.recentOrders = data.orders.slice(0, 5); // Suponemos que ya vienen ordenados (latest)
-        
-        // Finalizamos la carga para ocultar el spinner
-        this.loading = false;
-        
-        // Forzamos la actualización de la vista inmediatamente (por si Angular no detecta los cambios automáticamente)
-        this.cdr.detectChanges();
+          // --- Procesamiento de Pedidos ---
+          this.recentOrders = (data.orders || []).slice(0, 5); 
+        } catch (e) {
+          console.error("Error procesando datos del dashboard:", e);
+        } finally {
+          // Finalizamos la carga para ocultar el spinner
+          this.loading = false;
+          
+          // Forzamos la actualización de la vista inmediatamente (por si Angular no detecta los cambios automáticamente)
+          this.cdr.detectChanges();
+        }
       },
       error: (err) => {
         console.error("Error cargando el panel de control", err);

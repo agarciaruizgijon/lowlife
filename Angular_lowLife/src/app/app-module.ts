@@ -22,6 +22,8 @@ import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { AdminProductManagement } from './admin-product-management/admin-product-management';
 import { AdminProductEdit } from './admin-product-edit/admin-product-edit';
 import { AdminUserEdit } from './admin-user-edit/admin-user-edit';
+import { AdminOrders } from './admin-orders/admin-orders';
+import { AdminOrderEdit } from './admin-order-edit/admin-order-edit';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { AdminUserEdit } from './admin-user-edit/admin-user-edit';
     AdminProductManagement,
     AdminProductEdit,
     AdminUserEdit,
+    AdminOrders,
+    AdminOrderEdit,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [provideBrowserGlobalErrorListeners(), provideHttpClient()],

@@ -32,4 +32,19 @@ export class OrderService {
   getAllOrders(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:8000/api/pedidos');
   }
+
+  /**
+   * Obtiene los detalles de un pedido específico por su ID.
+   * Se utiliza en la vista de edición de pedidos del Administrador.
+   */
+  getOrderById(id: number | string): Observable<any> {
+    return this.http.get<any>(`http://localhost:8000/api/pedidos/${id}`);
+  }
+
+  /**
+   * Actualiza los datos de un pedido (ej. estado de procesado).
+   */
+  updateOrder(id: number | string, data: any): Observable<any> {
+    return this.http.put<any>(`http://localhost:8000/api/pedidos/${id}`, data);
+  }
 }

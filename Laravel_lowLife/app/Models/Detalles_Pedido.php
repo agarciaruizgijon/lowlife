@@ -20,12 +20,12 @@ class Detalles_Pedido extends Model
     // Relación: Este detalle pertenece a un Pedido específico
     public function pedido()
     {
-        return $this->belongsTo(Pedido::class);
+        return $this->belongsTo(Pedidos::class, 'pedido_id');
     }
 
     // Relación: Este detalle pertenece a un Producto específico
     public function producto()
     {
-        return $this->belongsTo(Producto::class);
+        return $this->belongsTo(Productos::class, 'producto_id');
     }
 }

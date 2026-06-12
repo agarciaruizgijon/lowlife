@@ -1,0 +1,25 @@
+.card-lowlife {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.table th {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: #6c757d;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.tiny {
+  font-size: 0.75rem;
+}
+
+.fw-black {
+  font-weight: 900;
+}
