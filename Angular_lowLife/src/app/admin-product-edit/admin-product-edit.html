@@ -27,10 +27,6 @@
                 <label class="form-label text-muted small fw-bold">Precio (€)</label>
                 <input type="number" step="0.01" name="precio" [(ngModel)]="producto.precio" class="form-control form-control-underline" placeholder="0.00" required>
               </div>
-              <div class="col-md-6 mb-4">
-                <label class="form-label text-muted small fw-bold">Stock (Cantidad)</label>
-                <input type="number" name="stock" [(ngModel)]="producto.stock" class="form-control form-control-underline" placeholder="0" required>
-              </div>
             </div>
           </div>
         </div>
@@ -40,38 +36,61 @@
             <h4 class="mb-4">Variantes</h4>
 
             <div class="mb-4">
-              <label class="form-label text-muted small fw-bold d-block">Tallas Disponibles</label>
-              <div class="d-flex flex-wrap gap-2" role="group">
-                <div *ngFor="let talla of tallasOptions">
-                  <input type="checkbox" class="btn-check" [id]="'talla'+talla" (change)="toggleTalla(talla)" [checked]="selectedTallas.includes(talla)" autocomplete="off">
-                  <label class="btn btn-outline-dark" [for]="'talla'+talla">{{ talla }}</label>
-                </div>
-              </div>
-            </div>
+              <p class="text-muted small mb-3">Añade las combinaciones de talla y color, con el stock disponible para cada una. Puedes dejar campos en blanco si no aplican (ej. anillos sin color).</p>
 
-            <div class="mb-4">
-              <label class="form-label text-muted small fw-bold d-block">Añadir Colores</label>
-              
-              <div class="row g-2 mb-3 align-items-center">
-                <div class="col-sm-5">
-                  <input type="text" class="form-control" [(ngModel)]="currentColorName" name="currentColorName" placeholder="Nombre (ej. Azul Marino)">
+              <!-- Agregar nueva variación -->
+              <div class="row g-2 mb-3 align-items-end">
+                <div class="col-sm-3">
+                  <label class="form-label small">Talla (ej. M, 38, Unitalla)</label>
+                  <input type="text" class="form-control form-control-sm" [(ngModel)]="nuevaVariacion.talla" name="nuevaTalla">
                 </div>
                 <div class="col-sm-3">
-                  <input type="color" class="form-control form-control-color w-100" [(ngModel)]="currentColor" name="currentColor" id="colorPicker" title="Selecciona el color">
+                  <label class="form-label small">Color</label>
+                  <input type="text" class="form-control form-control-sm" [(ngModel)]="nuevaVariacion.color_nombre" name="nuevoColorNombre" placeholder="Rojo, Azul...">
                 </div>
-                <div class="col-sm-4 d-grid">
-                  <button type="button" class="btn btn-secondary" (click)="addColor()">Añadir Color</button>
+                <div class="col-sm-2">
+                  <label class="form-label small">HEX</label>
+                  <input type="color" class="form-control form-control-color w-100 form-control-sm" [(ngModel)]="nuevaVariacion.color_hex" name="nuevoColorHex" title="Elige color">
+                </div>
+                <div class="col-sm-2">
+                  <label class="form-label small">Stock</label>
+                  <input type="number" class="form-control form-control-sm" [(ngModel)]="nuevaVariacion.stock" name="nuevoStock" min="0">
+                </div>
+                <div class="col-sm-2 d-grid">
+                  <button type="button" class="btn btn-secondary btn-sm" (click)="addVariacion()">Añadir</button>
                 </div>
               </div>
 
-              <div class="d-flex gap-3 flex-wrap">
-                <div *ngFor="let color of selectedColors" class="position-relative d-flex flex-column align-items-center">
-                  <div class="color-circle border border-secondary border-opacity-25 mb-1" [style.background-color]="color.hex" [title]="color.name + ' (' + color.hex + ')'"></div>
-                  <small class="text-muted" style="font-size: 0.7rem;">{{ color.name }}</small>
-                  <button type="button" class="btn btn-danger btn-sm position-absolute top-0 start-100 translate-middle rounded-circle p-0" style="width: 20px; height: 20px; line-height: 1;" (click)="removeColor(color.hex)">&times;</button>
-                </div>
+              <!-- Lista de variaciones -->
+              <div class="table-responsive" *ngIf="variaciones.length > 0">
+                <table class="table table-sm align-middle">
+                  <thead>
+                    <tr class="text-muted small">
+                      <th>Talla</th>
+                      <th>Color</th>
+                      <th>Stock</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let v of variaciones; let i = index">
+                      <td>{{ v.talla || '-' }}</td>
+                      <td>
+                        <div class="d-flex align-items-center gap-2" *ngIf="v.color_nombre">
+                          <div class="color-circle border" style="width: 15px; height: 15px; border-radius: 50%;" [style.background-color]="v.color_hex"></div>
+                          <span class="small">{{ v.color_nombre }}</span>
+                        </div>
+                        <span *ngIf="!v.color_nombre">-</span>
+                      </td>
+                      <td>{{ v.stock }}</td>
+                      <td class="text-end">
+                        <button type="button" class="btn btn-sm text-danger border-0 bg-transparent p-0" (click)="removeVariacion(i)"><i class="bi bi-trash"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <small class="text-muted mt-2 d-block" *ngIf="selectedColors.length === 0">No se han seleccionado colores.</small>
+              <small class="text-muted mt-2 d-block" *ngIf="variaciones.length === 0">No hay variaciones añadidas.</small>
             </div>
           </div>
         </div>

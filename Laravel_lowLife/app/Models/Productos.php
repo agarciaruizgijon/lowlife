@@ -11,10 +11,7 @@ class Productos extends Model
         'titulo',
         'descripcion',
         'foto_url',
-        'colores',
         'precio',
-        'stock',
-        'tallas',
         'estado',
         'categoria',
         'proveedor_nombre',
@@ -25,5 +22,10 @@ class Productos extends Model
     public function detallesPedidos()
     {
         return $this->hasMany(DetallePedido::class);
+    }
+
+    public function variaciones()
+    {
+        return $this->hasMany(ProductoVariacion::class, 'producto_id');
     }
 }

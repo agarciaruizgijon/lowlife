@@ -12,7 +12,7 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        return response()->json(Productos::all());
+        return response()->json(Productos::with('variaciones')->get());
     }
 
     /**
@@ -24,17 +24,15 @@ class ProductosController extends Controller
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'precio' => 'required|numeric',
-            'stock' => 'required|integer',
             'foto_url' => 'nullable', // puede ser string (URL) o file (imagen local)
-            'colores' => 'nullable|string',
-            'tallas' => 'nullable|string',
             'estado' => 'nullable|string',
             'categoria' => 'nullable|string',
             'proveedor_nombre' => 'nullable|string',
             'proveedor_email' => 'nullable|email',
+            'variaciones' => 'nullable|string', // JSON string con las variaciones
         ]);
 
-        $data = $request->except('foto_url');
+        $data = $request->except(['foto_url', 'variaciones']);
 
         // Manejar subida de foto de producto
         if ($request->hasFile('foto_url')) {
@@ -46,6 +44,22 @@ class ProductosController extends Controller
 
         $producto = Productos::create($data);
 
+        if ($request->filled('variaciones')) {
+            $variaciones = json_decode($request->variaciones, true);
+            if (is_array($variaciones)) {
+                foreach ($variaciones as $var) {
+                    $producto->variaciones()->create([
+                        'talla' => $var['talla'] ?? null,
+                        'color_nombre' => $var['color_nombre'] ?? null,
+                        'color_hex' => $var['color_hex'] ?? null,
+                        'stock' => $var['stock'] ?? 0,
+                    ]);
+                }
+            }
+        }
+
+        $producto->load('variaciones');
+
         return response()->json($producto, 201);
     }
 
@@ -54,7 +68,7 @@ class ProductosController extends Controller
      */
     public function show($id)
     {
-        $producto = Productos::find($id);
+        $producto = Productos::with('variaciones')->find($id);
         if (!$producto) {
             return response()->json(['message' => 'Not Found'], 404);
         }
@@ -75,17 +89,15 @@ class ProductosController extends Controller
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'precio' => 'required|numeric',
-            'stock' => 'required|integer',
             'foto_url' => 'nullable', 
-            'colores' => 'nullable|string',
-            'tallas' => 'nullable|string',
             'estado' => 'nullable|string',
             'categoria' => 'nullable|string',
             'proveedor_nombre' => 'nullable|string',
             'proveedor_email' => 'nullable|email',
+            'variaciones' => 'nullable|string',
         ]);
 
-        $data = $request->except('foto_url');
+        $data = $request->except(['foto_url', 'variaciones']);
 
         // Manejar subida de foto de producto
         if ($request->hasFile('foto_url')) {
@@ -96,6 +108,24 @@ class ProductosController extends Controller
         }
 
         $producto->update($data);
+
+        if ($request->has('variaciones')) {
+            $variaciones = json_decode($request->variaciones, true);
+            // Recrear variaciones para simplificar
+            $producto->variaciones()->delete();
+            if (is_array($variaciones)) {
+                foreach ($variaciones as $var) {
+                    $producto->variaciones()->create([
+                        'talla' => $var['talla'] ?? null,
+                        'color_nombre' => $var['color_nombre'] ?? null,
+                        'color_hex' => $var['color_hex'] ?? null,
+                        'stock' => $var['stock'] ?? 0,
+                    ]);
+                }
+            }
+        }
+
+        $producto->load('variaciones');
 
         return response()->json($producto, 200);
     }

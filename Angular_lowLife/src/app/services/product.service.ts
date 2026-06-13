@@ -12,6 +12,7 @@ export interface Product {
   category: string;
   image: string;
   colors: any[];
+  variaciones?: any[];
   [key: string]: any; 
 }
 
@@ -54,12 +55,19 @@ export class ProductService {
       }
     }
 
+    let totalStock = 0;
+    if (item.variaciones && Array.isArray(item.variaciones)) {
+      totalStock = item.variaciones.reduce((acc: number, val: any) => acc + (Number(val.stock) || 0), 0);
+    } else {
+      totalStock = Number(item.stock || 0);
+    }
+
     return {
       ...item,
       name: item.titulo || item.name,
       price: Number(item.precio || item.price),
       image: item.foto_url || item.image,
-      stock: Number(item.stock || 0),
+      stock: totalStock,
       status: item.estado === 'active' ? 'Activo' : (item.estado === 'inactive' ? 'Inactivo' : 'Borrador'),
       category: item.categoria || 'Sin Categoría',
       colors: parsedColors

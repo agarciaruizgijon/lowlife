@@ -15,7 +15,6 @@ export class AdminProductEdit implements OnInit {
     titulo: string;
     descripcion: string;
     precio: number | null;
-    stock: number | null;
     estado: string;
     categoria: string;
     proveedor_nombre: string;
@@ -25,7 +24,6 @@ export class AdminProductEdit implements OnInit {
     titulo: '',
     descripcion: '',
     precio: null,
-    stock: null,
     estado: 'draft',
     categoria: '',
     proveedor_nombre: '',
@@ -37,14 +35,9 @@ export class AdminProductEdit implements OnInit {
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
 
-  // Tallas disponibles
-  tallasOptions = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Unitalla'];
-  selectedTallas: string[] = [];
-
-  // Selector dinámico de colores
-  currentColor: string = '#000000';
-  currentColorName: string = '';
-  selectedColors: { name: string, hex: string }[] = [];
+  // Variaciones
+  variaciones: { talla: string, color_nombre: string, color_hex: string, stock: number }[] = [];
+  nuevaVariacion = { talla: '', color_nombre: '', color_hex: '#000000', stock: 0 };
 
   constructor(
     private productService: ProductService, 
@@ -66,7 +59,6 @@ export class AdminProductEdit implements OnInit {
         this.producto.titulo = data.titulo || data.name || '';
         this.producto.descripcion = data.descripcion || '';
         this.producto.precio = data.precio || data.price || 0;
-        this.producto.stock = data.stock || 0;
         this.producto.estado = data.estado || 'draft';
         this.producto.categoria = data.categoria || '';
         this.producto.proveedor_nombre = data.proveedor_nombre || '';
@@ -77,20 +69,8 @@ export class AdminProductEdit implements OnInit {
             this.imagePreview = this.producto.foto_url;
         }
 
-        if (data.tallas) {
-            this.selectedTallas = data.tallas.split(',');
-        }
-        
-        if (data.colores) {
-            let parsedColors = [];
-            try {
-              parsedColors = data.colores.startsWith('[') ? JSON.parse(data.colores) : data.colores.split(',');
-            } catch(e) {
-              parsedColors = data.colores.split(',');
-            }
-            this.selectedColors = parsedColors.map((c: any) => {
-              return typeof c === 'string' ? { name: c, hex: c } : c;
-            });
+        if (data.variaciones && Array.isArray(data.variaciones)) {
+            this.variaciones = data.variaciones;
         }
 
         this.cdr.detectChanges();
@@ -99,26 +79,24 @@ export class AdminProductEdit implements OnInit {
     });
   }
 
-  toggleTalla(talla: string) {
-    const index = this.selectedTallas.indexOf(talla);
-    if (index > -1) {
-      this.selectedTallas.splice(index, 1);
-    } else {
-      this.selectedTallas.push(talla);
+  addVariacion() {
+    if (this.nuevaVariacion.talla.trim() === '' && this.nuevaVariacion.color_nombre.trim() === '') {
+      alert('Por favor, ingresa al menos una talla o un color.');
+      return;
     }
+    if (this.nuevaVariacion.stock < 0) {
+      alert('El stock no puede ser negativo.');
+      return;
+    }
+    this.variaciones.push({ ...this.nuevaVariacion });
+    // Reset inputs
+    this.nuevaVariacion.talla = '';
+    this.nuevaVariacion.color_nombre = '';
+    this.nuevaVariacion.stock = 0;
   }
 
-  addColor() {
-    if (this.currentColorName.trim() !== '' && !this.selectedColors.some(c => c.hex === this.currentColor)) {
-      this.selectedColors.push({ name: this.currentColorName, hex: this.currentColor });
-      this.currentColorName = ''; // reset after add
-    } else if (this.currentColorName.trim() === '') {
-      alert('Por favor, ingresa un nombre para el color.');
-    }
-  }
-
-  removeColor(colorHex: string) {
-    this.selectedColors = this.selectedColors.filter(c => c.hex !== colorHex);
+  removeVariacion(index: number) {
+    this.variaciones.splice(index, 1);
   }
 
   onFileSelected(event: any) {
@@ -138,18 +116,13 @@ export class AdminProductEdit implements OnInit {
     formData.append('titulo', this.producto.titulo);
     formData.append('descripcion', this.producto.descripcion);
     formData.append('precio', this.producto.precio?.toString() || '0');
-    formData.append('stock', this.producto.stock?.toString() || '0');
     if (this.producto.estado) formData.append('estado', this.producto.estado);
     if (this.producto.categoria) formData.append('categoria', this.producto.categoria);
     if (this.producto.proveedor_nombre) formData.append('proveedor_nombre', this.producto.proveedor_nombre);
     if (this.producto.proveedor_email) formData.append('proveedor_email', this.producto.proveedor_email);
 
-    if (this.selectedTallas.length > 0) {
-      formData.append('tallas', this.selectedTallas.join(','));
-    }
-
-    if (this.selectedColors.length > 0) {
-      formData.append('colores', JSON.stringify(this.selectedColors));
+    if (this.variaciones.length > 0) {
+      formData.append('variaciones', JSON.stringify(this.variaciones));
     }
 
     if (this.selectedFile) {

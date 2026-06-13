@@ -4,9 +4,11 @@
     <h1 class="fw-bold mb-3">Método de pago</h1>
     <h3 class="fw-normal mb-4" style="font-size: 1.5rem;">Total: 129.99€</h3>
 
-    <div class="payment-card">
-      <div class="payment-card-header text-center py-2">
+    <div class="payment-card shadow">
+      <div class="payment-card-header text-center py-2 d-flex justify-content-center align-items-center gap-3">
         <span class="visa-logo text-info fw-bold fst-italic fs-5" style="color: #1DA1F2 !important;">VISA</span>
+        <i class="bi bi-cc-mastercard fs-5 text-white"></i>
+        <i class="bi bi-cc-amex fs-5 text-white"></i>
       </div>
       
       <div class="payment-card-body p-4 p-md-5">
@@ -39,12 +41,21 @@
             </label>
           </div>
 
-          <!-- Botón Cyan (Olas) -->
-          <button type="button" class="btn btn-cyan w-100 mb-3 rounded-1 shadow-sm d-flex justify-content-center align-items-center">
-            <!-- svg para simular el logo que aparece -->
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 12H8L10 6L14 18L16 12H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Botón Cyan (Bizum) -->
+          <button type="button" class="btn btn-cyan w-100 mb-3 rounded-1 shadow-sm d-flex justify-content-center align-items-center text-white fw-bold gap-2">
+            <svg width="24" height="24" viewBox="0 0 100 100" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(50, 50) rotate(-45) translate(-50, -50)">
+                <!-- Long Pill -->
+                <rect x="15" y="35" width="55" height="14" rx="7" />
+                <!-- Short Pill -->
+                <rect x="35" y="55" width="30" height="14" rx="7" />
+                <!-- Top Right Dot -->
+                <circle cx="85" cy="42" r="7" />
+                <!-- Bottom Left Dot -->
+                <circle cx="15" cy="62" r="7" />
+              </g>
             </svg>
+            Bizum
           </button>
 
           <!-- Botón Google Pay -->
