@@ -40,9 +40,9 @@
                 <tr *ngFor="let det of order.detalles">
                   <td class="ps-4 py-3">
                     <div class="d-flex align-items-center">
-                      <img [src]="det.producto?.image || 'assets/imagenes/placeholder.png'" [alt]="det.producto?.name" class="rounded shadow-sm object-fit-cover me-3" style="width: 60px; height: 60px;">
+                      <img [src]="det.producto?.foto_url || 'assets/imagenes/placeholder.png'" [alt]="det.producto?.titulo" class="rounded shadow-sm object-fit-cover me-3" style="width: 60px; height: 60px;">
                       <div>
-                        <h6 class="mb-0 fw-bold">{{ det.producto?.name || 'Producto Desconocido' }}</h6>
+                        <h6 class="mb-0 fw-bold">{{ det.producto?.titulo || 'Producto Desconocido' }}</h6>
                         <span class="badge bg-light text-dark border mt-1">ID: {{ det.producto_id }}</span>
                       </div>
                     </div>
@@ -74,19 +74,26 @@
         </div>
         <div class="card-body p-4 text-center">
           <div class="mb-4">
-            <span class="badge rounded-pill px-4 py-2 fs-6" 
-                  [ngClass]="order.procesado ? 'bg-success bg-opacity-10 text-success' : 'bg-warning bg-opacity-10 text-warning'">
-              <i class="bi me-2" [ngClass]="order.procesado ? 'bi-check-circle-fill' : 'bi-clock-fill'"></i>
-              {{ order.procesado ? 'PROCESADO' : 'PENDIENTE' }}
-            </span>
+            <label class="form-label fw-bold text-muted small text-uppercase">Fase del Pedido</label>
+            <select class="form-select form-select-lg" [value]="order.estado || 'Recepción y confirmación'" (change)="changeStatus($event)" [disabled]="saving">
+              <option value="Recepción y confirmación">Recepción y confirmación</option>
+              <option value="Preparación (Picking y Packing)">Preparación (Picking y Packing)</option>
+              <option value="Expedición">Expedición</option>
+              <option value="Tránsito y distribución">Tránsito y distribución</option>
+              <option value="Entrega al cliente">Entrega al cliente</option>
+            </select>
           </div>
-          <button class="btn w-100 py-3 fw-bold rounded-3 shadow-sm d-flex align-items-center justify-content-center" 
-                  [ngClass]="order.procesado ? 'btn-outline-warning' : 'btn-success text-white'" 
-                  (click)="toggleStatus()" [disabled]="saving">
-            <span *ngIf="saving" class="spinner-border spinner-border-sm me-2" role="status"></span>
-            <i class="bi me-2 fs-5" [ngClass]="order.procesado ? 'bi-arrow-counterclockwise' : 'bi-check-lg'"></i>
-            {{ order.procesado ? 'Revertir a Pendiente' : 'Marcar como Procesado' }}
-          </button>
+          <div *ngIf="saving" class="text-center mt-3 text-muted small">
+            <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+            Actualizando...
+          </div>
+          
+          <div *ngIf="order.estado === 'Entrega al cliente'" class="mt-4 pt-4 border-top">
+            <button class="btn btn-outline-danger w-100 py-2 d-flex justify-content-center align-items-center" (click)="deleteOrder()" [disabled]="saving">
+              <i class="bi bi-trash3-fill me-2"></i> Borrar Pedido Definitivamente
+            </button>
+            <div class="form-text text-danger mt-2 small text-center"><i class="bi bi-exclamation-triangle"></i> Esta acción no se puede deshacer y borrará todos los registros.</div>
+          </div>
         </div>
       </div>
 
@@ -98,23 +105,32 @@
         <div class="card-body p-4">
           <div class="d-flex align-items-center mb-4">
             <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-3 fs-3 shadow-sm" style="width: 65px; height: 65px;">
-              {{ (order.usuario?.name?.charAt(0) || '?') | uppercase }}
+              {{ (order.nombre_envio?.charAt(0) || order.usuario?.name?.charAt(0) || '?') | uppercase }}
             </div>
             <div>
-              <h5 class="mb-1 fw-bold">{{ order.usuario?.name || 'Usuario Eliminado' }}</h5>
-              <span class="badge bg-light text-dark border">Cliente</span>
+              <h5 class="mb-1 fw-bold">{{ order.nombre_envio }} {{ order.apellidos_envio }}</h5>
+              <span class="badge bg-light text-dark border">Receptor</span>
             </div>
           </div>
           
-          <div class="bg-light p-3 rounded-3">
+          <div class="bg-light p-3 rounded-3 mb-4">
             <ul class="list-unstyled mb-0">
               <li class="mb-3 d-flex align-items-center">
                 <div class="icon-circle bg-white text-muted shadow-sm me-3 d-flex align-items-center justify-content-center rounded-circle" style="width: 35px; height: 35px;">
                   <i class="bi bi-envelope"></i>
                 </div>
                 <div>
-                  <span class="d-block text-muted tiny text-uppercase fw-bold mb-0">Email</span>
+                  <span class="d-block text-muted tiny text-uppercase fw-bold mb-0">Email de Contacto</span>
                   <span class="fw-medium text-dark">{{ order.usuario?.email || 'N/A' }}</span>
+                </div>
+              </li>
+              <li class="mb-3 d-flex align-items-center">
+                <div class="icon-circle bg-white text-muted shadow-sm me-3 d-flex align-items-center justify-content-center rounded-circle" style="width: 35px; height: 35px;">
+                  <i class="bi bi-telephone"></i>
+                </div>
+                <div>
+                  <span class="d-block text-muted tiny text-uppercase fw-bold mb-0">Teléfono</span>
+                  <span class="fw-medium text-dark">{{ order.telefono_envio || 'N/A' }}</span>
                 </div>
               </li>
               <li class="mb-3 d-flex align-items-center">
@@ -124,6 +140,16 @@
                 <div>
                   <span class="d-block text-muted tiny text-uppercase fw-bold mb-0">Fecha de Pedido</span>
                   <span class="fw-medium text-dark">{{ (order.fecha || order.created_at) | date:'dd/MM/yyyy HH:mm' }}</span>
+                </div>
+              </li>
+              <li class="mb-3 d-flex align-items-center">
+                <div class="icon-circle bg-white text-muted shadow-sm me-3 d-flex align-items-center justify-content-center rounded-circle" style="width: 35px; height: 35px;">
+                  <i class="bi bi-truck"></i>
+                </div>
+                <div>
+                  <span class="d-block text-muted tiny text-uppercase fw-bold mb-0">Fecha de Entrega</span>
+                  <span class="fw-medium text-info fw-bold" *ngIf="order.fecha_entrega">{{ order.fecha_entrega | date:'dd/MM/yyyy' }}</span>
+                  <span class="fw-medium text-muted" *ngIf="!order.fecha_entrega">No definida</span>
                 </div>
               </li>
               <li class="d-flex align-items-center">
@@ -136,6 +162,14 @@
                 </div>
               </li>
             </ul>
+          </div>
+          
+          <!-- Shipping Address info -->
+          <h6 class="fw-bold mb-3">Dirección de Envío</h6>
+          <div class="p-3 border rounded">
+            <p class="mb-1"><strong>{{ order.nombre_envio }} {{ order.apellidos_envio }}</strong></p>
+            <p class="mb-1 text-muted">{{ order.direccion_envio }}</p>
+            <p class="mb-0 text-muted">{{ order.codigo_postal }} {{ order.ciudad }}</p>
           </div>
         </div>
       </div>

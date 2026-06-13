@@ -101,4 +101,34 @@ export class CartService {
       tap(() => this.refreshCartCount())
     );
   }
+
+  /**
+   * Actualiza la cantidad de un producto en la cesta.
+   */
+  updateQuantity(cestaId: number, cantidad: number): Observable<any> {
+    const user = this.authService.getUser();
+    if (!user || !user.id) {
+      return throwError(() => new Error('Debes iniciar sesión para modificar la cesta.'));
+    }
+
+    return this.http.put<any>(`${this.apiUrl}/${cestaId}`, { cantidad }).pipe(
+      tap(() => this.refreshCartCount())
+    );
+  }
+
+  /**
+   * Vacía toda la cesta del usuario.
+   */
+  clearCart(): Observable<any> {
+    const user = this.authService.getUser();
+    if (!user || !user.id) {
+      return throwError(() => new Error('Debes iniciar sesión para vaciar la cesta.'));
+    }
+
+    return this.http.delete<any>(`${this.apiUrl}/clear/${user.id}`).pipe(
+      tap(() => {
+        this.cartCountSubject.next(0);
+      })
+    );
+  }
 }

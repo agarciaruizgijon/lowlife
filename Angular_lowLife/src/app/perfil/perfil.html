@@ -97,25 +97,48 @@
           <div class="accordion-item mb-3 border rounded overflow-hidden shadow-sm" *ngFor="let pedido of pedidos; let i = index">
             <h2 class="accordion-header" [id]="'heading' + i">
               <button class="accordion-button collapsed py-3" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i">
-                <strong class="me-3">Pedido #{{ pedido.id }}</strong> 
-                <span class="text-muted me-auto">{{ pedido.fecha | date:'dd/MM/yyyy' }}</span>
-                <span class="badge" [ngClass]="pedido.procesado ? 'bg-success' : 'bg-warning text-dark'">
-                  {{ pedido.procesado ? 'Enviado' : 'Procesando' }}
+                <span class="text-muted me-auto fw-bold">Pedido el {{ pedido.fecha | date:'dd/MM/yyyy' }}</span>
+                <span class="text-info me-3"><i class="bi bi-calendar-check me-1"></i> Entrega est. {{ getDeliveryDate(pedido) | date:'dd/MM/yyyy' }}</span>
+                <!-- Badge de estado usando la nueva variable -->
+                <span class="badge" [ngClass]="{
+                  'bg-success': pedido.estado === 'Entrega al cliente',
+                  'bg-info': pedido.estado === 'Tránsito y distribución',
+                  'bg-warning text-dark': pedido.estado !== 'Entrega al cliente' && pedido.estado !== 'Tránsito y distribución'
+                }">
+                  {{ pedido.estado || (pedido.procesado ? 'Procesado' : 'Pendiente') }}
                 </span>
+                <!-- Botón de ocultar si ya está entregado -->
+                <button *ngIf="pedido.estado === 'Entrega al cliente'" class="btn btn-sm btn-outline-danger ms-3 border-0" (click)="ocultarPedido(pedido.id); $event.stopPropagation()" title="Ocultar del historial">
+                  <i class="bi bi-trash3"></i>
+                </button>
               </button>
             </h2>
             <div [id]="'collapse' + i" class="accordion-collapse collapse" [attr.data-bs-parent]="'#pedidosAccordion'">
               <div class="accordion-body bg-light">
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0 border-bottom" *ngFor="let detalle of pedido.detalles; let last = last" [class.border-bottom-0]="last">
+                  <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0 border-bottom" *ngFor="let detalle of pedido.detalles">
                     <div class="d-flex align-items-center">
                       <img [src]="detalle.producto?.foto_url || 'assets/default-product.png'" alt="{{ detalle.producto?.titulo }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;" class="me-3 border">
                       <div>
                         <h6 class="mb-0 text-dark">{{ detalle.producto?.titulo }}</h6>
-                        <small class="text-muted">Cantidad: {{ detalle.cantidad }}</small>
+                        <small class="text-muted">Cantidad: {{ detalle.cantidad }} <span *ngIf="detalle.talla"> | Talla: {{ detalle.talla }}</span><span *ngIf="detalle.color"> | Color: {{ detalle.color }}</span></small>
                       </div>
                     </div>
                     <strong class="text-dark">{{ (detalle.producto?.precio * detalle.cantidad) | currency:'EUR' }}</strong>
+                  </li>
+                  <li class="list-group-item bg-transparent px-0 border-0 pt-3 mt-2">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-truck me-2 text-primary"></i>Datos de Envío</h6>
+                    <div class="row g-2 text-muted small">
+                      <div class="col-sm-6">
+                        <strong>Recibe:</strong> {{ pedido.nombre_envio }} {{ pedido.apellidos_envio }}
+                      </div>
+                      <div class="col-sm-6">
+                        <strong>Teléfono:</strong> {{ pedido.telefono_envio }}
+                      </div>
+                      <div class="col-sm-12">
+                        <strong>Dirección:</strong> {{ pedido.direccion_envio }}, {{ pedido.codigo_postal }} {{ pedido.ciudad }}
+                      </div>
+                    </div>
                   </li>
                 </ul>
               </div>

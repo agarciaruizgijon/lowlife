@@ -46,7 +46,7 @@ export class ProductService {
   }
 
   private mapToProduct(item: any): Product {
-    let parsedColors = [];
+    let parsedColors: any[] = [];
     if (item.colores) {
       try {
         parsedColors = item.colores.startsWith('[') ? JSON.parse(item.colores) : item.colores.split(',');
@@ -58,6 +58,24 @@ export class ProductService {
     let totalStock = 0;
     if (item.variaciones && Array.isArray(item.variaciones)) {
       totalStock = item.variaciones.reduce((acc: number, val: any) => acc + (Number(val.stock) || 0), 0);
+      
+      // Extraemos colores también desde las variaciones
+      item.variaciones.forEach((v: any) => {
+          if (v.color_nombre || v.color_hex) {
+              const hex = v.color_hex || '';
+              const name = v.color_nombre || hex;
+              
+              const exists = parsedColors.some(c => {
+                  if (typeof c === 'string') return c.trim().toLowerCase() === name.trim().toLowerCase() || c.trim().toLowerCase() === hex.trim().toLowerCase();
+                  if (typeof c === 'object') return (c.name && c.name.trim().toLowerCase() === name.trim().toLowerCase()) || (c.hex && c.hex.trim().toLowerCase() === hex.trim().toLowerCase());
+                  return false;
+              });
+              
+              if (!exists) {
+                  parsedColors.push({ name: v.color_nombre || '', hex: hex });
+              }
+          }
+      });
     } else {
       totalStock = Number(item.stock || 0);
     }

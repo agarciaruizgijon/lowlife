@@ -1,0 +1,64 @@
+<section class="shipping-section">
+  <!-- Contenedor principal centrado para el formulario de dirección -->
+  <div class="container d-flex flex-column justify-content-center align-items-center h-100 py-5">
+    
+    <h1 class="fw-bold mb-3">Dirección de envío</h1>
+    <p class="text-muted mb-4">Por favor, introduce los datos de envío para tu pedido.</p>
+
+    <!-- Tarjeta que contiene el formulario de dirección -->
+    <div class="shipping-card shadow">
+      <div class="shipping-card-body p-4 p-md-5">
+        <!-- Usamos #shippingForm="ngForm" para validar el estado completo del formulario -->
+        <form #shippingForm="ngForm">
+          
+          <!-- Fila con Nombre y Apellidos -->
+          <div class="row mb-4">
+            <div class="col-md-6 mb-4 mb-md-0">
+              <!-- Enlazamos el input con shippingData.nombre -->
+              <input type="text" class="form-control form-control-underline" name="nombre" [(ngModel)]="shippingData.nombre" placeholder="Nombre" required>
+            </div>
+            <div class="col-md-6">
+              <!-- Enlazamos el input con shippingData.apellidos -->
+              <input type="text" class="form-control form-control-underline" name="apellidos" [(ngModel)]="shippingData.apellidos" placeholder="Apellidos" required>
+            </div>
+          </div>
+
+          <!-- Dirección principal -->
+          <div class="mb-4">
+            <!-- Enlazamos el input con shippingData.direccion -->
+            <input type="text" class="form-control form-control-underline" name="direccion" [(ngModel)]="shippingData.direccion" placeholder="Dirección (Calle, número, piso...)" required>
+          </div>
+
+          <!-- Ciudad y Código Postal -->
+          <div class="row mb-4">
+            <div class="col-md-8 mb-4 mb-md-0">
+              <!-- Enlazamos el input con shippingData.ciudad -->
+              <input type="text" class="form-control form-control-underline" name="ciudad" [(ngModel)]="shippingData.ciudad" placeholder="Ciudad" required>
+            </div>
+            <div class="col-md-4">
+              <!-- Enlazamos el input con shippingData.codigoPostal -->
+              <input type="text" class="form-control form-control-underline" name="codigoPostal" [(ngModel)]="shippingData.codigoPostal" placeholder="Código Postal" required>
+            </div>
+          </div>
+
+          <!-- Teléfono de contacto -->
+          <div class="mb-5">
+            <!-- Enlazamos el input con shippingData.telefono -->
+            <input type="tel" class="form-control form-control-underline" name="telefono" [(ngModel)]="shippingData.telefono" placeholder="Teléfono de contacto" required>
+          </div>
+
+          <!-- Botón para ir a Método de Pago -->
+          <!-- Si shippingForm.invalid es true, el botón se deshabilita y no se puede clickear -->
+          <button type="button" class="btn btn-dark w-100 mb-3 rounded-1 fw-semibold shadow-sm" [disabled]="shippingForm.invalid" (click)="continuarAlPago()">
+            Continuar al método de pago
+          </button>
+          
+          <!-- Botón o enlace para volver al carrito -->
+          <div class="text-center">
+            <a routerLink="/carrito" class="text-dark text-decoration-underline text-muted" style="font-size: 0.95rem; cursor: pointer;">Volver al carrito</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -16,6 +16,7 @@ import { Cart } from './cart/cart';
 import { Contact } from './contact/contact';
 import { About } from './about/about';
 import { PaymentMethod } from './payment-method/payment-method';
+import { ShippingAddress } from './shipping-address/shipping-address';
 import { AdminUserManagement } from './admin-user-management/admin-user-management';
 import { AdminProductCreation } from './admin-product-creation/admin-product-creation';
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
@@ -38,6 +39,7 @@ import { AdminOrderEdit } from './admin-order-edit/admin-order-edit';
     Contact,
     About,
     PaymentMethod,
+    ShippingAddress,
     AdminUserManagement,
     AdminProductCreation,
     AdminDashboard,

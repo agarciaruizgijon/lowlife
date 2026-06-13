@@ -1,0 +1,85 @@
+.shipping-section {
+  min-height: calc(100vh - 100px); /* Adjust based on navbar/footer */
+  background-image: url('https://images.unsplash.com/photo-1555448248-2571daf6344b?w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  background-attachment: fixed;
+}
+
+.shipping-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 28%;
+  right: 28%;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 40px rgba(0,0,0,0.15);
+  z-index: 0;
+}
+
+.shipping-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+h1, p {
+  font-family: 'Inter', sans-serif;
+  color: #000;
+}
+
+.shipping-card {
+  width: 100%;
+  max-width: 600px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  background-color: #f7f7f7;
+}
+
+.shipping-card-body {
+  background-color: #f4f4f4;
+}
+
+.form-control-underline {
+  border: none;
+  border-bottom: 2px solid #999;
+  border-radius: 0;
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 0.95rem;
+  color: #333;
+  box-shadow: none !important;
+}
+
+.form-control-underline:focus {
+  border-bottom-color: #333;
+  background-color: transparent;
+}
+
+.form-control-underline::placeholder {
+  color: #888;
+}
+
+@media (max-width: 1200px) {
+  .shipping-section::before {
+    left: 20%;
+    right: 20%;
+  }
+}
+
+@media (max-width: 992px) {
+  .shipping-section::before {
+    left: 10%;
+    right: 10%;
+  }
+}
+
+@media (max-width: 768px) {
+  .shipping-section::before {
+    left: 0;
+    right: 0;
+  }
+}

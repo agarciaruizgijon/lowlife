@@ -38,15 +38,19 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // Rutas para el historial de pedidos y lista de deseados
     Route::get('/mis-pedidos', [PedidosController::class, 'misPedidos']);
+    Route::post('/pedidos', [PedidosController::class, 'store']); // Crear pedido
+    Route::patch('/pedidos/{id}/ocultar', [PedidosController::class, 'ocultarPedido']); // Ocultar pedido para el usuario
     Route::get('/deseados', [\App\Http\Controllers\DeseadosController::class, 'index']);
     Route::post('/deseados/toggle', [\App\Http\Controllers\DeseadosController::class, 'toggle']);
 });
 
 Route::apiResource('productos', ProductosController::class);
 Route::apiResource('usuarios', UsuariosController::class);
-Route::apiResource('pedidos', PedidosController::class);
+Route::apiResource('pedidos', PedidosController::class)->except(['store']);
 Route::apiResource('detalles_pedidos', DetallesPedidoController::class);
 
 Route::get('cesta/{usuario_id}', [CestaController::class, 'index']);
 Route::post('cesta', [CestaController::class, 'store']);
+Route::put('cesta/{id}', [CestaController::class, 'update']);
+Route::delete('cesta/clear/{usuario_id}', [CestaController::class, 'clear']);
 Route::delete('cesta/{id}', [CestaController::class, 'destroy']);

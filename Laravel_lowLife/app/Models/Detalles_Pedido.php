@@ -14,7 +14,9 @@ class Detalles_Pedido extends Model
     protected $fillable = [
         'pedido_id',
         'producto_id',
-        'cantidad'
+        'cantidad',
+        'talla',
+        'color'
     ];
 
     // Relación: Este detalle pertenece a un Pedido específico

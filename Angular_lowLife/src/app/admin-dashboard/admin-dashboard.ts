@@ -19,7 +19,7 @@ export class AdminDashboard implements OnInit {
   totalUsuarios: number = 0; // Almacena el número total de usuarios registrados
   
   // Variables para las listas que se muestran en el dashboard
-  stockAlerts: Product[] = []; // Array de productos que tienen bajo stock (< 5 unidades)
+  stockAlerts: any[] = []; // Array de productos o variaciones que tienen bajo stock (< 5 unidades)
   recentOrders: any[] = []; // Array con los pedidos más recientes
   
   // Estado de carga inicial (true muestra el spinner, false muestra los datos)
@@ -53,9 +53,32 @@ export class AdminDashboard implements OnInit {
     }).subscribe({
       next: (data) => {
         try {
-          // --- Procesamiento de Productos ---
-          this.stockAlerts = (data.products || [])
-            .filter((p: any) => p.stock < 5)
+          // --- Procesamiento de Productos y Variaciones ---
+          let allVariations: any[] = [];
+          (data.products || []).forEach((p: any) => {
+            if (p.variaciones && p.variaciones.length > 0) {
+              p.variaciones.forEach((v: any) => {
+                if (v.stock < 5) {
+                  allVariations.push({
+                    titulo: p.titulo,
+                    color: v.color_nombre,
+                    talla: v.talla,
+                    stock: v.stock
+                  });
+                }
+              });
+            } else if (p.stock !== undefined && p.stock < 5) {
+              // Por si algún producto no tiene variaciones aún
+              allVariations.push({
+                titulo: p.titulo,
+                color: 'N/A',
+                talla: 'N/A',
+                stock: p.stock
+              });
+            }
+          });
+
+          this.stockAlerts = allVariations
             .sort((a: any, b: any) => a.stock - b.stock)
             .slice(0, 5);
 

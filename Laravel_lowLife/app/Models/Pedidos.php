@@ -10,7 +10,17 @@ class Pedidos extends Model
     protected $fillable = [
         'usuario_id',
         'fecha',
-        'procesado'
+        'procesado',
+        'total',
+        'nombre_envio',
+        'apellidos_envio',
+        'direccion_envio',
+        'ciudad',
+        'codigo_postal',
+        'telefono_envio',
+        'fecha_entrega',
+        'estado',
+        'oculto_usuario'
     ];
 
     // Relación: Un Pedido pertenece a un Usuario (N a 1)

@@ -29,23 +29,34 @@
         </div>
 
         <div class="row mb-4">
-          <div class="col-6">
+          <div class="col-6" *ngIf="availableSizes.length > 0">
             <label class="form-label text-muted">Talla:</label>
             <select class="form-select" [(ngModel)]="selectedSize">
-              <option *ngFor="let size of parsedSizes" [value]="size">{{ size }}</option>
+              <option *ngFor="let size of availableSizes" [value]="size">{{ size }}</option>
             </select>
           </div>
-          <div class="col-6" *ngIf="producto.colors.length">
+          <div class="col-6" *ngIf="availableColors.length > 0">
             <label class="form-label text-muted">Color:</label>
             <select class="form-select" [(ngModel)]="selectedColor">
-              <option *ngFor="let color of producto.colors" [value]="color.name || color.hex || color">{{ color.name || color }}</option>
+              <option *ngFor="let color of availableColors" [value]="color">{{ color }}</option>
             </select>
           </div>
         </div>
 
+        <!-- Indicador de Stock (Opcional, pero ayuda al usuario) -->
+        <div class="mb-3" *ngIf="availableSizes.length > 0 || availableColors.length > 0">
+          <span class="badge" [ngClass]="currentStock > 0 ? 'bg-success bg-opacity-25 text-success border border-success border-opacity-50' : 'bg-danger bg-opacity-25 text-danger border border-danger border-opacity-50'">
+            {{ currentStock > 0 ? 'En Stock' : 'Agotado' }}
+          </span>
+        </div>
+
         <div class="product-actions d-flex gap-3 mb-4">
-          <button class="btn btn-primary add-to-cart-btn flex-grow-1 py-2 fw-bold fs-5" style="border-radius: 4px;" (click)="addToCart()">
-            <i class="bi bi-cart-plus me-2"></i> Añadir al carro
+          <button class="btn btn-primary add-to-cart-btn flex-grow-1 py-2 fw-bold fs-5" 
+                  style="border-radius: 4px;" 
+                  (click)="addToCart()"
+                  [disabled]="(availableSizes.length > 0 || availableColors.length > 0) && currentStock === 0">
+            <i class="bi bi-cart-plus me-2"></i> 
+            {{ ((availableSizes.length > 0 || availableColors.length > 0) && currentStock === 0) ? 'Agotado' : 'Añadir al carro' }}
           </button>
           
           <!-- Comentario: Botón grande para dar like/deseados -->

@@ -81,13 +81,23 @@
           
           <!-- Dynamic Products -->
           <div class="col" *ngFor="let articulo of articulos">
-            <div class="product-card" [routerLink]="['/producto', articulo.id]" style="cursor: pointer;">
-              <div class="product-img-wrapper">
-                <img [src]="articulo.image" [alt]="articulo.name" class="product-img">
+            <!-- Comentario: Si el artículo no tiene stock, no le pasamos routerLink para que no pueda entrar y cambiamos el cursor -->
+            <div class="product-card" [routerLink]="articulo.stock > 0 ? ['/producto', articulo.id] : null" [style.cursor]="articulo.stock > 0 ? 'pointer' : 'not-allowed'">
+              <div class="product-img-wrapper" style="position: relative;">
+                <!-- Comentario: Overlay para mostrar una raya cruzada (tachada) sobre la imagen si no hay stock -->
+                <div *ngIf="articulo.stock === 0" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; z-index: 1; overflow: hidden; border-radius: 8px;">
+                   <div style="width: 150%; height: 3px; background-color: #dc3545; transform: rotate(-45deg); opacity: 0.8;"></div>
+                </div>
+                <!-- Comentario: Atenuamos la imagen si no hay stock -->
+                <img [src]="articulo.image" [alt]="articulo.name" class="product-img" [style.opacity]="articulo.stock === 0 ? '0.6' : '1'">
               </div>
               <div class="product-info">
                 <div class="product-title-price">
-                  <h3 class="product-title">{{ articulo.name }}</h3>
+                  <!-- Comentario: Título del producto con etiqueta de sin stock en rojo si corresponde -->
+                  <h3 class="product-title">
+                    {{ articulo.name }}
+                    <span *ngIf="articulo.stock === 0" class="text-danger ms-1" style="font-size: 0.85rem; font-weight: bold;">Sin stock</span>
+                  </h3>
                   <span class="product-price">{{ articulo.price }}€</span>
                 </div>
                 <div class="product-colors">

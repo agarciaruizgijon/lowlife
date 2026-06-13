@@ -48,6 +48,12 @@ export class AdminOrderEdit implements OnInit {
       next: (data) => {
         // Si la petición es exitosa, guardamos los datos y calculamos el total
         this.order = data;
+        if (!this.order.fecha_entrega) {
+          const d = new Date(this.order.fecha || this.order.created_at);
+          d.setMonth(d.getMonth() + 1);
+          // Lo pasamos a formato ISO corto para que el pipe date:'dd/MM/yyyy' funcione correctamente
+          this.order.fecha_entrega = d.toISOString();
+        }
         this.calculateTotal();
         this.loading = false; // Ocultamos el spinner
         this.cdr.detectChanges(); // Forzar actualización de la vista
@@ -70,23 +76,23 @@ export class AdminOrderEdit implements OnInit {
     }
   }
 
-  // Alterna el estado del pedido entre Procesado (true) y Pendiente (false)
-  toggleStatus(): void {
+  // Cambia el estado del pedido a la fase seleccionada
+  changeStatus(event: Event): void {
     if (!this.order) return;
     
-    // Invertimos el estado actual
-    const newStatus = !this.order.procesado;
-    const actionText = newStatus ? 'marcar como procesado' : 'marcar como pendiente';
+    const select = event.target as HTMLSelectElement;
+    const newStatus = select.value;
 
-    // Usamos confirm nativo en vez de SweetAlert para evitar errores de compilación
-    const confirmacion = window.confirm(`¿Estás seguro de que quieres ${actionText} este pedido?`);
+    const confirmacion = window.confirm(`¿Estás seguro de que quieres cambiar el estado del pedido a "${newStatus}"?`);
     
     if (confirmacion) {
-      this.saving = true; // Deshabilita el botón mientras se guarda
+      this.saving = true; // Deshabilita mientras se guarda
+      
       // Llamamos al servicio para hacer el PUT a la API de Laravel
-      this.orderService.updateOrder(this.orderId, { procesado: newStatus }).subscribe({
+      this.orderService.updateOrder(this.orderId, { estado: newStatus, procesado: newStatus === 'Entrega al cliente' }).subscribe({
         next: (updatedOrder) => {
-          // Si todo va bien, actualizamos el estado local para reflejar el cambio en la vista
+          // Si todo va bien, actualizamos el estado local
+          this.order.estado = updatedOrder.estado;
           this.order.procesado = updatedOrder.procesado;
           this.saving = false;
           alert('El estado del pedido ha sido actualizado correctamente.');
@@ -96,7 +102,33 @@ export class AdminOrderEdit implements OnInit {
           console.error('Error updating order', err);
           this.saving = false;
           alert('Error: Hubo un problema al actualizar el pedido.');
+          // Revertimos el select si hubo error
+          select.value = this.order.estado || 'Recepción y confirmación';
           this.cdr.detectChanges();
+        }
+      });
+    } else {
+      // Si cancela, revertimos visualmente el select
+      select.value = this.order.estado || 'Recepción y confirmación';
+    }
+  }
+
+  // Elimina definitivamente un pedido entregado
+  deleteOrder(): void {
+    if (!this.order) return;
+    
+    if (window.confirm('¡ATENCIÓN! ¿Estás seguro de que deseas borrar DEFINITIVAMENTE este pedido? Esta acción no se puede deshacer y los datos se perderán de la base de datos.')) {
+      this.saving = true;
+      this.orderService.deleteOrder(this.orderId).subscribe({
+        next: () => {
+          this.saving = false;
+          alert('El pedido ha sido eliminado correctamente.');
+          this.router.navigate(['/admin-pedidos']);
+        },
+        error: (err) => {
+          console.error('Error deleting order', err);
+          this.saving = false;
+          alert('Hubo un error al intentar eliminar el pedido.');
         }
       });
     }

@@ -50,8 +50,10 @@ export class AdminOrders implements OnInit {
               email: order.usuario?.email || 'N/A',
               // Usamos fecha de creación
               date: new Date(order.fecha || order.created_at),
-              // Convertimos el booleano 'procesado' en un estado legible
-              status: order.procesado ? 'procesado' : 'pendiente',
+              // Añadimos fecha de entrega estimada (si no está, calculamos +1 mes)
+              fecha_entrega: order.fecha_entrega ? new Date(order.fecha_entrega) : (() => { const d = new Date(order.fecha || order.created_at); d.setMonth(d.getMonth() + 1); return d; })(),
+              // Convertimos el booleano 'procesado' en un estado legible por retrocompatibilidad o usamos el nuevo estado
+              status: order.estado || (order.procesado ? 'procesado' : 'pendiente'),
               total: total
             };
           });

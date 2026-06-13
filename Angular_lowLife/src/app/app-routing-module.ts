@@ -10,6 +10,7 @@ import { Cart } from './cart/cart';
 import { Contact } from './contact/contact';
 import { About } from './about/about';
 import { PaymentMethod } from './payment-method/payment-method';
+import { ShippingAddress } from './shipping-address/shipping-address';
 import { Perfil } from './perfil/perfil';
 import { AuthCallbackComponent } from './auth/auth-callback/auth-callback.component';
 
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'carrito', component: Cart },
   { path: 'contacto', component: Contact },
   { path: 'nosotros', component: About },
+  { path: 'direccion-envio', component: ShippingAddress },
   { path: 'metodo-pago', component: PaymentMethod },
   { path: 'admin-gestionUsuario', component: AdminUserManagement },
   { path: 'admin-productos', component: AdminProductManagement },

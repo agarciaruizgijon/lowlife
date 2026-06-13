@@ -27,7 +27,8 @@
             <tr>
               <th class="ps-4 py-3">ID Pedido</th>
               <th class="py-3">Cliente</th>
-              <th class="py-3">Fecha</th>
+              <th class="py-3">Fecha Compra</th>
+              <th class="py-3">Fecha Entrega</th>
               <th class="py-3">Estado</th>
               <th class="py-3 text-end">Total</th>
               <th class="py-3 text-center pe-4">Acciones</th>
@@ -35,7 +36,7 @@
           </thead>
           <tbody>
             <tr *ngIf="loading">
-              <td colspan="6" class="text-center py-5 text-muted">
+              <td colspan="7" class="text-center py-5 text-muted">
                 <div class="spinner-border text-primary mb-3" role="status"></div>
                 <p class="mb-0">Cargando pedidos...</p>
               </td>
@@ -55,9 +56,15 @@
               </td>
               <td>{{ order.date | date:'dd/MM/yyyy HH:mm' }}</td>
               <td>
-                <span class="status-pill" [ngClass]="{
-                  'completed': order.status === 'procesado',
-                  'pending': order.status === 'pendiente'
+                <span class="text-info fw-bold" *ngIf="order['fecha_entrega']">{{ order['fecha_entrega'] | date:'dd/MM/yyyy' }}</span>
+                <span class="text-muted" *ngIf="!order['fecha_entrega']">No definida</span>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-success': order.status === 'Entrega al cliente' || order.status === 'procesado',
+                  'bg-info': order.status === 'Tránsito y distribución' || order.status === 'Expedición',
+                  'bg-primary': order.status === 'Preparación (Picking y Packing)',
+                  'bg-warning text-dark': order.status === 'Recepción y confirmación' || order.status === 'pendiente'
                 }">
                   {{ order.status | titlecase }}
                 </span>

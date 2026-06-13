@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router'; // Añadimos RouterModule
+import { Router, RouterModule, ActivatedRoute } from '@angular/router'; // Añadimos RouterModule y ActivatedRoute
 import { AuthService } from '../services/auth.service';
 import { WishlistService } from '../services/wishlist.service';
 import { OrderService } from '../services/order.service';
@@ -32,8 +32,10 @@ export class Perfil implements OnInit {
   constructor(
     private authService: AuthService, 
     private router: Router,
+    private route: ActivatedRoute,
     private wishlistService: WishlistService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private cdr: ChangeDetectorRef // Inyectar ChangeDetectorRef correctamente
   ) {}
 
   ngOnInit() {
@@ -44,21 +46,63 @@ export class Perfil implements OnInit {
       this.initEditData();
       this.loadPedidos();
       this.loadDeseados();
+
+      // Leer parámetros de la URL para abrir una pestaña específica
+      this.route.queryParams.subscribe(params => {
+        if (params['tab']) {
+          this.activeTab = params['tab'];
+          // Asegurar que si entramos por URL a pedidos, se recarguen
+          if (this.activeTab === 'pedidos') {
+            this.loadPedidos();
+          }
+          this.cdr.detectChanges(); // Forzar actualización visual
+        }
+      });
+    }
+  }
+
+  // Oculta un pedido de la vista del usuario
+  ocultarPedido(id: number) {
+    if (confirm('¿Estás seguro de que quieres borrar este pedido de tu historial?')) {
+      this.orderService.hideOrder(id).subscribe({
+        next: (res) => {
+          // Recargamos la lista de pedidos
+          this.loadPedidos();
+        },
+        error: (err) => {
+          console.error('Error al ocultar el pedido', err);
+          alert(err.error?.error || 'No se pudo ocultar el pedido.');
+        }
+      });
     }
   }
 
   // Carga el historial de pedidos
   loadPedidos() {
     this.orderService.getMyOrders().subscribe({
-      next: (data) => this.pedidos = data,
+      next: (data) => {
+        this.pedidos = data;
+        this.cdr.detectChanges(); // Forzar refresco visual de Angular
+      },
       error: (err) => console.error('Error cargando pedidos', err)
     });
+  }
+
+  // Calcula la fecha de entrega si no está definida en la BD (retroactividad)
+  getDeliveryDate(pedido: any): Date {
+    if (pedido.fecha_entrega) return new Date(pedido.fecha_entrega);
+    const baseDate = new Date(pedido.fecha || pedido.created_at);
+    baseDate.setMonth(baseDate.getMonth() + 1);
+    return baseDate;
   }
 
   // Carga la lista de deseados
   loadDeseados() {
     this.wishlistService.getWishlist().subscribe({
-      next: (data) => this.deseados = data,
+      next: (data) => {
+        this.deseados = data;
+        this.cdr.detectChanges();
+      },
       error: (err) => console.error('Error cargando deseados', err)
     });
   }
@@ -68,6 +112,15 @@ export class Perfil implements OnInit {
     this.activeTab = tab;
     // Si cambiamos de pestaña, cerramos el modo edición por seguridad
     this.isEditing = false;
+    
+    // Forzamos la recarga al hacer clic en las pestañas para asegurar que
+    // Angular muestre los datos con un solo clic
+    if (tab === 'pedidos') {
+      this.loadPedidos();
+    } else if (tab === 'deseados') {
+      this.loadDeseados();
+    }
+    this.cdr.detectChanges(); // Refrescar vista
   }
 
   // Quitar like desde el perfil

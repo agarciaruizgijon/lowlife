@@ -53,19 +53,111 @@ export class Index implements OnInit {
       next: (data) => {
         this.allArticulos = data;
         
-        // Listas fijas según diseño original
-        // Ordenamos alfabéticamente las categorías para mayor facilidad de uso
-        this.availableCategories = ['Camisetas', 'Sudaderas', 'Pantalones', 'Accesorios', 'Zapatos'].sort();
-        // Las tallas mantienen su orden lógico natural de menor a mayor
-        this.availableSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Unitalla'];
-        // Ordenamos los colores alfabéticamente por su nombre
-        this.baseColors.sort((a, b) => a.name.localeCompare(b.name));
+        // Extraemos solo las categorías disponibles de todos los artículos de forma inicial
+        const uniqueCategories = new Set<string>();
+        this.allArticulos.forEach(p => {
+          if (p.category) {
+            const cat = p.category.charAt(0).toUpperCase() + p.category.slice(1).toLowerCase();
+            uniqueCategories.add(cat);
+          }
+        });
+        this.availableCategories = Array.from(uniqueCategories).sort();
+
+        // Actualizamos las tallas y colores en base a lo que haya (inicialmente sin filtros de categoría)
+        this.updateDynamicFilters();
         
         this.applyFilters();
         this.cdr.detectChanges(); // Forzar actualización de la vista
       },
       error: (err) => console.error('Error fetching products', err)
     });
+  }
+
+  // Comentario: Esta función actualiza las tallas y colores disponibles según las categorías seleccionadas
+  updateDynamicFilters() {
+    const uniqueSizes = new Set<string>();
+    const uniqueColorsMap = new Map<string, {name: string, hex: string}>();
+
+    // Filtramos los artículos para considerar solo los de las categorías seleccionadas
+    // Si no hay categorías seleccionadas, usamos todos los artículos
+    const articlesToConsider = this.selectedCategories.length > 0 
+      ? this.allArticulos.filter(p => {
+          const catLower = (p.category || '').toLowerCase();
+          return this.selectedCategories.map(c => c.toLowerCase()).includes(catLower);
+        })
+      : this.allArticulos;
+
+    articlesToConsider.forEach(p => {
+      // Extraer tallas disponibles para los artículos filtrados
+      if (p['tallas']) {
+        const tArray = typeof p['tallas'] === 'string' ? p['tallas'].split(',') : p['tallas'];
+        tArray.forEach((t: string) => {
+            if (t.trim()) uniqueSizes.add(t.trim().toUpperCase());
+        });
+      }
+      if (p.variaciones) {
+         p.variaciones.forEach((v: any) => {
+           if (v.talla && v.talla.trim()) uniqueSizes.add(v.talla.trim().toUpperCase());
+         });
+      }
+
+      // Extraer colores disponibles para los artículos filtrados
+      if (p.colors && p.colors.length > 0) {
+        p.colors.forEach((c: any) => {
+          let cName = '';
+          let cHex = '';
+          // Procesamos si el color es un string (ej. "#FF0000" o "Rojo")
+          if (typeof c === 'string') {
+            if (c.startsWith('#')) {
+              cHex = c;
+              cName = this.hexToBaseColor(c);
+            } else {
+              cName = c;
+              cHex = this.getBaseColorHex(cName);
+            }
+          // Procesamos si el color es un objeto (ej. { name: "Rojo", hex: "#FF0000" })
+          } else if (typeof c === 'object') {
+            // Arreglamos la extracción del nombre del color
+            cName = c.name || this.hexToBaseColor(c.hex || '#000000');
+            cHex = c.hex || this.getBaseColorHex(cName);
+          }
+          
+          if (cName) {
+             // Mapeamos a un color base estandarizado ("Rojo", "Azul", etc.)
+             const baseName = this.mapColorToBase(cName);
+             if (!uniqueColorsMap.has(baseName)) {
+                uniqueColorsMap.set(baseName, { name: baseName, hex: this.getBaseColorHex(baseName) || cHex || '#808080' });
+             }
+          }
+        });
+      }
+    });
+
+    const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'UNITALLA'];
+    this.availableSizes = Array.from(uniqueSizes).sort((a, b) => {
+        const idxA = sizeOrder.indexOf(a);
+        const idxB = sizeOrder.indexOf(b);
+        if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+        if (idxA !== -1) return -1;
+        if (idxB !== -1) return 1;
+        return a.localeCompare(b);
+    });
+
+    if (uniqueColorsMap.size > 0) {
+        this.baseColors = Array.from(uniqueColorsMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+        this.baseColors = []; // Limpiamos si no hay colores
+    }
+  }
+
+  getBaseColorHex(colorName: string): string {
+    const textColors: { [key: string]: string } = {
+      'blanco': '#ffffff', 'negro': '#000000', 'gris': '#808080', 'rojo': '#FF0000',
+      'azul': '#0000FF', 'verde': '#008000', 'amarillo': '#FFFF00', 'naranja': '#FFA500',
+      'morado': '#800080', 'rosa': '#FFC0CB', 'marron': '#8B4513', 'marrón': '#8B4513',
+      'beige': '#F5F5DC', 'burdeos': '#800020', 'celeste': '#87CEEB', 'marino': '#000080'
+    };
+    return textColors[colorName.toLowerCase().trim()] || '';
   }
 
   openFilterModal() {
@@ -84,10 +176,15 @@ export class Index implements OnInit {
     this.applyFilters();
   }
 
+  // Comentario: Al activar o desactivar una categoría, actualizamos los filtros dinámicos (tallas y colores)
   toggleCategory(cat: string) {
     const idx = this.selectedCategories.indexOf(cat);
     if (idx > -1) this.selectedCategories.splice(idx, 1);
     else this.selectedCategories.push(cat);
+    
+    // Comentario: Recalculamos tallas y colores en base a la nueva selección de categorías
+    this.updateDynamicFilters();
+    
     this.applyFilters();
   }
   
@@ -120,13 +217,19 @@ export class Index implements OnInit {
             const tArray = typeof p['tallas'] === 'string' ? p['tallas'].split(',') : p['tallas'];
             hasSize = tArray.some((t: string) => this.selectedSizes.map(s => s.toLowerCase()).includes(t.trim().toLowerCase()));
         }
+        if (!hasSize && p.variaciones) {
+            hasSize = p.variaciones.some((v: any) => v.talla && this.selectedSizes.map(s => s.toLowerCase()).includes(v.talla.trim().toLowerCase()));
+        }
         if (!hasSize) return false;
       }
       
       if (this.selectedColors.length > 0) {
         let hasColor = false;
         if (p.colors && p.colors.length > 0) {
-            hasColor = p.colors.some(c => this.selectedColors.includes(this.mapColorToBase(c.name || c.hex || c)));
+            hasColor = p.colors.some(c => {
+                let cName = typeof c === 'string' ? c : (c.name || c.hex || '');
+                return this.selectedColors.includes(this.mapColorToBase(cName));
+            });
         }
         if (!hasColor) return false;
       }

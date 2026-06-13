@@ -81,8 +81,9 @@
           <div *ngFor="let product of stockAlerts" class="stock-alert-item d-flex align-items-center mb-3">
             <div class="alert-indicator me-3" [ngClass]="product.stock === 0 ? 'bg-danger' : 'bg-warning'"></div>
             <div class="flex-grow-1">
-              <h6 class="mb-0 small fw-bold">{{ product.name }}</h6>
-              <span class="text-white-50 tiny">{{ product.stock === 0 ? 'Agotado' : 'Quedan ' + product.stock + ' unidades' }}</span>
+              <span class="d-block fw-semibold text-white mb-1 text-truncate" style="max-width: 150px;">{{ product['titulo'] || product['name'] }}</span>
+              <span class="d-block text-white-50 tiny mb-1">{{ product['color'] !== 'N/A' ? product['color'] + ' - ' + product['talla'] : '' }}</span>
+              <span class="text-white-50 tiny">{{ product['stock'] === 0 ? 'Agotado' : 'Quedan ' + product['stock'] + ' unidades' }}</span>
             </div>
             <span class="badge" [ngClass]="product.stock === 0 ? 'bg-danger' : 'bg-warning text-dark'">{{ product.stock }}</span>
           </div>

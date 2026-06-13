@@ -10,6 +10,11 @@
       </div>
 
       <div *ngIf="cesta.length > 0">
+        <div class="d-flex justify-content-end mb-3" *ngIf="cesta.length > 1">
+          <button class="btn btn-outline-danger btn-sm" (click)="clearCart()">
+            <i class="bi bi-trash2-fill me-1"></i> Vaciar toda la cesta
+          </button>
+        </div>
         <ul class="list-group mb-4">
           <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of cesta">
             <div class="d-flex align-items-center">
@@ -18,7 +23,20 @@
                 <h5 class="mb-0">{{ item.producto?.titulo || 'Producto' }}</h5>
                 <small class="text-muted d-block" *ngIf="item.color">Color: <span class="d-inline-block rounded-circle align-middle ms-1" [style.background-color]="item.color" [style.width.px]="12" [style.height.px]="12" [title]="item.color"></span> {{ item.color }}</small>
                 <small class="text-muted d-block" *ngIf="item.talla">Talla: {{ item.talla }}</small>
-                <small class="text-muted d-block">Cantidad: {{ item.cantidad }}</small>
+                <div class="d-flex align-items-center mt-1">
+                  <small class="text-muted me-2">Cantidad:</small>
+                  <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-outline-secondary px-2" (click)="decreaseQuantity(item)">
+                      <i class="bi bi-dash"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary px-3 fw-bold" disabled style="opacity: 1; border-left: 0; border-right: 0;">
+                      {{ item.cantidad }}
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary px-2" (click)="increaseQuantity(item)">
+                      <i class="bi bi-plus"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="d-flex align-items-center gap-3">
@@ -33,7 +51,7 @@
           <h4 class="fw-bold m-0">Total</h4>
           <h3 class="fw-bold text-primary m-0">€{{ total | number:'1.2-2' }}</h3>
         </div>
-        <button class="btn btn-dark w-100 mt-4 py-2 fs-5" routerLink="/metodo-pago">Proceder al pago</button>
+        <button class="btn btn-dark w-100 mt-4 py-2 fs-5" routerLink="/direccion-envio">Proceder a dar dirección de envío</button>
       </div>
 
     </div>

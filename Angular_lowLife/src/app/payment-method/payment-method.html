@@ -2,7 +2,8 @@
   <div class="container d-flex flex-column justify-content-center align-items-center h-100 py-5">
     
     <h1 class="fw-bold mb-3">Método de pago</h1>
-    <h3 class="fw-normal mb-4" style="font-size: 1.5rem;">Total: 129.99€</h3>
+    <!-- Mostrar el total dinámicamente usando la variable 'total' del componente. Se usa el pipe 'number' para formatear con 2 decimales -->
+    <h3 class="fw-normal mb-4" style="font-size: 1.5rem;">Total: {{ total | number:'1.2-2' }}€</h3>
 
     <div class="payment-card shadow">
       <div class="payment-card-header text-center py-2 d-flex justify-content-center align-items-center gap-3">
@@ -12,64 +13,56 @@
       </div>
       
       <div class="payment-card-body p-4 p-md-5">
-        <form>
+        <!-- Añadimos #paymentForm="ngForm" para manejar la validación general del formulario -->
+        <form #paymentForm="ngForm" (ngSubmit)="procesarPago()">
           <!-- Número de tarjeta -->
           <div class="mb-4">
-            <input type="text" class="form-control form-control-underline" placeholder="Número de tarjeta">
+            <!-- Validación: obligatorio y patrón de 16 dígitos numéricos -->
+            <input type="text" class="form-control form-control-underline" name="numeroTarjeta" [(ngModel)]="cardData.numero" placeholder="Número de tarjeta (16 dígitos)" required pattern="^\d{16}$" maxlength="16">
+            <!-- Mensaje de error para número de tarjeta -->
+            <small class="text-danger" *ngIf="paymentForm.controls['numeroTarjeta']?.invalid && paymentForm.controls['numeroTarjeta']?.touched">El número debe tener 16 dígitos.</small>
           </div>
 
           <!-- Fecha y Código -->
           <div class="row mb-4">
             <div class="col-6">
-              <input type="text" class="form-control form-control-underline" placeholder="Fecha de expiración">
+              <!-- Validación: obligatorio y patrón MM/YY (mes 01-12, año de 2 dígitos) -->
+              <input type="text" class="form-control form-control-underline" name="fechaExpiracion" [(ngModel)]="cardData.fecha" placeholder="Fecha de expiración (MM/YY)" required pattern="^(0[1-9]|1[0-2])\/\d{2}$" maxlength="5">
+              <!-- Mensaje de error -->
+              <small class="text-danger" *ngIf="paymentForm.controls['fechaExpiracion']?.invalid && paymentForm.controls['fechaExpiracion']?.touched">Formato MM/YY requerido.</small>
             </div>
             <div class="col-6">
-              <input type="text" class="form-control form-control-underline" placeholder="Código de seguridad">
+              <!-- Validación: obligatorio y patrón de 3 o 4 dígitos para el CVV -->
+              <input type="text" class="form-control form-control-underline" name="cvv" [(ngModel)]="cardData.cvv" placeholder="Código de seguridad (CVV)" required pattern="^\d{3,4}$" maxlength="4">
+              <!-- Mensaje de error -->
+              <small class="text-danger" *ngIf="paymentForm.controls['cvv']?.invalid && paymentForm.controls['cvv']?.touched">El CVV debe tener 3 o 4 dígitos.</small>
             </div>
           </div>
 
           <!-- Titular -->
           <div class="mb-4">
-            <input type="text" class="form-control form-control-underline" placeholder="Titular de la tarjeta">
+            <!-- Validación: obligatorio -->
+            <input type="text" class="form-control form-control-underline" name="titular" [(ngModel)]="cardData.titular" placeholder="Titular de la tarjeta" required minlength="3">
+            <!-- Mensaje de error -->
+            <small class="text-danger" *ngIf="paymentForm.controls['titular']?.invalid && paymentForm.controls['titular']?.touched">El nombre es obligatorio.</small>
           </div>
 
           <!-- Recordar -->
           <div class="form-check mb-4 d-flex align-items-center">
-            <input class="form-check-input check-custom me-2 mt-0" type="checkbox" id="recordarPago" checked>
+            <input class="form-check-input check-custom me-2 mt-0" type="checkbox" name="recordar" [(ngModel)]="cardData.recordar" id="recordarPago">
             <label class="form-check-label text-muted" style="font-size: 0.9rem;" for="recordarPago">
               Recordar para mi próximo pago
             </label>
           </div>
 
-          <!-- Botón Cyan (Bizum) -->
-          <button type="button" class="btn btn-cyan w-100 mb-3 rounded-1 shadow-sm d-flex justify-content-center align-items-center text-white fw-bold gap-2">
-            <svg width="24" height="24" viewBox="0 0 100 100" fill="white" xmlns="http://www.w3.org/2000/svg">
-              <g transform="translate(50, 50) rotate(-45) translate(-50, -50)">
-                <!-- Long Pill -->
-                <rect x="15" y="35" width="55" height="14" rx="7" />
-                <!-- Short Pill -->
-                <rect x="35" y="55" width="30" height="14" rx="7" />
-                <!-- Top Right Dot -->
-                <circle cx="85" cy="42" r="7" />
-                <!-- Bottom Left Dot -->
-                <circle cx="15" cy="62" r="7" />
-              </g>
-            </svg>
-            Bizum
-          </button>
-
-          <!-- Botón Google Pay -->
-          <button type="button" class="btn btn-gpay w-100 mb-5 rounded-1 border text-dark fw-semibold d-flex align-items-center justify-content-center shadow-sm">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="G" style="width: 18px; margin-right: 8px;">
-            Pay
-          </button>
-
           <!-- Confirmar -->
-          <button type="submit" class="btn btn-danger w-100 mb-3 rounded-1 fw-semibold shadow-sm btn-confirmar" style="background-color: #df3a2a; border-color: #c9322a;">Confirmar</button>
+          <!-- Deshabilitamos el botón si paymentForm.invalid es true -->
+          <button type="submit" class="btn btn-danger w-100 mb-3 rounded-1 fw-semibold shadow-sm btn-confirmar" style="background-color: #df3a2a; border-color: #c9322a;" [disabled]="paymentForm.invalid">Confirmar</button>
           
           <!-- Volver -->
           <div class="text-center">
-            <a routerLink="/carrito" class="text-dark text-decoration-underline text-muted" style="font-size: 0.95rem; cursor: pointer;">Volver</a>
+            <!-- Enlace actualizado para volver a la dirección de envío antes del carrito -->
+            <a routerLink="/direccion-envio" class="text-dark text-decoration-underline text-muted" style="font-size: 0.95rem; cursor: pointer;">Volver a los datos de envío</a>
           </div>
         </form>
       </div>

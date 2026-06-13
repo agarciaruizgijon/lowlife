@@ -74,15 +74,19 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let v of variaciones; let i = index">
-                      <td>{{ v.talla || '-' }}</td>
+                      <!-- Comentario: Ahora las variaciones son editables directamente -->
                       <td>
-                        <div class="d-flex align-items-center gap-2" *ngIf="v.color_nombre">
-                          <div class="color-circle border" style="width: 15px; height: 15px; border-radius: 50%;" [style.background-color]="v.color_hex"></div>
-                          <span class="small">{{ v.color_nombre }}</span>
-                        </div>
-                        <span *ngIf="!v.color_nombre">-</span>
+                        <input type="text" class="form-control form-control-sm border-0 bg-light" [(ngModel)]="v.talla" name="talla_{{i}}" placeholder="N/A">
                       </td>
-                      <td>{{ v.stock }}</td>
+                      <td>
+                        <div class="d-flex align-items-center gap-1">
+                          <input type="color" class="form-control form-control-color p-0 border-0" style="width: 20px; height: 20px;" [(ngModel)]="v.color_hex" name="colorHex_{{i}}" title="Cambiar color">
+                          <input type="text" class="form-control form-control-sm border-0 bg-light flex-grow-1" [(ngModel)]="v.color_nombre" name="colorNombre_{{i}}" placeholder="N/A">
+                        </div>
+                      </td>
+                      <td style="width: 80px;">
+                        <input type="number" class="form-control form-control-sm border-0 bg-light text-center" [(ngModel)]="v.stock" name="stock_{{i}}" min="0">
+                      </td>
                       <td class="text-end">
                         <button type="button" class="btn btn-sm text-danger border-0 bg-transparent p-0" (click)="removeVariacion(i)"><i class="bi bi-trash"></i></button>
                       </td>
