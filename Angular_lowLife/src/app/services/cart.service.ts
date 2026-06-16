@@ -18,7 +18,7 @@ export interface CartItem {
   providedIn: 'root'
 })
 export class CartService {
-  private apiUrl = 'http://localhost:8000/api/cesta';
+  private apiUrl = 'https://ruix.iesruizgijon.es/agarcia/laravel/public/api/cesta';
   
   private cartCountSubject = new BehaviorSubject<number>(0);
   public cartCount$ = this.cartCountSubject.asObservable();

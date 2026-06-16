@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class OrderService {
-  private apiUrl = 'http://localhost:8000/api/mis-pedidos';
+  private apiUrl = 'https://ruix.iesruizgijon.es/agarcia/laravel/public/api/mis-pedidos';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -30,7 +30,7 @@ export class OrderService {
     const token = this.authService.getToken();
     if (!token) return throwError(() => new Error('No autorizado'));
 
-    return this.http.post<any>('http://localhost:8000/api/pedidos', orderData, {
+    return this.http.post<any>('https://ruix.iesruizgijon.es/agarcia/laravel/public/api/pedidos', orderData, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
   }
@@ -43,7 +43,7 @@ export class OrderService {
    * Se utiliza en el panel de control del Administrador para calcular ventas totales y mostrar pedidos recientes.
    */
   getAllOrders(): Observable<any[]> {
-    return this.http.get<any[]>('http://localhost:8000/api/pedidos');
+    return this.http.get<any[]>('https://ruix.iesruizgijon.es/agarcia/laravel/public/api/pedidos');
   }
 
   /**
@@ -51,14 +51,14 @@ export class OrderService {
    * Se utiliza en la vista de edición de pedidos del Administrador.
    */
   getOrderById(id: number | string): Observable<any> {
-    return this.http.get<any>(`http://localhost:8000/api/pedidos/${id}`);
+    return this.http.get<any>(`https://ruix.iesruizgijon.es/agarcia/laravel/public/api/pedidos/${id}`);
   }
 
   /**
    * Actualiza los datos de un pedido (ej. estado de procesado).
    */
   updateOrder(id: number | string, data: any): Observable<any> {
-    return this.http.put<any>(`http://localhost:8000/api/pedidos/${id}`, data);
+    return this.http.put<any>(`https://ruix.iesruizgijon.es/agarcia/laravel/public/api/pedidos/${id}`, data);
   }
 
   /**
@@ -68,7 +68,7 @@ export class OrderService {
     const token = this.authService.getToken();
     if (!token) return throwError(() => new Error('No autorizado'));
 
-    return this.http.patch<any>(`http://localhost:8000/api/pedidos/${id}/ocultar`, {}, {
+    return this.http.patch<any>(`https://ruix.iesruizgijon.es/agarcia/laravel/public/api/pedidos/${id}/ocultar`, {}, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
   }
@@ -77,6 +77,6 @@ export class OrderService {
    * Elimina definitivamente un pedido del sistema
    */
   deleteOrder(id: number | string): Observable<any> {
-    return this.http.delete<any>(`http://localhost:8000/api/pedidos/${id}`);
+    return this.http.delete<any>(`https://ruix.iesruizgijon.es/agarcia/laravel/public/api/pedidos/${id}`);
   }
 }

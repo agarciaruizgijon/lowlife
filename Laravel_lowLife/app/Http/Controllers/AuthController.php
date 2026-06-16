@@ -51,7 +51,8 @@ class AuthController extends Controller
         try {
             Mail::to($usuario->email)->send(new VerifyEmailMailable($usuario, $verifyUrl));
         } catch (\Exception $e) {
-            // Si el correo falla (por ejemplo, Mailtrap está caído), ignoramos el error para no bloquear el registro
+            // Devolvemos el error real para saber qué pasa en el hosting
+            return response()->json(['error_correo' => $e->getMessage()], 500);
         }
 
         // Responder al cliente (Angular) que todo ha ido bien
@@ -71,17 +72,17 @@ class AuthController extends Controller
 
         // Si no existe, redirigimos al frontend mostrando un error
         if (!$user) {
-            return redirect('http://localhost:4200/login?error=user_not_found');
+            return redirect('https://ruix.iesruizgijon.es/agarcia/lowlife/login?error=user_not_found');
         }
 
         // 2. Verificamos que el código (hash) sea correcto comparándolo con el email del usuario
         if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
-            return redirect('http://localhost:4200/login?error=invalid_hash');
+            return redirect('https://ruix.iesruizgijon.es/agarcia/lowlife/login?error=invalid_hash');
         }
 
         // 3. Si el usuario ya había verificado su correo antes, le avisamos
         if ($user->hasVerifiedEmail()) {
-            return redirect('http://localhost:4200/login?verified=already');
+            return redirect('https://ruix.iesruizgijon.es/agarcia/lowlife/login?verified=already');
         }
 
         // 4. Si todo es correcto, marcamos su cuenta como verificada en la base de datos
@@ -90,7 +91,7 @@ class AuthController extends Controller
         }
 
         // 5. Redirigimos al usuario a Angular con el parámetro 'verified=success' para que le salga la alerta verde
-        return redirect('http://localhost:4200/login?verified=success');
+        return redirect('https://ruix.iesruizgijon.es/agarcia/lowlife/login?verified=success');
     }
 
     /**
@@ -196,11 +197,11 @@ class AuthController extends Controller
             $token = $usuario->createToken('auth_token')->plainTextToken;
 
             // Redirigimos al frontend pasándole el token en la URL
-            return redirect('http://localhost:4200/auth/callback?token=' . $token);
+            return redirect('https://ruix.iesruizgijon.es/agarcia/lowlife/auth/callback?token=' . $token);
 
         } catch (\Exception $e) {
             // En caso de error (ej. usuario cancela), redirigimos al login con error
-            return redirect('http://localhost:4200/login?error=google_auth_failed');
+            return redirect('https://ruix.iesruizgijon.es/agarcia/lowlife/login?error=google_auth_failed');
         }
     }
 }

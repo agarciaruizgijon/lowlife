@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class WishlistService {
-  private apiUrl = 'http://localhost:8000/api/deseados';
+  private apiUrl = 'https://ruix.iesruizgijon.es/agarcia/laravel/public/api/deseados';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

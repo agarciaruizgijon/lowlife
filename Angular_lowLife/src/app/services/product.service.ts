@@ -20,7 +20,7 @@ export interface Product {
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:8000/api/productos';
+  private apiUrl = 'https://ruix.iesruizgijon.es/agarcia/laravel/public/api/productos';
 
   constructor(private http: HttpClient) { }
 

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
   // URL base de la API para usuarios
-  private apiUrl = 'http://localhost:8000/api/usuarios';
+  private apiUrl = 'https://ruix.iesruizgijon.es/agarcia/laravel/public/api/usuarios';
 
   constructor(private http: HttpClient) {}
 

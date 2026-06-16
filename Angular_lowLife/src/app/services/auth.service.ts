@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   // URL base de nuestra API en Laravel
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = 'https://ruix.iesruizgijon.es/agarcia/laravel/public/api';
 
   constructor(private http: HttpClient, private router: Router) {}
 

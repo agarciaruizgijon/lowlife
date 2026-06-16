@@ -32,7 +32,7 @@ export class AuthCallbackComponent implements OnInit {
         this.authService.setToken(token);
 
         // Obtener los datos del usuario usando el token (necesitamos hacer una petición a /user)
-        this.http.get('http://localhost:8000/api/user', {
+        this.http.get('https://ruix.iesruizgijon.es/agarcia/laravel/public/api/user', {
           headers: { 'Authorization': `Bearer ${token}` }
         }).subscribe({
           next: (user: any) => {
