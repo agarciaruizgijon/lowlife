@@ -58,14 +58,7 @@
       
       <!-- Right Side: Search and Icons (hidden on login page) -->
       <div class="d-flex align-items-center gap-4 mt-2 mt-lg-0" *ngIf="!isLoginPage()">
-        <div class="search-container w-100 d-lg-none mb-2">
-          <input class="form-control search-pill bg-white" type="search" placeholder="Buscar" aria-label="Search">
-          <i class="bi bi-search search-icon"></i>
-        </div>
-        <div class="search-container d-none d-lg-block">
-          <input class="form-control search-pill bg-white" type="search" placeholder="Buscar" aria-label="Search">
-          <i class="bi bi-search search-icon"></i>
-        </div>
+
         <div class="d-none d-lg-flex nav-icons gap-4 align-items-center">
           <div class="position-relative" *ngIf="!isAdminMode">
             <i class="bi bi-cart2" routerLink="/carrito" style="cursor: pointer;"></i>
