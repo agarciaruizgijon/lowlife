@@ -75,6 +75,14 @@ export class ProductService {
   }
 
   /**
+   * Elimina un producto en el backend.
+   * @param id El identificador del producto a eliminar.
+   */
+  deleteProduct(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
+
+  /**
    * Función adaptadora fundamental: Convierte el objeto "crudo" que devuelve Laravel 
    * (con nombres de columnas de la base de datos) al formato estandarizado que 
    * espera y utiliza Angular (la interfaz Product).

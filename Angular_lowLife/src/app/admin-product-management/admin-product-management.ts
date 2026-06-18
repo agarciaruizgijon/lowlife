@@ -119,6 +119,23 @@ export class AdminProductManagement implements OnInit {
   }
 
   /**
+   * Elimina un producto por su id y actualiza la lista
+   */
+  deleteProduct(id: number): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+      this.productService.deleteProduct(id).subscribe({
+        next: () => {
+          this.loadProducts();
+        },
+        error: (err) => {
+          console.error('Error al eliminar producto', err);
+          alert('Hubo un error al eliminar el producto.');
+        }
+      });
+    }
+  }
+
+  /**
    * Comentario: Crea un array con el número de páginas totales para dibujarlo en el HTML
    */
   get pagesArray(): number[] {

@@ -133,8 +133,15 @@ class ProductosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Productos $productos)
+    public function destroy($id)
     {
-        //
+        $producto = Productos::find($id);
+        if (!$producto) {
+            return response()->json(['message' => 'Not Found'], 404);
+        }
+
+        $producto->delete();
+
+        return response()->json(['message' => 'Producto eliminado correctamente'], 200);
     }
 }
