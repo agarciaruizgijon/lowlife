@@ -22,6 +22,7 @@ import { AdminProductEdit } from './admin-product-edit/admin-product-edit';
 import { AdminUserEdit } from './admin-user-edit/admin-user-edit';
 import { AdminOrders } from './admin-orders/admin-orders';
 import { AdminOrderEdit } from './admin-order-edit/admin-order-edit';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: 'guia-estilos', component: StyleGuide },
@@ -36,14 +37,14 @@ const routes: Routes = [
   { path: 'nosotros', component: About },
   { path: 'direccion-envio', component: ShippingAddress },
   { path: 'metodo-pago', component: PaymentMethod },
-  { path: 'admin-gestionUsuario', component: AdminUserManagement },
-  { path: 'admin-productos', component: AdminProductManagement },
-  { path: 'admin-crearProducto', component: AdminProductCreation },
-  { path: 'admin-editarProducto/:id', component: AdminProductEdit },
-  { path: 'admin-editarUsuario/:id', component: AdminUserEdit },
-  { path: 'admin-pedidos', component: AdminOrders },
-  { path: 'admin-editarPedido/:id', component: AdminOrderEdit },
-  { path: 'admin-dashboard', component: AdminDashboard },
+  { path: 'admin-gestionUsuario', component: AdminUserManagement, canActivate: [AdminGuard] },
+  { path: 'admin-productos', component: AdminProductManagement, canActivate: [AdminGuard] },
+  { path: 'admin-crearProducto', component: AdminProductCreation, canActivate: [AdminGuard] },
+  { path: 'admin-editarProducto/:id', component: AdminProductEdit, canActivate: [AdminGuard] },
+  { path: 'admin-editarUsuario/:id', component: AdminUserEdit, canActivate: [AdminGuard] },
+  { path: 'admin-pedidos', component: AdminOrders, canActivate: [AdminGuard] },
+  { path: 'admin-editarPedido/:id', component: AdminOrderEdit, canActivate: [AdminGuard] },
+  { path: 'admin-dashboard', component: AdminDashboard, canActivate: [AdminGuard] },
   { path: '', redirectTo: '/index', pathMatch: 'full' }
 ];
 
