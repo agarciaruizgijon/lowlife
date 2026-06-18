@@ -5,44 +5,24 @@
       <h2 class="text-center fw-bold mb-1">Contáctanos</h2>
       <p class="text-center contact-subtitle mb-4">LowLife</p>
 
-      <form (submit)="onSubmit($event)">
+      <form (ngSubmit)="onSubmit($event)">
         <!-- Nombre Completo / Usuario -->
         <div class="mb-4">
-          <input
-            type="text"
-            class="form-control form-control-underline"
-            id="contactName"
-            placeholder="Nombre Completo / Usuario"
-            [(ngModel)]="contactName"
-            name="contactName"
-            required
-          />
+          <input type="text" class="form-control form-control-underline" id="contactName"
+            placeholder="Nombre Completo / Usuario" [(ngModel)]="contactName" name="contactName" required />
         </div>
 
         <!-- Correo Electrónico -->
         <div class="mb-4">
-          <input
-            type="email"
-            class="form-control form-control-underline"
-            id="contactEmail"
-            placeholder="Correo electrónico"
-            [(ngModel)]="contactEmail"
-            name="contactEmail"
-            required
-          />
+          <input type="email" class="form-control form-control-underline" id="contactEmail"
+            placeholder="Correo electrónico" [(ngModel)]="contactEmail" name="contactEmail" required />
         </div>
 
         <!-- Mensaje -->
         <div class="mb-4">
           <label class="form-label contact-label" for="contactMessage">Mensaje</label>
-          <textarea
-            class="form-control contact-textarea"
-            id="contactMessage"
-            rows="4"
-            [(ngModel)]="contactMessage"
-            name="contactMessage"
-            required
-          ></textarea>
+          <textarea class="form-control contact-textarea" id="contactMessage" rows="4" [(ngModel)]="contactMessage"
+            name="contactMessage" required></textarea>
         </div>
 
         <!-- Botón Enviar -->

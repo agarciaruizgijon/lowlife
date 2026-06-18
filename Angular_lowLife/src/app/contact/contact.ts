@@ -12,17 +12,36 @@ export class Contact {
   contactMessage: string = '';
   submitted: boolean = false;
 
-  onSubmit(event: Event) {
+  async onSubmit(event: Event) {
     event.preventDefault();
     if (this.contactName && this.contactEmail && this.contactMessage) {
-      this.submitted = true;
-      // Reset form after 4 seconds
-      setTimeout(() => {
-        this.submitted = false;
-        this.contactName = '';
-        this.contactEmail = '';
-        this.contactMessage = '';
-      }, 4000);
+
+      const response = await fetch('https://formspree.io/f/mlgkyaej', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: this.contactName,
+          email: this.contactEmail,
+          message: this.contactMessage
+        })
+      });
+
+      if (response.ok) {
+        this.submitted = true;
+        // borrar el formulario cuando pasen 4 segundos
+        setTimeout(() => {
+          this.submitted = false;
+          this.contactName = '';
+          this.contactEmail = '';
+          this.contactMessage = '';
+        }, 4000);
+      } else {
+        alert('Hubo un problema al enviar el mensaje. Inténtalo de nuevo.');
+      }
+
     }
   }
 }
