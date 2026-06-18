@@ -7,17 +7,17 @@ import { AuthService } from '../services/auth.service';
 })
 export class AdminGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   canActivate(): boolean {
     const user = this.authService.getUser();
-    
-    // Check if user exists and has the admin role
+
+    // Comprueba que el usuario exiuste y tiene rol admin
     if (user && user.rol === 'admin') {
       return true;
     }
 
-    // If not admin or not logged in, redirect to index
+    // si no es admin o no está logueado, redirige al index
     this.router.navigate(['/index']);
     return false;
   }
