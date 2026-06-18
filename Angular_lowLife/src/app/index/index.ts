@@ -26,20 +26,8 @@ export class Index implements OnInit {
   availableCategories: string[] = []; // Categorías únicas extraídas de los productos
   availableSizes: string[] = []; // Tallas únicas extraídas de los productos
   
-  // Colores base predefinidos con sus nombres y códigos hexadecimales
-  baseColors = [
-    { name: 'Negro', hex: '#000000' },
-    { name: 'Blanco', hex: '#ffffff' },
-    { name: 'Gris', hex: '#808080' },
-    { name: 'Marrón', hex: '#8B4513' },
-    { name: 'Rojo', hex: '#FF0000' },
-    { name: 'Naranja', hex: '#FFA500' },
-    { name: 'Amarillo', hex: '#FFFF00' },
-    { name: 'Verde', hex: '#008000' },
-    { name: 'Azul', hex: '#0000FF' },
-    { name: 'Morado', hex: '#800080' },
-    { name: 'Rosa', hex: '#FFC0CB' }
-  ];
+  // Colores base disponibles en los filtros
+  baseColors: { name: string, hex: string }[] = [];
 
   // Estado de los filtros: qué opciones ha seleccionado el usuario
   selectedCategories: string[] = [];
